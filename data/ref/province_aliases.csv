@@ -1,0 +1,63 @@
+alias,region_id,canonical_name
+Aceh,ID-AC,Aceh
+Nanggroe Aceh Darussalam,ID-AC,Aceh
+NAD,ID-AC,Aceh
+Sumatera Utara,ID-SU,Sumatera Utara
+Sumut,ID-SU,Sumatera Utara
+Sumatera Barat,ID-SB,Sumatera Barat
+Sumbar,ID-SB,Sumatera Barat
+Riau,ID-RI,Riau
+Kepulauan Riau,ID-KR,Kepulauan Riau
+Kepri,ID-KR,Kepulauan Riau
+Jambi,ID-JA,Jambi
+Sumatera Selatan,ID-SS,Sumatera Selatan
+Sumsel,ID-SS,Sumatera Selatan
+Kepulauan Bangka Belitung,ID-BB,Kepulauan Bangka Belitung
+Babel,ID-BB,Kepulauan Bangka Belitung
+Bengkulu,ID-BE,Bengkulu
+Lampung,ID-LA,Lampung
+DKI Jakarta,ID-JK,DKI Jakarta
+Jakarta,ID-JK,DKI Jakarta
+Daerah Khusus Ibukota Jakarta,ID-JK,DKI Jakarta
+Jawa Barat,ID-JB,Jawa Barat
+Jabar,ID-JB,Jawa Barat
+Banten,ID-BT,Banten
+Jawa Tengah,ID-JT,Jawa Tengah
+Jateng,ID-JT,Jawa Tengah
+DI Yogyakarta,ID-YO,DI Yogyakarta
+DIY,ID-YO,DI Yogyakarta
+Yogyakarta,ID-YO,DI Yogyakarta
+Daerah Istimewa Yogyakarta,ID-YO,DI Yogyakarta
+Jawa Timur,ID-JI,Jawa Timur
+Jatim,ID-JI,Jawa Timur
+Bali,ID-BA,Bali
+Nusa Tenggara Barat,ID-NB,Nusa Tenggara Barat
+NTB,ID-NB,Nusa Tenggara Barat
+Nusa Tenggara Timur,ID-NT,Nusa Tenggara Timur
+NTT,ID-NT,Nusa Tenggara Timur
+Kalimantan Barat,ID-KB,Kalimantan Barat
+Kalbar,ID-KB,Kalimantan Barat
+Kalimantan Tengah,ID-KT,Kalimantan Tengah
+Kalteng,ID-KT,Kalimantan Tengah
+Kalimantan Selatan,ID-KS,Kalimantan Selatan
+Kalsel,ID-KS,Kalimantan Selatan
+Kalimantan Timur,ID-KI,Kalimantan Timur
+Kaltim,ID-KI,Kalimantan Timur
+Kalimantan Utara,ID-KU,Kalimantan Utara
+Kaltara,ID-KU,Kalimantan Utara
+Sulawesi Utara,ID-SA,Sulawesi Utara
+Sulut,ID-SA,Sulawesi Utara
+Gorontalo,ID-GO,Gorontalo
+Sulawesi Tengah,ID-ST,Sulawesi Tengah
+Sulteng,ID-ST,Sulawesi Tengah
+Sulawesi Barat,ID-SR,Sulawesi Barat
+Sulbar,ID-SR,Sulawesi Barat
+Sulawesi Selatan,ID-SN,Sulawesi Selatan
+Sulsel,ID-SN,Sulawesi Selatan
+Sulawesi Tenggara,ID-SG,Sulawesi Tenggara
+Sultra,ID-SG,Sulawesi Tenggara
+Maluku,ID-MA,Maluku
+Maluku Utara,ID-MU,Maluku Utara
+Malut,ID-MU,Maluku Utara
+Papua Barat,ID-PB,Papua Barat
+Papua,ID-PA,Papua

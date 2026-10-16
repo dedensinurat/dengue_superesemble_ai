@@ -1,0 +1,35 @@
+region_id,name,region_group,lat,lon
+ID-AC,Aceh,Sumatra,4.6951,96.7494
+ID-SU,Sumatera Utara,Sumatra,2.1154,99.5451
+ID-SB,Sumatera Barat,Sumatra,-0.7399,100.8000
+ID-RI,Riau,Sumatra,0.2933,101.7068
+ID-JA,Jambi,Sumatra,-1.4852,102.4381
+ID-SS,Sumatera Selatan,Sumatra,-3.3194,104.9144
+ID-BE,Bengkulu,Sumatra,-3.5778,102.3464
+ID-LA,Lampung,Sumatra,-4.5586,105.4068
+ID-BB,Kepulauan Bangka Belitung,Sumatra,-2.7411,106.4406
+ID-KR,Kepulauan Riau,Sumatra,3.9457,108.1429
+ID-JK,DKI Jakarta,Java-Bali,-6.2088,106.8456
+ID-JB,Jawa Barat,Java-Bali,-6.9175,107.6191
+ID-JT,Jawa Tengah,Java-Bali,-7.1510,110.1403
+ID-YO,DI Yogyakarta,Java-Bali,-7.7956,110.3695
+ID-JI,Jawa Timur,Java-Bali,-7.5361,112.2384
+ID-BT,Banten,Java-Bali,-6.4058,106.0640
+ID-BA,Bali,Java-Bali,-8.4095,115.1889
+ID-NB,Nusa Tenggara Barat,Nusa Tenggara,-8.6529,117.3616
+ID-NT,Nusa Tenggara Timur,Nusa Tenggara,-8.6574,121.0794
+ID-KB,Kalimantan Barat,Kalimantan,-0.2787,111.4753
+ID-KT,Kalimantan Tengah,Kalimantan,-1.6815,113.3824
+ID-KS,Kalimantan Selatan,Kalimantan,-3.0926,115.2838
+ID-KI,Kalimantan Timur,Kalimantan,0.5387,116.4194
+ID-KU,Kalimantan Utara,Kalimantan,3.0731,116.0414
+ID-SA,Sulawesi Utara,Sulawesi,0.6247,123.9750
+ID-ST,Sulawesi Tengah,Sulawesi,-1.4300,121.4456
+ID-SN,Sulawesi Selatan,Sulawesi,-3.6687,119.9741
+ID-SG,Sulawesi Tenggara,Sulawesi,-4.1449,122.1746
+ID-GO,Gorontalo,Sulawesi,0.6999,122.4467
+ID-SR,Sulawesi Barat,Sulawesi,-2.8441,119.2321
+ID-MA,Maluku,Maluku,-3.2385,130.1453
+ID-MU,Maluku Utara,Maluku,1.5709,127.8088
+ID-PB,Papua Barat,Papua,-1.3361,133.1747
+ID-PA,Papua,Papua,-4.2699,138.0804

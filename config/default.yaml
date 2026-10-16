@@ -1,0 +1,85 @@
+
+# Default configuration for DengueCast
+# All runtime parameters must come from this file - NO magic numbers in code.
+
+region:
+  country: "Indonesia"
+  admin_level: 1          # 1 = provinsi
+  id_col: "region_id"
+
+data:
+  paths:
+    raw: "data/raw"
+    interim: "data/interim"
+    processed: "data/processed"
+    db: "data/processed/denguecast.duckdb"
+  month_col: "month"
+  cases_source: "synthetic"        # synthetic | opendengue | csv
+  climate_source: "climatology"    # climatology | bmkg_station | era5land | nasa_power
+
+horizon:
+  max_lead: 6
+
+features:
+  climate_window: 3          # lag window: 3 = lag 0-2; 5 = lag 0-4
+  nino_window: 4             # lag window for ONI/DMI
+  collinearity_threshold: 0.7
+  climate_by_group: false    # interact precip/humidity with region_group
+  exclude_dtr_if_missing: true
+
+models:
+  n_samples: 1000
+  max_candidates: 128
+  top_k: 4
+  propagate_lag_uncertainty: false
+
+evaluation:
+  initial_train_years: 5
+  cutoffs: [0.25, 0.5, 0.75]
+  exclude_periods:           # list of "YYYY-MM/YYYY-MM" ranges
+    - "2020-01/2021-12"
+  bootstrap_n: 500
+  reliability_bins: 10
+
+thresholds:
+  endemic_years: 5
+  exclude_outbreak_years: false
+
+bmkg:
+  column_map:
+    Tn: "tmin"
+    Tx: "tmax"
+    Tavg: "tmean"
+    RH_avg: "humidity"
+    RR: "precip"
+    ss: "sunshine"
+    ff_x: "wind_max"
+    ddd_x: "wind_dir_max"
+    ff_avg: "wind"
+    ddd_car: "wind_dir_mode"
+  date_formats:
+    - "%d-%m-%Y"
+    - "%Y-%m-%d"
+  codes:
+    8888: "nan"   # not measured; for RR this means trace/unmeasured
+    9999: "nan"   # no data / missing
+  min_valid_days_frac: 0.8
+  aggregation_method: "idw"   # idw | mean | nearest
+  max_station_km: 150
+  min_stations: 1
+  georef_rmse_max_km: 50.0    # reject digitizer if RMSE exceeds this
+
+runtime:
+  seed: 42
+  synthetic: true             # set false to use real data
+  n_synthetic_regions: 63
+  n_synthetic_years: 12
+  log_level: "INFO"
+
+api:
+  cors_origins: ["*"]
+  host: "0.0.0.0"
+  port: 8000
+
+dashboard:
+  port: 8501

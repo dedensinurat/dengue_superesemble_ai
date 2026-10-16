@@ -1,0 +1,28 @@
+{
+  "run_id": "run_2019_12_99dd9e",
+  "origin": "2019-12",
+  "start_time": "2026-10-16T09:31:43.302233+00:00",
+  "completion_time": "2026-10-16T09:37:19.181347+00:00",
+  "n_regions": 63,
+  "max_lead": 6,
+  "n_samples": 1000,
+  "synthetic": true,
+  "selected_models": [
+    "B1_seasonal_mean",
+    "B2_seasonal_nb",
+    "nbglm_002_humidity_l02_z_dtr_l02_z",
+    "nbglm_005_humidity_l02_z_precip_l02_z",
+    "nbglm_001_humidity_l02_z",
+    "nbglm_008_humidity_l02_z_precip_l02_z"
+  ],
+  "weights": {
+    "B1_seasonal_mean": 0.19357942077188617,
+    "B2_seasonal_nb": 0.17973130411666743,
+    "nbglm_002_humidity_l02_z_dtr_l02_z": 0.15738481165970372,
+    "nbglm_005_humidity_l02_z_precip_l02_z": 0.1571006085231562,
+    "nbglm_001_humidity_l02_z": 0.1569592317104309,
+    "nbglm_008_humidity_l02_z_precip_l02_z": 0.15524462321815566
+  },
+  "forecasts_hash": "6b1ca3d6",
+  "weights_hash": "ca19a9c5"
+}

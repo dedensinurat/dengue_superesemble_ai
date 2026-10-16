@@ -1,0 +1,4 @@
+station_id,name,lat,lon,region_id
+STN_EXAMPLE_01,EXAMPLE Station Sleman,-7.768,110.378,REG_01
+STN_EXAMPLE_02,EXAMPLE Station Kemayoran,-6.155,106.840,REG_02
+STN_EXAMPLE_03,EXAMPLE Station Maros,-5.006,119.575,REG_03
