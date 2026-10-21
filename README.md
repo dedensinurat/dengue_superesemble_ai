@@ -239,24 +239,3 @@ Pengembangan DengueCast berlandaskan pada literatur epidemiologi dan operasional
 5. **ECMWF (European Centre for Medium-Range Weather Forecasts)**. *ERA5-Land: High-resolution global reanalysis of land variables*. Copernicus Climate Change Service (C3S).
 6. **NOAA Climate Prediction Center (CPC)**. *Historical El Niño / La Niña Episodes (Oceanic Niño Index — ONI)*.
 7. **Badan Pusat Statistik (BPS)**. *Sensus Penduduk Indonesia 2010, 2020, dan Proyeksi Penduduk Antar-Sensus (SUPAS)*.
-
----
-
-## 10. Naskah Singkat Presenter (Talking Points)
-
-Gunakan 4 poin berikut untuk memukau audiens saat Anda mempresentasikan proyek ini:
-
-1. **Masalah Nyata (Opening):**  
-   *"Bapak/Ibu sekalian, tahun 2024 mencatat rekor terburuk kasus DBD dalam sejarah Indonesia dengan lebih dari 244 ribu kasus. Di ujung garis kuning grafik tren nasional kita, angka insidens mencapai 87,4 per 100 ribu penduduk—hampir 2 kali lipat di atas batas aman Kemenkes. Rumah sakit penuh sesak, dan klaim pembiayaan BPJS Kesehatan melonjak drastis."*
-
-2. **Bukti Hubungan Iklim (Evidence):**  
-   *"Melalui analisis 15 tahun data satelit cuaca ERA5-Land dan NASA POWER, kami menemukan fenomena **Biological Lag**: Puncak pasien rumah sakit selalu tertinggal 45 hingga 60 hari pasca anomali curah hujan lebat. Nyamuk butuh waktu untuk menetas, dewasa, dan menularkan virus."*
-
-3. **Solusi Teknologi AI (The Engine):**  
-   *"DengueCast tidak membuat ramalan tebak-tebakan. Kami menggunakan **Negative Binomial GLM** dengan framework probabilistik 1.000 sampel Monte Carlo dan superensemble 4 model. Sistem ini membaca sinyal cuaca hari ini untuk memproyeksikan risiko 1 hingga 3 bulan ke depan."*
-
-4. **Nilai Strategis untuk BPJS Kesehatan (Closing):**  
-   *"Dengan keunggulan waktu 60 hari lebih awal ini, BPJS Kesehatan tidak lagi berada dalam posisi reaktif membayar klaim saat wabah sudah meletus. BPJS dapat berkolaborasi secara proaktif dengan dinas kesehatan daerah untuk intervensi sebelum nyamuk dewasa menyebarkan penyakit."*
-
----
-*DengueCast v0.1.0 • Lisensi MIT • Dikembangkan untuk Riset Sistem Peringatan Dini Kesehatan Nasional*
