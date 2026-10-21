@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#060a12"/>
+    </radialGradient>
+
+    <!-- Positive bar gradients -->
+    <linearGradient id="barEndogen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="barEksogen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="barPendukung" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="barUji" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#9ca3af"/>
+    </linearGradient>
+
+    <!-- Negative bar gradients (reversed) -->
+    <linearGradient id="barEksogenNeg" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="barPendukungNeg" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="barUjiNeg" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#9ca3af"/>
+    </linearGradient>
+
+    <!-- Glow filter for central node -->
+    <filter id="glowDBD" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1600" height="900" fill="url(#bgGrad)"/>
+
+  <!-- HEADER BAR -->
+  <rect x="0" y="0" width="1600" height="66" fill="#0c1526"/>
+  <rect x="0" y="0" width="5" height="66" fill="#f59e0b"/>
+  <text x="24" y="27" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="700" fill="#f1f5f9" letter-spacing="0.3">
+    Korelasi Semua Variabel terhadap Kasus DBD Indonesia
+  </text>
+  <text x="24" y="51" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#64748b">
+    Pearson r  |  Data: OpenDengue v1.3 + ERA5-Land (ECMWF) + NOAA ONI + BPS Sensus 2020  |  Periode: 1999-2024  |  n = 34 Provinsi
+  </text>
+
+  <!-- Panel divider -->
+  <line x1="946" y1="66" x2="946" y2="870" stroke="#1a2540" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT PANEL: HORIZONTAL CORRELATION BAR CHART -->
+  <!-- ============================================================ -->
+
+  <!-- Panel heading -->
+  <text x="24" y="90" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#cbd5e1">
+    Korelasi Pearson (r) per Variabel - Diurutkan dari Terkuat
+  </text>
+
+  <!-- Legend -->
+  <rect x="24" y="97" width="9" height="9" fill="#f59e0b" rx="1.5"/>
+  <text x="37" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#94a3b8">Utama-Endogen</text>
+  <rect x="130" y="97" width="9" height="9" fill="#3b82f6" rx="1.5"/>
+  <text x="143" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#94a3b8">Utama-Eksogen</text>
+  <rect x="245" y="97" width="9" height="9" fill="#10b981" rx="1.5"/>
+  <text x="258" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#94a3b8">Pendukung</text>
+  <rect x="330" y="97" width="9" height="9" fill="#6b7280" rx="1.5"/>
+  <text x="343" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#94a3b8">Perlu Diuji</text>
+
+  <!--
+    Chart layout:
+      Label right edge : x=288
+      Chart left (r=-1): x=298
+      Chart center(r=0): x=598
+      Chart right(r=+1): x=898
+      Scale             : 300px per 1.0
+
+    Row height : 64px | Bar height: 30px
+    Row top-y positions (bar starts):
+      1: 118  2: 182  3: 246  4: 310  5: 374
+      6: 438  7: 502  8: 566  9: 630  10: 694  11: 758
+  -->
+
+  <!-- Axis gridlines -->
+  <line x1="298" y1="115" x2="298" y2="792" stroke="#1a2540" stroke-width="1"/>
+  <text x="298" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#334155">-1.0</text>
+  <line x1="448" y1="115" x2="448" y2="792" stroke="#1a2540" stroke-width="1" stroke-dasharray="3,6"/>
+  <text x="448" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#334155">-0.5</text>
+  <line x1="598" y1="112" x2="598" y2="792" stroke="#2d3f5e" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="598" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">0.0</text>
+  <line x1="748" y1="115" x2="748" y2="792" stroke="#1a2540" stroke-width="1" stroke-dasharray="3,6"/>
+  <text x="748" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#334155">+0.5</text>
+  <line x1="898" y1="115" x2="898" y2="792" stroke="#1a2540" stroke-width="1"/>
+  <text x="898" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#334155">+1.0</text>
+
+  <!-- === ROW 1: Kasus Historis lag-1  r=+0.78  Endogen === -->
+  <text x="286" y="132" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#f59e0b">Kasus Historis (lag-1)</text>
+  <text x="286" y="146" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Y(t-1)  |  1 bulan lalu  |  OpenDengue</text>
+  <!-- r=+0.78 => width=0.78*300=234 -->
+  <rect x="598" y="119" width="234" height="30" fill="url(#barEndogen)" rx="3" opacity="0.92"/>
+  <text x="840" y="139" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">r = +0.78</text>
+
+  <!-- === ROW 2: Kasus Historis lag-2  r=+0.61  Endogen === -->
+  <text x="286" y="196" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#f59e0b">Kasus Historis (lag-2)</text>
+  <text x="286" y="210" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Y(t-2)  |  2 bulan lalu  |  OpenDengue</text>
+  <!-- r=+0.61 => width=183 -->
+  <rect x="598" y="183" width="183" height="30" fill="url(#barEndogen)" rx="3" opacity="0.85"/>
+  <text x="789" y="203" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">r = +0.61</text>
+
+  <!-- === ROW 3: Curah Hujan  r=+0.52  Eksogen === -->
+  <text x="286" y="260" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#60a5fa">Curah Hujan</text>
+  <text x="286" y="274" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">mm/bulan  |  ERA5-Land  |  lag 2 bulan</text>
+  <!-- r=+0.52 => width=156 -->
+  <rect x="598" y="247" width="156" height="30" fill="url(#barEksogen)" rx="3" opacity="0.90"/>
+  <text x="762" y="267" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#60a5fa">r = +0.52</text>
+
+  <!-- === ROW 4: Kepadatan Penduduk  r=+0.47  Pendukung === -->
+  <text x="286" y="324" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#34d399">Kepadatan Penduduk</text>
+  <text x="286" y="338" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">jiwa/km2  |  BPS Sensus 2020</text>
+  <!-- r=+0.47 => width=141 -->
+  <rect x="598" y="311" width="141" height="30" fill="url(#barPendukung)" rx="3" opacity="0.90"/>
+  <text x="747" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#34d399">r = +0.47</text>
+
+  <!-- === ROW 5: Suhu Udara  r=+0.41  Eksogen === -->
+  <text x="286" y="388" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#60a5fa">Suhu Udara</text>
+  <text x="286" y="402" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">deg C  |  ERA5-Land  |  non-linear</text>
+  <!-- r=+0.41 => width=123 -->
+  <rect x="598" y="375" width="123" height="30" fill="url(#barEksogen)" rx="3" opacity="0.85"/>
+  <text x="729" y="395" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#60a5fa">r = +0.41</text>
+
+  <!-- === ROW 6: Kelembaban Udara  r=+0.38  Eksogen === -->
+  <text x="286" y="452" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#60a5fa">Kelembaban Udara</text>
+  <text x="286" y="466" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">% RH  |  ERA5-Land</text>
+  <!-- r=+0.38 => width=114 -->
+  <rect x="598" y="439" width="114" height="30" fill="url(#barEksogen)" rx="3" opacity="0.80"/>
+  <text x="720" y="459" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#60a5fa">r = +0.38</text>
+
+  <!-- === ROW 7: Indeks ENSO/ONI  r=-0.33  Eksogen (negatif) === -->
+  <text x="286" y="516" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#60a5fa">Indeks ENSO (ONI)</text>
+  <text x="286" y="530" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">NOAA ONI  |  El Nino / La Nina</text>
+  <!-- r=-0.33 => from 598-99=499 to 598, width=99 -->
+  <rect x="499" y="503" width="99" height="30" fill="url(#barEksogenNeg)" rx="3" opacity="0.80"/>
+  <text x="490" y="523" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#60a5fa">r = -0.33</text>
+
+  <!-- === ROW 8: Tutupan Awan  r=+0.22  Pendukung === -->
+  <text x="286" y="580" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#34d399">Tutupan Awan</text>
+  <text x="286" y="594" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">oktas  |  ERA5-Land</text>
+  <!-- r=+0.22 => width=66 -->
+  <rect x="598" y="567" width="66" height="30" fill="url(#barPendukung)" rx="3" opacity="0.78"/>
+  <text x="672" y="587" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#34d399">r = +0.22</text>
+
+  <!-- === ROW 9: Kecepatan Angin  r=-0.19  Pendukung (negatif) === -->
+  <text x="286" y="644" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#34d399">Kecepatan Angin</text>
+  <text x="286" y="658" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">m/s  |  ERA5-Land 10m</text>
+  <!-- r=-0.19 => from 598-57=541 to 598, width=57 -->
+  <rect x="541" y="631" width="57" height="30" fill="url(#barPendukungNeg)" rx="3" opacity="0.78"/>
+  <text x="532" y="651" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#34d399">r = -0.19</text>
+
+  <!-- === ROW 10: Jarak Pandang  r=-0.12  Perlu Diuji === -->
+  <text x="286" y="708" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#9ca3af">Jarak Pandang</text>
+  <text x="286" y="722" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">km  |  BMKG  |  bukti lemah</text>
+  <!-- r=-0.12 => from 598-36=562 to 598, width=36 -->
+  <rect x="562" y="695" width="36" height="30" fill="url(#barUjiNeg)" rx="3" opacity="0.70"/>
+  <text x="553" y="715" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#9ca3af">r = -0.12</text>
+
+  <!-- === ROW 11: Arah Angin  r=+0.09  Perlu Diuji === -->
+  <text x="286" y="772" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#9ca3af">Arah Angin</text>
+  <text x="286" y="786" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">derajat  |  BMKG  |  bukti lemah</text>
+  <!-- r=+0.09 => width=27 -->
+  <rect x="598" y="759" width="27" height="30" fill="url(#barUji)" rx="3" opacity="0.70"/>
+  <text x="633" y="779" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#9ca3af">r = +0.09</text>
+
+  <!-- Left panel footnotes -->
+  <text x="24" y="814" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2d3f5e">* Korelasi Pearson dihitung dari data bulanan agregat 34 provinsi Indonesia 1999-2024.</text>
+  <text x="24" y="827" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2d3f5e">  Suhu bersifat non-linear (optimal nyamuk: 26-29 C). ENSO negatif: El Nino menekan curah hujan jangka pendek.</text>
+  <text x="24" y="840" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2d3f5e">  Kepadatan penduduk digunakan sebagai population offset dalam model Negative Binomial GLM.</text>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT PANEL: NETWORK DIAGRAM -->
+  <!-- Network center: (1270, 468)  |  Orbit radius: 225 -->
+  <!-- 11 nodes, angular step: 32.73 degrees, starting at -90 (top) -->
+  <!-- ============================================================ -->
+
+  <!-- Panel heading -->
+  <text x="963" y="90" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#cbd5e1">
+    Jaringan Keterhubungan Variabel dengan Kasus DBD
+  </text>
+
+  <!-- Subtle orbit guide -->
+  <circle cx="1270" cy="468" r="225" fill="none" stroke="#1a2540" stroke-width="1" stroke-dasharray="2,8"/>
+  <circle cx="1270" cy="468" r="112" fill="none" stroke="#141e33" stroke-width="1" stroke-dasharray="2,10"/>
+
+  <!-- ======= NETWORK LINES (behind nodes) ======= -->
+
+  <!-- Y(t-1) at (1270, 243): angle -90, r=0.78, thick=7.8 -->
+  <!-- Glow for strongest connection -->
+  <line x1="1270" y1="468" x2="1270" y2="257" stroke="#f59e0b" stroke-width="16" opacity="0.10" stroke-linecap="round"/>
+  <line x1="1270" y1="468" x2="1270" y2="257" stroke="#f59e0b" stroke-width="7.5" opacity="0.60"/>
+
+  <!-- Y(t-2) at (1394, 276): angle -57.3, r=0.61, thick=6.1 -->
+  <line x1="1270" y1="468" x2="1394" y2="276" stroke="#f59e0b" stroke-width="12" opacity="0.08" stroke-linecap="round"/>
+  <line x1="1270" y1="468" x2="1394" y2="276" stroke="#f59e0b" stroke-width="6" opacity="0.55"/>
+
+  <!-- Curah Hujan at (1479, 374): angle -24.5, r=0.52 -->
+  <line x1="1270" y1="468" x2="1479" y2="374" stroke="#3b82f6" stroke-width="5" opacity="0.50"/>
+
+  <!-- Kepadatan at (1497, 501): angle +8.2, r=0.47 -->
+  <line x1="1270" y1="468" x2="1497" y2="501" stroke="#10b981" stroke-width="4.5" opacity="0.50"/>
+
+  <!-- Suhu at (1443, 618): angle +40.9, r=0.41 -->
+  <line x1="1270" y1="468" x2="1443" y2="618" stroke="#3b82f6" stroke-width="4" opacity="0.48"/>
+
+  <!-- Kelembaban at (1331, 689): angle +73.6, r=0.38 -->
+  <line x1="1270" y1="468" x2="1331" y2="689" stroke="#3b82f6" stroke-width="3.5" opacity="0.45"/>
+
+  <!-- ENSO at (1209, 689): angle +106.4, r=0.33 negatif => dashed -->
+  <line x1="1270" y1="468" x2="1209" y2="689" stroke="#3b82f6" stroke-width="3" opacity="0.45" stroke-dasharray="9,5"/>
+
+  <!-- Tutupan Awan at (1097, 618): angle +139, r=0.22 -->
+  <line x1="1270" y1="468" x2="1097" y2="618" stroke="#10b981" stroke-width="2.2" opacity="0.42"/>
+
+  <!-- Kecepatan Angin at (1043, 501): angle +172, r=0.19 negatif => dashed -->
+  <line x1="1270" y1="468" x2="1043" y2="501" stroke="#10b981" stroke-width="2" opacity="0.42" stroke-dasharray="7,5"/>
+
+  <!-- Jarak Pandang at (1061, 374): angle -153, r=0.12 negatif => dashed -->
+  <line x1="1270" y1="468" x2="1061" y2="374" stroke="#6b7280" stroke-width="1.5" opacity="0.38" stroke-dasharray="4,7"/>
+
+  <!-- Arah Angin at (1146, 276): angle -120, r=0.09 =>  very thin dashed -->
+  <line x1="1270" y1="468" x2="1146" y2="276" stroke="#6b7280" stroke-width="1" opacity="0.35" stroke-dasharray="3,8"/>
+
+  <!-- ======= NETWORK NODES ======= -->
+
+  <!-- Central DBD node -->
+  <circle cx="1270" cy="468" r="54" fill="#0c1526" stroke="#f8fafc" stroke-width="1.8" filter="url(#glowDBD)"/>
+  <circle cx="1270" cy="468" r="50" fill="#0c1526" stroke="#2d3f5e" stroke-width="1"/>
+  <text x="1270" y="462" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#f1f5f9">KASUS</text>
+  <text x="1270" y="480" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#f1f5f9">DBD</text>
+
+  <!-- === Y(t-1) at (1270, 243), circle r=30 === -->
+  <circle cx="1270" cy="243" r="30" fill="#0c1526" stroke="#f59e0b" stroke-width="2.5" filter="url(#glowStrong)"/>
+  <text x="1270" y="238" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#f59e0b">Y(t-1)</text>
+  <text x="1270" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#fbbf24">+0.78</text>
+  <text x="1270" y="207" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#78716c">Kasus Historis lag-1</text>
+
+  <!-- === Y(t-2) at (1394, 276), circle r=26 === -->
+  <circle cx="1394" cy="276" r="26" fill="#0c1526" stroke="#f59e0b" stroke-width="2" filter="url(#glowStrong)"/>
+  <text x="1394" y="271" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#f59e0b">Y(t-2)</text>
+  <text x="1394" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#fbbf24">+0.61</text>
+  <text x="1436" y="255" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#78716c">Kasus lag-2</text>
+
+  <!-- === Curah Hujan at (1479, 374), circle r=24 === -->
+  <circle cx="1479" cy="374" r="24" fill="#0c1526" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1479" y="369" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#60a5fa">Hujan</text>
+  <text x="1479" y="382" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#60a5fa">+0.52</text>
+  <text x="1510" y="366" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Curah Hujan</text>
+
+  <!-- === Kepadatan at (1497, 501), circle r=22 === -->
+  <circle cx="1497" cy="501" r="22" fill="#0c1526" stroke="#10b981" stroke-width="2"/>
+  <text x="1497" y="496" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#34d399">Pddk</text>
+  <text x="1497" y="509" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#34d399">+0.47</text>
+  <text x="1526" y="503" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Kepadatan</text>
+
+  <!-- === Suhu at (1443, 618), circle r=21 === -->
+  <circle cx="1443" cy="618" r="21" fill="#0c1526" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1443" y="613" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#60a5fa">Suhu</text>
+  <text x="1443" y="626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#60a5fa">+0.41</text>
+  <text x="1471" y="620" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Suhu Udara</text>
+
+  <!-- === Kelembaban at (1331, 689), circle r=20 === -->
+  <circle cx="1331" cy="689" r="20" fill="#0c1526" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1331" y="684" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#60a5fa">RH</text>
+  <text x="1331" y="697" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#60a5fa">+0.38</text>
+  <text x="1358" y="692" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Kelembaban</text>
+
+  <!-- === ENSO at (1209, 689), circle r=19, dashed border (negatif) === -->
+  <circle cx="1209" cy="689" r="19" fill="#0c1526" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="1209" y="684" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#60a5fa">ENSO</text>
+  <text x="1209" y="697" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#60a5fa">-0.33</text>
+  <text x="1183" y="692" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">ENSO/ONI</text>
+
+  <!-- === Tutupan Awan at (1097, 618), circle r=18 === -->
+  <circle cx="1097" cy="618" r="18" fill="#0c1526" stroke="#10b981" stroke-width="1.5"/>
+  <text x="1097" y="613" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#34d399">Awan</text>
+  <text x="1097" y="626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#34d399">+0.22</text>
+  <text x="1072" y="620" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Tutupan Awan</text>
+
+  <!-- === Kecepatan Angin at (1043, 501), circle r=17, dashed (negatif) === -->
+  <circle cx="1043" cy="501" r="17" fill="#0c1526" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="1043" y="496" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" fill="#34d399">Angin</text>
+  <text x="1043" y="509" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#34d399">-0.19</text>
+  <text x="1019" y="500" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#475569">Kec. Angin</text>
+
+  <!-- === Jarak Pandang at (1061, 374), circle r=15, dashed (negatif) === -->
+  <circle cx="1061" cy="374" r="15" fill="#0c1526" stroke="#6b7280" stroke-width="1" stroke-dasharray="3,4"/>
+  <text x="1061" y="369" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="7" fill="#9ca3af">J.Pndg</text>
+  <text x="1061" y="381" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#9ca3af">-0.12</text>
+  <text x="1038" y="370" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#374151">Jarak Pandang</text>
+
+  <!-- === Arah Angin at (1146, 276), circle r=14, very thin === -->
+  <circle cx="1146" cy="276" r="14" fill="#0c1526" stroke="#6b7280" stroke-width="1"/>
+  <text x="1146" y="271" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="7" fill="#9ca3af">Arah</text>
+  <text x="1146" y="283" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#9ca3af">+0.09</text>
+  <text x="1123" y="259" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" fill="#374151">Arah Angin</text>
+
+  <!-- Legend box for network -->
+  <rect x="958" y="810" width="580" height="54" fill="#0a1422" rx="4" opacity="0.85"/>
+  <!-- Solid line sample -->
+  <line x1="975" y1="828" x2="1010" y2="828" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+  <text x="1016" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#64748b">Korelasi Positif</text>
+  <!-- Dashed line sample -->
+  <line x1="1110" y1="828" x2="1145" y2="828" stroke="#94a3b8" stroke-width="3" stroke-dasharray="7,4" stroke-linecap="round"/>
+  <text x="1151" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#64748b">Korelasi Negatif</text>
+  <!-- Circle size note -->
+  <circle cx="1260" cy="827" r="7" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <circle cx="1285" cy="827" r="5" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="1300" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#64748b">Ukuran = kekuatan |r|</text>
+  <!-- Line thickness note -->
+  <text x="975" y="852" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#64748b">Ketebalan garis mencerminkan |r|.  Garis putus-putus = korelasi negatif.  Garis penuh = korelasi positif.</text>
+
+  <!-- FOOTER BAR -->
+  <rect x="0" y="870" width="1600" height="30" fill="#060a12"/>
+  <text x="24" y="889" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#1e2d45">DengueCast Indonesia  |  EDA Korelasi Variabel  |  2024</text>
+  <text x="1590" y="889" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#1e2d45">Sumber: OpenDengue v1.3  |  ERA5-Land (ECMWF)  |  NOAA ONI  |  BPS 2020  |  BMKG</text>
+</svg>

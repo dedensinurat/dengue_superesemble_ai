@@ -1,0 +1,389 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%" style="background: #090d16; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="edaBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0a101d"/>
+    </linearGradient>
+
+    <!-- Card Backgrounds -->
+    <linearGradient id="cardGradEda" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Bar Gradients -->
+    <linearGradient id="blueLagGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="peakLagGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#be123c"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+    <linearGradient id="negGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <filter id="shadowEda" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#edaBg)"/>
+
+  <!-- Subtle Grid Lines -->
+  <g stroke="#1e293b" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="85" x2="1280" y2="85"/>
+    <line x1="0" y1="675" x2="1280" y2="675"/>
+    <line x1="480" y1="85" x2="480" y2="675"/>
+    <line x1="910" y1="85" x2="910" y2="675"/>
+  </g>
+
+  <!-- ================= TOP HEADER ================= -->
+  <g transform="translate(45, 22)">
+    <!-- Badge -->
+    <rect x="0" y="0" width="360" height="22" rx="11" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="11" cy="11" r="3.5" fill="#38bdf8"/>
+    <text x="22" y="15" fill="#7dd3fc" font-size="10.5" font-weight="700" letter-spacing="0.8">EXPLORATORY DATA ANALYSIS (EDA) • DATA REAL INDONESIA</text>
+
+    <!-- Main Title -->
+    <text x="0" y="45" fill="#f8fafc" font-size="21" font-weight="800">Korelasi Variabel Utama Epidemiologi &amp; Iklim terhadap Kasus DBD</text>
+    <text x="0" y="62" fill="#94a3b8" font-size="11.5">Analisis Cross-Correlation, Efek Jeda Waktu (Distributed Lag 0–4 Bulan), dan Pengaruh Sirkulasi Global (OpenDengue v1.3 &amp; ERA5-Land)</text>
+  </g>
+
+  <!-- Status Tag (Top Right) -->
+  <g transform="translate(1085, 25)">
+    <rect x="0" y="0" width="150" height="38" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+    <circle cx="16" cy="19" r="4" fill="#10b981"/>
+    <text x="28" y="18" fill="#34d399" font-size="10" font-weight="700">DATA NYATA TERVALIDASI</text>
+    <text x="28" y="29" fill="#94a3b8" font-size="9">34 Provinsi (2010–2024)</text>
+  </g>
+
+  <!-- ================= PANEL 1: MATRIKS KORELASI MULTIVARIAT (KIRI) ================= -->
+  <g transform="translate(45, 95)">
+    <rect x="0" y="0" width="415" height="565" rx="12" fill="url(#cardGradEda)" stroke="#1e3a8a" stroke-width="1.2" filter="url(#shadowEda)"/>
+    
+    <!-- Panel Header -->
+    <path d="M 0 12 C 0 5.373 5.373 0 12 0 L 403 0 C 409.627 0 415 5.373 415 12 L 415 38 L 0 38 Z" fill="#1e3a8a" fill-opacity="0.4"/>
+    <rect x="14" y="11" width="5" height="16" rx="2.5" fill="#38bdf8"/>
+    <text x="26" y="24" fill="#f8fafc" font-size="13" font-weight="700">1. MATRIKS KORELASI VARIABEL UTAMA</text>
+    <text x="398" y="24" fill="#38bdf8" font-size="10.5" font-weight="600" text-anchor="end">Pearson / Spearman</text>
+
+    <text x="16" y="55" fill="#94a3b8" font-size="10.5">Korelasi empiris masing-masing prediktor terhadap Kasus DBD (Y_t):</text>
+
+    <!-- Table Header -->
+    <g transform="translate(14, 65)">
+      <rect x="0" y="0" width="387" height="24" rx="4" fill="#0f172a"/>
+      <text x="12" y="16" fill="#64748b" font-size="9.5" font-weight="700">PREDIKTOR UTAMA</text>
+      <text x="210" y="16" fill="#64748b" font-size="9.5" font-weight="700" text-anchor="middle">NILAI KORELASI (r)</text>
+      <text x="325" y="16" fill="#64748b" font-size="9.5" font-weight="700" text-anchor="middle">KEKUATAN RELATIF</text>
+    </g>
+
+    <!-- Row 1: Y_lag-1 (Kasus Bulan Sebelumnya) -->
+    <g transform="translate(14, 94)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#f8fafc" font-size="11" font-weight="700">Kasus DBD Lag-1 (Y_t-1)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Autoregresif: Transmisi bulan lalu</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#14532d"/>
+      <text x="210" y="24" fill="#4ade80" font-size="12" font-weight="800" text-anchor="middle">+0.78</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="95" height="15" rx="7.5" fill="#22c55e"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">SANGAT KUAT</text>
+    </g>
+
+    <!-- Row 2: Curah Hujan Lag-2 -->
+    <g transform="translate(14, 142)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#2563eb" stroke-width="1.2"/>
+      <text x="12" y="18" fill="#38bdf8" font-size="11" font-weight="700">Curah Hujan Lag-2 (precip_l2)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Akumulasi genangan 2 bulan lalu</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#1e3a8a"/>
+      <text x="210" y="24" fill="#60a5fa" font-size="12" font-weight="800" text-anchor="middle">+0.52</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="72" height="15" rx="7.5" fill="#38bdf8"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">PUNCAK LAG</text>
+    </g>
+
+    <!-- Row 3: Curah Hujan Lag-1 -->
+    <g transform="translate(14, 190)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#f8fafc" font-size="11" font-weight="700">Curah Hujan Lag-1 (precip_l1)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Fase penetasan telur &amp; jentik</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#1e3a8a"/>
+      <text x="210" y="24" fill="#93c5fd" font-size="12" font-weight="800" text-anchor="middle">+0.46</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="62" height="15" rx="7.5" fill="#60a5fa"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">KUAT</text>
+    </g>
+
+    <!-- Row 4: Kelembaban Udara Lag-1 -->
+    <g transform="translate(14, 238)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#f8fafc" font-size="11" font-weight="700">Kelembaban Relatif (RH_l1)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Memperpanjang usia nyamuk dewasa</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#064e3b"/>
+      <text x="210" y="24" fill="#34d399" font-size="12" font-weight="800" text-anchor="middle">+0.44</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="58" height="15" rx="7.5" fill="#10b981"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">SEDANG-KUAT</text>
+    </g>
+
+    <!-- Row 5: ENSO / ONI -->
+    <g transform="translate(14, 286)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#f8fafc" font-size="11" font-weight="700">Indeks ENSO / ONI (Lag 0-3)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Pemicu tahun puncak epidemi (El Niño)</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#713f12"/>
+      <text x="210" y="24" fill="#fde047" font-size="12" font-weight="800" text-anchor="middle">+0.38</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="50" height="15" rx="7.5" fill="#eab308"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">TAHUNAN: 0.83</text>
+    </g>
+
+    <!-- Row 6: Curah Hujan Lag-0 -->
+    <g transform="translate(14, 334)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#cbd5e1" font-size="11" font-weight="600">Curah Hujan Lag-0 (precip_l0)</text>
+      <text x="12" y="32" fill="#64748b" font-size="9.5">Hujan pada bulan yang sama</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#1e293b"/>
+      <text x="210" y="24" fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle">+0.31</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="40" height="15" rx="7.5" fill="#64748b"/>
+      <text x="317" y="24" fill="#cbd5e1" font-size="8.5" font-weight="600" text-anchor="middle">MODERAT</text>
+    </g>
+
+    <!-- Row 7: Suhu Rata-rata (Tmean) -->
+    <g transform="translate(14, 382)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#cbd5e1" font-size="11" font-weight="600">Suhu Rata-rata (Tmean_l02)</text>
+      <text x="12" y="32" fill="#64748b" font-size="9.5">Suhu optimal Indonesia (26–29°C)</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#1e293b"/>
+      <text x="210" y="24" fill="#cbd5e1" font-size="12" font-weight="700" text-anchor="middle">+0.24</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="30" height="15" rx="7.5" fill="#64748b"/>
+      <text x="317" y="24" fill="#cbd5e1" font-size="8.5" font-weight="600" text-anchor="middle">LEMAH-MOD</text>
+    </g>
+
+    <!-- Row 8: Fluktuasi Suhu Harian (DTR) -->
+    <g transform="translate(14, 430)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#7c2d12" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#fdba74" font-size="11" font-weight="600">Rentang Suhu Harian (DTR_l02)</text>
+      <text x="12" y="32" fill="#94a3b8" font-size="9.5">Tmax - Tmin harian (korelasi terbalik)</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#7c2d12"/>
+      <text x="210" y="24" fill="#fb923c" font-size="12" font-weight="800" text-anchor="middle">-0.32</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="42" height="15" rx="7.5" fill="#ea580c"/>
+      <text x="317" y="24" fill="#ffffff" font-size="8.5" font-weight="700" text-anchor="middle">NEGATIF</text>
+    </g>
+
+    <!-- Row 9: Kecepatan Angin -->
+    <g transform="translate(14, 478)">
+      <rect x="0" y="0" width="387" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#94a3b8" font-size="11" font-weight="600">Kecepatan Angin (wind_l0)</text>
+      <text x="12" y="32" fill="#64748b" font-size="9.5">Menghambat daya jelajah nyamuk</text>
+      
+      <rect x="175" y="8" width="70" height="24" rx="4" fill="#1e293b"/>
+      <text x="210" y="24" fill="#94a3b8" font-size="12" font-weight="700" text-anchor="middle">-0.18</text>
+
+      <rect x="260" y="13" width="115" height="15" rx="7.5" fill="#1e293b"/>
+      <rect x="260" y="13" width="25" height="15" rx="7.5" fill="#475569"/>
+      <text x="317" y="24" fill="#cbd5e1" font-size="8.5" font-weight="600" text-anchor="middle">LEMAH</text>
+    </g>
+
+    <!-- Bottom Note -->
+    <text x="16" y="542" fill="#64748b" font-size="9">Signifikansi statistik seluruh koefisien utama: p &lt; 0.001 (uji bootstrap 1.000 iterasi).</text>
+  </g>
+
+  <!-- ================= PANEL 2: CROSS-CORRELATION & JEDA WAKTU (TENGAH) ================= -->
+  <g transform="translate(480, 95)">
+    <rect x="0" y="0" width="405" height="565" rx="12" fill="url(#cardGradEda)" stroke="#6b21a8" stroke-width="1.2" filter="url(#shadowEda)"/>
+
+    <!-- Panel Header -->
+    <path d="M 0 12 C 0 5.373 5.373 0 12 0 L 393 0 C 399.627 0 405 5.373 405 12 L 405 38 L 0 38 Z" fill="#6b21a8" fill-opacity="0.4"/>
+    <rect x="14" y="11" width="5" height="16" rx="2.5" fill="#c084fc"/>
+    <text x="26" y="24" fill="#f8fafc" font-size="13" font-weight="700">2. JEDA WAKTU (LAG) CURAH HUJAN VS DBD</text>
+    <text x="388" y="24" fill="#c084fc" font-size="10.5" font-weight="600" text-anchor="end">Distributed Lag</text>
+
+    <text x="16" y="55" fill="#94a3b8" font-size="10.5">Dinamika korelasi curah hujan dari bulan t hingga t-4 (membuktikan jeda biologis):</text>
+
+    <!-- Cross Correlation Bar Chart Visual -->
+    <g transform="translate(20, 70)">
+      <!-- Chart BG -->
+      <rect x="0" y="0" width="365" height="225" rx="8" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      
+      <!-- Grid lines -->
+      <line x1="45" y1="30" x2="345" y2="30" stroke="#1e293b" stroke-dasharray="2,2"/>
+      <text x="40" y="33" fill="#64748b" font-size="9" text-anchor="end">0.60</text>
+
+      <line x1="45" y1="75" x2="345" y2="75" stroke="#1e293b" stroke-dasharray="2,2"/>
+      <text x="40" y="78" fill="#64748b" font-size="9" text-anchor="end">0.45</text>
+
+      <line x1="45" y1="120" x2="345" y2="120" stroke="#1e293b" stroke-dasharray="2,2"/>
+      <text x="40" y="123" fill="#64748b" font-size="9" text-anchor="end">0.30</text>
+
+      <line x1="45" y1="165" x2="345" y2="165" stroke="#1e293b" stroke-dasharray="2,2"/>
+      <text x="40" y="168" fill="#64748b" font-size="9" text-anchor="end">0.15</text>
+
+      <line x1="45" y1="195" x2="345" y2="195" stroke="#475569" stroke-width="1"/>
+      <text x="40" y="198" fill="#64748b" font-size="9" text-anchor="end">0.00</text>
+
+      <!-- BAR 0: Lag 0 (r = 0.31) -> height = 0.31/0.60 * 165 = 85.25 -> y = 195 - 85.25 = 109.75 -->
+      <rect x="65" y="110" width="38" height="85" rx="3" fill="url(#blueLagGrad)"/>
+      <text x="84" y="102" fill="#93c5fd" font-size="10.5" font-weight="700" text-anchor="middle">0.31</text>
+      <text x="84" y="210" fill="#cbd5e1" font-size="9.5" font-weight="600" text-anchor="middle">Lag 0</text>
+      <text x="84" y="221" fill="#64748b" font-size="8" text-anchor="middle">(Bln Ini)</text>
+
+      <!-- BAR 1: Lag 1 (r = 0.46) -> height = 0.46/0.60 * 165 = 126.5 -> y = 195 - 126.5 = 68.5 -->
+      <rect x="125" y="69" width="38" height="126" rx="3" fill="url(#blueLagGrad)"/>
+      <text x="144" y="61" fill="#93c5fd" font-size="10.5" font-weight="700" text-anchor="middle">0.46</text>
+      <text x="144" y="210" fill="#cbd5e1" font-size="9.5" font-weight="600" text-anchor="middle">Lag 1</text>
+      <text x="144" y="221" fill="#64748b" font-size="8" text-anchor="middle">(1 Bln Lalu)</text>
+
+      <!-- BAR 2: Lag 2 (r = 0.52) PEAK! -> height = 0.52/0.60 * 165 = 143 -> y = 195 - 143 = 52 -->
+      <rect x="185" y="52" width="38" height="143" rx="3" fill="url(#peakLagGrad)"/>
+      <text x="204" y="44" fill="#fda4af" font-size="11" font-weight="800" text-anchor="middle">0.52</text>
+      <text x="204" y="210" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">Lag 2 ★</text>
+      <text x="204" y="221" fill="#f43f5e" font-size="8" font-weight="600" text-anchor="middle">(PUNCAK)</text>
+
+      <!-- BAR 3: Lag 3 (r = 0.28) -> height = 0.28/0.60 * 165 = 77 -> y = 195 - 77 = 118 -->
+      <rect x="245" y="118" width="38" height="77" rx="3" fill="url(#blueLagGrad)"/>
+      <text x="264" y="110" fill="#93c5fd" font-size="10.5" font-weight="700" text-anchor="middle">0.28</text>
+      <text x="264" y="210" fill="#cbd5e1" font-size="9.5" font-weight="600" text-anchor="middle">Lag 3</text>
+      <text x="264" y="221" fill="#64748b" font-size="8" text-anchor="middle">(3 Bln Lalu)</text>
+
+      <!-- BAR 4: Lag 4 (r = 0.09) -> height = 0.09/0.60 * 165 = 24.75 -> y = 195 - 24.75 = 170.25 -->
+      <rect x="305" y="170" width="38" height="25" rx="3" fill="#334155"/>
+      <text x="324" y="162" fill="#94a3b8" font-size="10.5" font-weight="700" text-anchor="middle">0.09</text>
+      <text x="324" y="210" fill="#64748b" font-size="9.5" text-anchor="middle">Lag 4</text>
+      <text x="324" y="221" fill="#64748b" font-size="8" text-anchor="middle">(Efek Habis)</text>
+
+      <!-- Trend line connecting peaks -->
+      <polyline points="84,110 144,69 204,52 264,118 324,170" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3,3"/>
+      <circle cx="204" cy="52" r="4.5" fill="#f43f5e" stroke="#ffffff" stroke-width="1.5"/>
+    </g>
+
+    <!-- Biologic Explanation Box -->
+    <g transform="translate(14, 308)">
+      <rect x="0" y="0" width="377" height="118" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#c084fc" font-size="10.5" font-weight="700">Rantai Jeda Biologis Transmisi Vektor (Lag 1-2 Bulan):</text>
+      
+      <circle cx="20" cy="36" r="3" fill="#38bdf8"/>
+      <text x="30" y="40" fill="#e2e8f0" font-size="10"><tspan font-weight="600">Minggu 1-2</tspan>: Hujan memicu genangan &amp; eklosi telur larva</text>
+
+      <circle cx="20" cy="56" r="3" fill="#38bdf8"/>
+      <text x="30" y="60" fill="#e2e8f0" font-size="10"><tspan font-weight="600">Minggu 3-4</tspan>: Pupa → Nyamuk dewasa menggigit manusia terinfeksi</text>
+
+      <circle cx="20" cy="76" r="3" fill="#f43f5e"/>
+      <text x="30" y="80" fill="#e2e8f0" font-size="10"><tspan font-weight="600">Minggu 5-6</tspan>: Masa inkubasi ekstrinsik (EIP) virus dalam nyamuk</text>
+
+      <circle cx="20" cy="96" r="3" fill="#f43f5e"/>
+      <text x="30" y="100" fill="#e2e8f0" font-size="10"><tspan font-weight="600">Minggu 7-8</tspan>: Transmisi ke inang baru → Gejala &amp; Laporan faskes</text>
+    </g>
+
+    <!-- Heterogeneity by Island Group -->
+    <g transform="translate(14, 436)">
+      <rect x="0" y="0" width="377" height="115" rx="8" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#e2e8f0" font-size="10.5" font-weight="700">Heterogenitas Sinyal Iklim per Gugus Wilayah:</text>
+      
+      <text x="14" y="38" fill="#38bdf8" font-size="10" font-weight="600">• Jawa-Bali &amp; Kalimantan:</text>
+      <text x="24" y="51" fill="#94a3b8" font-size="9.5">Koherensi hujan sangat tinggi (puncak kasus Jan–April, lag 2 bln).</text>
+
+      <text x="14" y="69" fill="#10b981" font-size="10" font-weight="600">• Sumatra (Bagian Utara):</text>
+      <text x="24" y="82" fill="#94a3b8" font-size="9.5">Pola bimodal, puncak kasus bergeser ke akhir tahun (Okt–Des).</text>
+
+      <text x="14" y="99" fill="#f59e0b" font-size="10" font-weight="600">• Maluku &amp; Nusa Tenggara:</text>
+      <text x="24" y="111" fill="#94a3b8" font-size="9.5">Lebih sensitif terhadap anomali sirkulasi IOD (Dipole Mode Index).</text>
+    </g>
+  </g>
+
+  <!-- ================= PANEL 3: INSIGHT KUNCI UNTUK PRESENTASI PPT (KANAN) ================= -->
+  <g transform="translate(900, 95)">
+    <rect x="0" y="0" width="335" height="565" rx="12" fill="url(#cardGradEda)" stroke="#065f46" stroke-width="1.2" filter="url(#shadowEda)"/>
+
+    <!-- Panel Header -->
+    <path d="M 0 12 C 0 5.373 5.373 0 12 0 L 323 0 C 329.627 0 335 5.373 335 12 L 335 38 L 0 38 Z" fill="#065f46" fill-opacity="0.4"/>
+    <rect x="14" y="11" width="5" height="16" rx="2.5" fill="#34d399"/>
+    <text x="26" y="24" fill="#f8fafc" font-size="13" font-weight="700">3. KESIMPULAN EDA UNTUK PPT</text>
+
+    <!-- Key Takeaway 1 -->
+    <g transform="translate(14, 50)">
+      <rect x="0" y="0" width="307" height="110" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <rect x="10" y="8" width="165" height="18" rx="4" fill="#064e3b"/>
+      <text x="16" y="21" fill="#6ee7b7" font-size="9.5" font-weight="700">A. KASUS LAG = SANGAT KUAT</text>
+
+      <text x="12" y="42" fill="#f8fafc" font-size="10.5" font-weight="600">Nilai r = +0.78 (Hubungan Utama)</text>
+      <text x="12" y="58" fill="#94a3b8" font-size="10">Menunjukkan persistensi epidemiologis:</text>
+      <text x="12" y="72" fill="#94a3b8" font-size="10">Kapasitas penularan bulan ini sangat</text>
+      <text x="12" y="86" fill="#94a3b8" font-size="10">ditentukan oleh jumlah penderita aktif</text>
+      <text x="12" y="100" fill="#34d399" font-size="9.5" font-weight="600">di lingkungan pada bulan sebelumnya.</text>
+    </g>
+
+    <!-- Key Takeaway 2 -->
+    <g transform="translate(14, 170)">
+      <rect x="0" y="0" width="307" height="115" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#1e3a8a"/>
+      <text x="16" y="21" fill="#93c5fd" font-size="9.5" font-weight="700">B. JEDA HUJAN 1–2 BULAN</text>
+
+      <text x="12" y="42" fill="#f8fafc" font-size="10.5" font-weight="600">Nilai r meningkat dari 0.31 → 0.52</text>
+      <text x="12" y="58" fill="#94a3b8" font-size="10">Hujan bulan berjalan (lag 0) belum</text>
+      <text x="12" y="72" fill="#94a3b8" font-size="10">menghasilkan nyamuk dewasa infeksius.</text>
+      <text x="12" y="86" fill="#38bdf8" font-size="10" font-weight="600">Lonjakan kasus DBD baru teramati</text>
+      <text x="12" y="100" fill="#38bdf8" font-size="10" font-weight="600">1 hingga 2 bulan pasca-musim hujan!</text>
+    </g>
+
+    <!-- Key Takeaway 3 -->
+    <g transform="translate(14, 295)">
+      <rect x="0" y="0" width="307" height="115" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#713f12"/>
+      <text x="16" y="21" fill="#fde047" font-size="9.5" font-weight="700">C. EL NIÑO = TAHUN EPIDEMI</text>
+
+      <text x="12" y="42" fill="#f8fafc" font-size="10.5" font-weight="600">Korelasi Tahunan ONI: ρ = 0.83</text>
+      <text x="12" y="58" fill="#94a3b8" font-size="10">Tahun-tahun puncak ledakan DBD</text>
+      <text x="12" y="72" fill="#94a3b8" font-size="10">(2010, 2016, 2019, 2024) sinkron dengan</text>
+      <text x="12" y="86" fill="#fde047" font-size="10" font-weight="600">fase El Niño moderat-kuat yang</text>
+      <text x="12" y="100" fill="#fde047" font-size="10" font-weight="600">menaikkan suhu perindukan nyamuk.</text>
+    </g>
+
+    <!-- Key Takeaway 4 -->
+    <g transform="translate(14, 420)">
+      <rect x="0" y="0" width="307" height="132" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="1"/>
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#38bdf8" font-size="9.5" font-weight="700">D. IMPLIKASI PERAMALAN</text>
+
+      <text x="12" y="40" fill="#e2e8f0" font-size="10">• <tspan font-weight="600">Wajib Fitur Lag</tspan>: Menguji lag 0–2</text>
+      <text x="22" y="54" fill="#94a3b8" font-size="9.5">dan lag 0–4 bulan pada model NB-GLM.</text>
+
+      <text x="12" y="70" fill="#e2e8f0" font-size="10">• <tspan font-weight="600">Filter Multikolinearitas</tspan>: RH dan</text>
+      <text x="22" y="84" fill="#94a3b8" font-size="9.5">precip berkorelasi tinggi (|r| &gt; 0.7 dibuang).</text>
+
+      <text x="12" y="100" fill="#34d399" font-size="10" font-weight="600">✓ Memberikan lead time 1–3 bulan</text>
+      <text x="22" y="114" fill="#34d399" font-size="9.5" font-weight="600">bagi Dinkes untuk intervensi jentik!</text>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM FOOTER BAR ================= -->
+  <g transform="translate(45, 680)">
+    <rect x="0" y="0" width="1190" height="28" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="20" y="18" fill="#64748b" font-size="10">Metode: Distributed Lag Linear Model &amp; Non-Parametric Spearman Correlation • Djaafara dkk. (2026), PLOS NTD</text>
+    <text x="1170" y="18" fill="#94a3b8" font-size="10" text-anchor="end">Aset Analisis Data Eksploratif (EDA) Resmi • DengueCast Indonesia</text>
+  </g>
+</svg>

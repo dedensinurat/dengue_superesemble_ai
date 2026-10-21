@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%" style="background: #090d16; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="cardShadowSummary" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Clean Background -->
+  <rect width="1280" height="720" fill="#090d16"/>
+
+  <!-- Subtle Header Divider -->
+  <line x1="50" y1="82" x2="1230" y2="82" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- ================= TOP HEADER ================= -->
+  <g transform="translate(50, 24)">
+    <text x="0" y="14" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="1">DENGUECAST • RINGKASAN KAUSALITAS EPIDEMIOLOGIS</text>
+    <text x="0" y="40" fill="#ffffff" font-size="22" font-weight="700">Pengaruh Variabel Utama terhadap Penyebaran DBD di Indonesia</text>
+    <text x="0" y="58" fill="#94a3b8" font-size="12">Sintesis Bukti Empiris Kemenkes RI (2010–2024): Bagaimana Iklim &amp; Kasus Historis Mengubah Dinamika Transmisi</text>
+
+    <!-- Clean Metric Pill Right -->
+    <g transform="translate(1000, 2)">
+      <rect x="0" y="0" width="180" height="42" rx="8" fill="#131d31" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="18" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle">SINTESIS 4 VARIABEL</text>
+      <text x="90" y="34" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">Model Probabilistik</text>
+    </g>
+  </g>
+
+  <!-- ================= 2x2 CLEAN GRID: 4 CORE VARIABLES ================= -->
+
+  <!-- CARD 1: CURAH HUJAN (TOP LEFT) -->
+  <g transform="translate(50, 98)">
+    <rect x="0" y="0" width="580" height="255" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#cardShadowSummary)"/>
+    
+    <rect x="20" y="18" width="4" height="18" rx="2" fill="#38bdf8"/>
+    <text x="32" y="32" fill="#ffffff" font-size="13.5" font-weight="700">1. Curah Hujan &amp; Jeda Waktu Biologis (Lag 1–2 Bulan)</text>
+    
+    <rect x="475" y="16" width="85" height="22" rx="4" fill="#131d31" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="517" y="31" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">r = +0.52 (Lag-2)</text>
+
+    <text x="20" y="60" fill="#94a3b8" font-size="11">Studi Kasus: Siklus Tahunan Jawa Barat (47k kasus) &amp; DKI Jakarta (11k kasus)</text>
+
+    <g transform="translate(20, 75)">
+      <rect x="0" y="0" width="540" height="100" rx="8" fill="#131d31" stroke="#1e293b" stroke-width="1"/>
+      <text x="14" y="22" fill="#38bdf8" font-size="11" font-weight="700">• Bulan 0 (Desember):</text>
+      <text x="145" y="22" fill="#e2e8f0" font-size="11">Curah hujan lebat (&gt;350mm) mengisi wadah perindukan nyamuk.</text>
+      
+      <text x="14" y="46" fill="#60a5fa" font-size="11" font-weight="700">• Bulan 1 (Januari):</text>
+      <text x="145" y="46" fill="#e2e8f0" font-size="11">Telur menetas, larva berkembang, dan densitas nyamuk melonjak.</text>
+
+      <text x="14" y="70" fill="#f43f5e" font-size="11" font-weight="700">• Bulan 2 (Feb–Mar):</text>
+      <text x="145" y="70" fill="#fca5a5" font-size="11" font-weight="700">Ledakan kasus RS (inkubasi EIP nyamuk 10hr + manusia 7hr selesai).</text>
+
+      <text x="14" y="90" fill="#94a3b8" font-size="10">Korelasi puncak terjadi di Lag 2, bukan saat hujan lebat di hari yang sama.</text>
+    </g>
+
+    <g transform="translate(20, 185)">
+      <rect x="0" y="0" width="540" height="52" rx="6" fill="#082f49" stroke="#0284c7" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#38bdf8" font-size="10" font-weight="700">★ Implikasi Kebijakan:</text>
+      <text x="12" y="35" fill="#e0f2fe" font-size="10">PSN 3M Plus &amp; larvasidasi harus berjalan di <tspan font-weight="700" fill="#ffffff">Bulan 0 saat hujan lebat,</tspan> bukan menunggu RS penuh di Bulan 2.</text>
+    </g>
+  </g>
+
+  <!-- CARD 2: SUHU & EL NINO (TOP RIGHT) -->
+  <g transform="translate(650, 98)">
+    <rect x="0" y="0" width="580" height="255" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#cardShadowSummary)"/>
+    
+    <rect x="20" y="18" width="4" height="18" rx="2" fill="#f43f5e"/>
+    <text x="32" y="32" fill="#ffffff" font-size="13.5" font-weight="700">2. Suhu Hangat &amp; El Niño Memicu KLB Nasional</text>
+
+    <rect x="465" y="16" width="95" height="22" rx="4" fill="#131d31" stroke="#f43f5e" stroke-width="0.8"/>
+    <text x="512" y="31" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">ρ = 0.83 Tahunan</text>
+
+    <text x="20" y="60" fill="#94a3b8" font-size="11">Studi Kasus: Super El Niño 2016 (204.000 kasus) &amp; Rekor Baru 2024 (244.000 kasus)</text>
+
+    <g transform="translate(20, 75)">
+      <rect x="0" y="0" width="540" height="100" rx="8" fill="#131d31" stroke="#1e293b" stroke-width="1"/>
+      <text x="14" y="22" fill="#f43f5e" font-size="11" font-weight="700">• Indeks ONI &gt; +1.5°C:</text>
+      <text x="145" y="22" fill="#e2e8f0" font-size="11">Kemarau panjang menaikkan suhu permukaan daratan 0.6°C–1.2°C.</text>
+      
+      <text x="14" y="46" fill="#f43f5e" font-size="11" font-weight="700">• Pemendekan EIP:</text>
+      <text x="145" y="46" fill="#e2e8f0" font-size="11">Masa inkubasi virus di nyamuk memendek dari <tspan fill="#f43f5e" font-weight="700">14 hari menjadi 7 hari</tspan>.</text>
+
+      <text x="14" y="70" fill="#f43f5e" font-size="11" font-weight="700">• Frekuensi Gigitan:</text>
+      <text x="145" y="70" fill="#e2e8f0" font-size="11">Dehidrasi mikro membuat nyamuk menggigit 2x lebih sering.</text>
+
+      <text x="14" y="90" fill="#94a3b8" font-size="10">Saat hujan peralihan tiba, seluruh 34 provinsi meledak serentak dalam status KLB.</text>
+    </g>
+
+    <g transform="translate(20, 185)">
+      <rect x="0" y="0" width="540" height="52" rx="6" fill="#4c0519" stroke="#be123c" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#fda4af" font-size="10" font-weight="700">★ Nilai Tambah Prediksi Iklim Global:</text>
+      <text x="12" y="35" fill="#ffe4e6" font-size="10">Indeks ONI memberi sinyal peringatan dini <tspan font-weight="700" fill="#ffffff">3 hingga 6 bulan sebelumnya</tspan> untuk kesiapan logistik faskes &amp; BPJS.</text>
+    </g>
+  </g>
+
+  <!-- CARD 3: KELEMBABAN UDARA (BOTTOM LEFT) -->
+  <g transform="translate(50, 368)">
+    <rect x="0" y="0" width="580" height="255" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#cardShadowSummary)"/>
+    
+    <rect x="20" y="18" width="4" height="18" rx="2" fill="#10b981"/>
+    <text x="32" y="32" fill="#ffffff" font-size="13.5" font-weight="700">3. Kelembaban Relatif (RH) &amp; Usia Hidup Vektor</text>
+
+    <rect x="475" y="16" width="85" height="22" rx="4" fill="#131d31" stroke="#10b981" stroke-width="0.8"/>
+    <text x="517" y="31" fill="#10b981" font-size="10" font-weight="700" text-anchor="middle">r = +0.44 (Lag-1)</text>
+
+    <text x="20" y="60" fill="#94a3b8" font-size="11">Studi Kasus: Transmisi Sepanjang Tahun di Kalimantan Timur &amp; Kepulauan Riau</text>
+
+    <g transform="translate(20, 75)">
+      <rect x="0" y="0" width="540" height="100" rx="8" fill="#131d31" stroke="#1e293b" stroke-width="1"/>
+      <text x="14" y="22" fill="#94a3b8" font-size="11" font-weight="700">• RH Kering (&lt; 60%):</text>
+      <text x="145" y="22" fill="#94a3b8" font-size="11">Nyamuk mati dalam 8–10 hari sebelum virus matang (rantai putus).</text>
+      
+      <text x="14" y="46" fill="#10b981" font-size="11" font-weight="700">• RH Lembab (&gt; 80%):</text>
+      <text x="145" y="46" fill="#e2e8f0" font-size="11">Usia hidup nyamuk melonjak hingga <tspan fill="#10b981" font-weight="700">30 s/d 36 hari</tspan>.</text>
+
+      <text x="14" y="70" fill="#10b981" font-size="11" font-weight="700">• Jendela Menular:</text>
+      <text x="145" y="70" fill="#e2e8f0" font-size="11">Nyamuk memiliki waktu 20+ hari untuk menulari 3–5 warga dalam 1 klaster.</text>
+
+      <text x="14" y="90" fill="#94a3b8" font-size="10">Kelembaban tinggi menjaga kasus tidak pernah nol meski di musim kemarau.</text>
+    </g>
+
+    <g transform="translate(20, 185)">
+      <rect x="0" y="0" width="540" height="52" rx="6" fill="#064e3b" stroke="#059669" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#6ee7b7" font-size="10" font-weight="700">★ Penyesuaian Model DengueCast:</text>
+      <text x="12" y="35" fill="#ecfdf5" font-size="10">RH diestimasi presisi dari suhu dan titik embun ERA5-Land, menjaga baseline probabilitas di daerah pesisir.</text>
+    </g>
+  </g>
+
+  <!-- CARD 4: KASUS HISTORIS (BOTTOM RIGHT) -->
+  <g transform="translate(650, 368)">
+    <rect x="0" y="0" width="580" height="255" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1" filter="url(#cardShadowSummary)"/>
+    
+    <rect x="20" y="18" width="4" height="18" rx="2" fill="#f59e0b"/>
+    <text x="32" y="32" fill="#ffffff" font-size="13.5" font-weight="700">4. Kasus Historis (Y_lag) &amp; Efek Bola Salju Urban</text>
+
+    <rect x="475" y="16" width="85" height="22" rx="4" fill="#131d31" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="517" y="31" fill="#f59e0b" font-size="10" font-weight="700" text-anchor="middle">r = +0.78 (Terkuat)</text>
+
+    <text x="20" y="60" fill="#94a3b8" font-size="11">Studi Kasus: Penularan Eksponensial di Kota Padat (Bandung, Surabaya, Jakarta)</text>
+
+    <g transform="translate(20, 75)">
+      <rect x="0" y="0" width="540" height="100" rx="8" fill="#131d31" stroke="#1e293b" stroke-width="1"/>
+      <text x="14" y="22" fill="#f59e0b" font-size="11" font-weight="700">• Reservoir Virus:</text>
+      <text x="145" y="22" fill="#e2e8f0" font-size="11">Nyamuk hanya tertular bila menggigit pasien demam aktif (hari 1–5).</text>
+      
+      <text x="14" y="46" fill="#f59e0b" font-size="11" font-weight="700">• Efek Pengganda:</text>
+      <text x="145" y="46" fill="#e2e8f0" font-size="11">500 kasus bulan lalu dapat meledak 4x lipat jadi 1.950 kasus bulan ini.</text>
+
+      <text x="14" y="70" fill="#f59e0b" font-size="11" font-weight="700">• Solusi Rekursi M0:</text>
+      <text x="145" y="70" fill="#e2e8f0" font-size="11">Model mengoper proyeksi rekursif tanpa membocorkan data masa depan.</text>
+
+      <text x="14" y="90" fill="#94a3b8" font-size="10">Tanpa reservoir manusia, nyamuk banyak sekalipun tidak akan menimbulkan wabah.</text>
+    </g>
+
+    <g transform="translate(20, 185)">
+      <rect x="0" y="0" width="540" height="52" rx="6" fill="#713f12" stroke="#d97706" stroke-width="0.8"/>
+      <text x="12" y="18" fill="#fde047" font-size="10" font-weight="700">★ Kebijakan Pelayanan Primer (FKTP):</text>
+      <text x="12" y="35" fill="#fefce8" font-size="10">Memutus 1 kasus viremia di Puskesmas (dengan kelambu/repelan) mencegah 3–5 rawat inap RS berikutnya.</text>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM STATUS FOOTER ================= -->
+  <g transform="translate(50, 638)">
+    <rect x="0" y="0" width="1180" height="52" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="20" y="22" fill="#38bdf8" font-size="11" font-weight="700">Sintesis Strategis Kebijakan Kesehatan &amp; BPJS:</text>
+    <text x="20" y="39" fill="#94a3b8" font-size="11">Mengintegrasikan 4 variabel ini memungkinkan DengueCast mengubah paradigma dari <tspan fill="#f43f5e" font-weight="600">Respon Kuratif RS</tspan> menjadi <tspan fill="#10b981" font-weight="600">Intervensi Preventif Berbasis Peringatan Dini Iklim 1–6 Bulan Sebelumnya</tspan>.</text>
+  </g>
+</svg>

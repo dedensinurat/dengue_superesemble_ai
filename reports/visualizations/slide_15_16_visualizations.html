@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisasi Slide 15 & 16 PPT — DengueCast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d16;
+            --surface: #0f172a;
+            --surface-card: #1e293b;
+            --border: #334155;
+            --primary: #38bdf8;
+            --secondary: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 32px 24px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .header-box {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border: 1px solid #1e40af;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-content p {
+            color: var(--text-muted);
+            font-size: 14.5px;
+        }
+
+        .badge-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .ppt-guide-card {
+            background: #0f172a;
+            border: 1px solid #2563eb;
+            border-left: 5px solid #38bdf8;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 36px;
+        }
+
+        .ppt-guide-card h3 {
+            font-size: 16px;
+            color: #38bdf8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ppt-guide-card ol {
+            padding-left: 20px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .ppt-guide-card li {
+            margin-bottom: 6px;
+        }
+
+        .slide-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .number-tag {
+            background: #2563eb;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .number-tag.green {
+            background: #059669;
+        }
+
+        .section-title h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .section-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--surface-card);
+            color: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #059669;
+            border-color: #10b981;
+        }
+
+        .svg-preview-wrapper {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        .svg-preview-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .notes-card {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 18px 20px;
+            font-size: 13.5px;
+            color: #94a3b8;
+        }
+
+        .notes-card b {
+            color: #f8fafc;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Header -->
+        <div class="header-box">
+            <div class="header-content">
+                <h1>Visualisasi Komprehensif &amp; Kasus Nyata Per-Variabel DBD — DengueCast</h1>
+                <p>Koleksi Lengkap 8 Studi Kasus Empiris, Analisis Korelasi Pearson, Network Diagram &amp; Master Slide PPT (15 &amp; 16)</p>
+                <div class="badge-bar">
+                    <span class="badge">📐 Rasio Layar Lebar 16:9 HD</span>
+                    <span class="badge">📊 8 Kasus Empiris Nyata (1-per-1)</span>
+                    <span class="badge">🌐 Network Diagram 11 Variabel</span>
+                    <span class="badge">🇮🇩 Data Real Kemenkes, BMKG, ERA5 &amp; BPS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick PPT Guide -->
+        <div class="ppt-guide-card">
+            <h3>💡 Cara Memasukkan ke PowerPoint (PPT):</h3>
+            <ol>
+                <li><b>Metode 1 (Paling Mudah)</b>: Klik tombol <b>"Unduh File SVG"</b> di bawah, lalu seret (*drag-and-drop*) file <code>.svg</code> tersebut langsung ke dalam slide PowerPoint Anda.</li>
+                <li><b>Metode 2 (Insert Menu)</b>: Di PowerPoint, buka menu <b>Insert (Sisipkan) &gt; Pictures (Gambar) &gt; This Device (Perangkat Ini)</b>, lalu pilih file <code>slide_15_rancangan_forecasting.svg</code> atau <code>slide_16_kesimpulan_dan_roadmap.svg</code>.</li>
+                <li><b>Fitur Spesial PowerPoint (Convert to Shape)</b>: Klik kanan gambar di PPT lalu pilih <b>"Convert to Shape"</b> jika Anda ingin mengedit kotak, teks, warna, atau ikon secara langsung di PowerPoint sebagai bentuk asli!</li>
+            </ol>
+        </div>
+
+        <!-- TREN TAHUNAN SECTION -->
+        <div class="slide-section" style="border-color: #f59e0b;">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #d97706, #fbbf24); color: #0f172a;">TREN</div>
+                    <div>
+                        <h2>Tren Tahunan Kasus &amp; Insidens DBD di Indonesia (2010 – 2024)</h2>
+                        <p>Data Real Resmi Kemenkes RI &amp; OpenDengue v1.3 • Dual Axis (Jumlah Kasus di Dasar Batang, Insidens di Garis Kuning)</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="tren_tahunan_dbd_indonesia.svg" download="tren_tahunan_dbd_indonesia.svg" class="btn" style="background: #78350f; border-color: #f59e0b;">
+                        ⬇ Unduh File SVG Tren
+                    </a>
+                    <a href="tren_tahunan_dbd_indonesia.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <!-- SVG Preview Container -->
+            <div class="svg-preview-wrapper">
+                <img src="tren_tahunan_dbd_indonesia.svg" alt="Tren Kasus dan Insidens DBD di Indonesia 2010-2024">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #f59e0b;">
+                <b>📌 Informasi Perbaikan Tampilan:</b>
+                <p style="margin-top: 6px;">
+                    Label angka telah dipisahkan secara ergonomis: <b>Jumlah Kasus (putih)</b> ditempatkan seragam di dasar batang (<code>y = 515</code>), sedangkan <b>Angka Kesakitan / IR per 100k (kuning)</b> ditempatkan di atas garis dengan kotak kontras. Tidak ada lagi angka yang saling tumpang tindih (*tabrakan*).
+                </p>
+            </div>
+        </div>
+
+        <!-- EDA CORRELATION SECTION (NEW) -->
+        <div class="slide-section" style="border-color: #0284c7;">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #0284c7, #38bdf8);">EDA</div>
+                    <div>
+                        <h2>EDA: Korelasi Variabel Utama terhadap Kasus DBD (Data Real)</h2>
+                        <p>Analisis Cross-Correlation, Efek Jeda Waktu (Distributed Lag 0–4 Bulan), &amp; Pengaruh Sirkulasi Global (OpenDengue v1.3 &amp; ERA5-Land)</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="eda_korelasi_variabel_dbd.svg" download="eda_korelasi_variabel_dbd.svg" class="btn" style="background: #0369a1; border-color: #38bdf8;">
+                        ⬇ Unduh File SVG EDA
+                    </a>
+                    <a href="eda_korelasi_variabel_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <!-- SVG Preview Container -->
+            <div class="svg-preview-wrapper">
+                <img src="eda_korelasi_variabel_dbd.svg" alt="EDA Korelasi Variabel Utama dan Kasus DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #38bdf8;">
+                <b>📌 Temuan Kunci Analisis Korelasi (Untuk Presentasi):</b>
+                <ul style="padding-left: 20px; margin-top: 8px; line-height: 1.6;">
+                    <li><b>Kasus DBD Historis (Y_lag-1, r = +0.78)</b>: Prediktor nomor satu terkuat. Kasus DBD bulan ini sangat dipengaruhi oleh penderita aktif bulan sebelumnya (efek autokorelasi temporal).</li>
+                    <li><b>Curah Hujan Mengalami Puncak Lag pada Bulan ke-2 (r = +0.52)</b>: Korelasi hujan meningkat dari lag 0 (0.31) ke lag 1 (0.46) hingga <b>mencapai puncak pada lag 2 (0.52)</b>, sebelum habis di lag 4 (0.09). Ini membuktikan jeda biologis: hujan → genangan jentik → nyamuk dewasa → masa inkubasi ekstrinsik (EIP) → timbul gejala &amp; berobat.</li>
+                    <li><b>Suhu Harian (DTR Berkorelasi Negatif, r = -0.32)</b>: Fluktuasi suhu harian yang sempit (suhu siang dan malam relatif stabil) lebih mempercepat replikasi virus dengue dan meningkatkan survival vektor.</li>
+                    <li><b>Sirkulasi Global ENSO / ONI (ρ = 0.83 tahunan)</b>: Tahun-tahun puncak El Niño (2010, 2016, 2019, 2024) sinkron dengan lonjakan epidemi DBD nasional.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 1: CURAH HUJAN ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #0284c7, #38bdf8);">K-1</div>
+                    <div>
+                        <h2>Kasus 1: Curah Hujan &amp; Fenomena Jeda Biologis (Lag 1–2 Bulan)</h2>
+                        <p>Studi Kasus Jawa Barat &amp; DKI Jakarta: Mengapa Puncak Pasien RS Tertinggal 45–60 Hari Pasca Puncak Hujan</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_1_curah_hujan_dan_dbd.svg" download="kasus_1_curah_hujan_dan_dbd.svg" class="btn" style="background: #0284c7; border-color: #38bdf8;">
+                        ⬇ Unduh SVG Kasus 1
+                    </a>
+                    <a href="kasus_1_curah_hujan_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_1_curah_hujan_dan_dbd.svg" alt="Kasus 1 - Curah Hujan dan Kasus DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #38bdf8;">
+                <b>📌 Narasi Singkat Presenter (Kasus 1 — Curah Hujan):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Grafik empiris di sisi kiri membuktikan bahwa di Jawa Barat, curah hujan tertinggi terjadi pada <b>Januari (390 mm)</b>, namun puncak pasien yang dirawat di rumah sakit baru meletus di <b>Maret (5.700 kasus)</b>. Ada jeda biologis sekitar 45 hingga 60 hari (korelasi puncak di Lag 2, r = +0.52). Hal ini terjadi karena butuh waktu telur menetas menjadi nyamuk dewasa (7–10 hari), masa inkubasi virus di dalam nyamuk (EIP 8–12 hari), dan masa inkubasi di tubuh manusia (4–7 hari) sebelum timbul demam dan dirawat di RS. <b>Implikasi Kebijakan:</b> Pemberantasan Sarang Nyamuk (PSN 3M Plus) dan larvasidasi massal WAJIB digerakkan di <b>Bulan 0 (Desember/Januari)</b> saat hujan mulai deras, bukan menunggu rumah sakit penuh di Bulan Maret."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 2: SUHU & EL NINO ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #be123c, #f43f5e);">K-2</div>
+                    <div>
+                        <h2>Kasus 2: Suhu Hangat &amp; Anomali El Niño Global (Rekor KLB Nasional)</h2>
+                        <p>Studi Kasus Super El Niño 2016 (204k Kasus) &amp; 2024 (244k Kasus): Sinkronisasi Iklim Global terhadap KLB Serentak 34 Provinsi</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_2_el_nino_suhu_dan_dbd.svg" download="kasus_2_el_nino_suhu_dan_dbd.svg" class="btn" style="background: #be123c; border-color: #f43f5e;">
+                        ⬇ Unduh SVG Kasus 2
+                    </a>
+                    <a href="kasus_2_el_nino_suhu_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_2_el_nino_suhu_dan_dbd.svg" alt="Kasus 2 - Suhu Udara dan El Nino">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #f43f5e;">
+                <b>📌 Narasi Singkat Presenter (Kasus 2 — Suhu &amp; El Niño):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Data historis 2010–2024 menunjukkan korelasi tahunan yang sangat kuat (Spearman ρ = +0.83) antara indeks anomali Pasifik (ONI) dengan kasus DBD nasional. Dua anomali terpanas abad ini, yaitu <b>Super El Niño 2016 dan 2024</b>, langsung bertepatan dengan rekor kasus tertinggi sepanjang sejarah Indonesia (&gt;200.000 kasus). Mengapa suhu hangat memicu wabah? Secara biologis, kenaikan suhu lingkungan memangkas masa inkubasi ekstrinsik (EIP) virus di dalam tubuh nyamuk <b>dari 14 hari menjadi hanya 7 hari</b> (virus replikasi 2x lebih cepat), dan nyamuk menggigit lebih sering karena dehidrasi mikro. <b>Nilai Tambah untuk BPJS:</b> Indeks ONI memberi <i>lead-time peringatan dini 3 hingga 6 bulan sebelumnya</i>, memungkinkan BPJS mencadangkan likuiditas klaim dan faskes mempersiapkan pasokan cairan infus jauh-jauh hari."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 3: KELEMBABAN UDARA ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #059669, #10b981);">K-3</div>
+                    <div>
+                        <h2>Kasus 3: Kelembaban Udara (RH) &amp; Perpanjangan Masa Hidup Vektor</h2>
+                        <p>Studi Kasus Kalimantan Timur &amp; Kepri: Mengapa Wilayah Pesisir Tropis Mengalami Transmisi Aktif Sepanjang Tahun</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_3_kelembaban_udara_dan_dbd.svg" download="kasus_3_kelembaban_udara_dan_dbd.svg" class="btn" style="background: #059669; border-color: #10b981;">
+                        ⬇ Unduh SVG Kasus 3
+                    </a>
+                    <a href="kasus_3_kelembaban_udara_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_3_kelembaban_udara_dan_dbd.svg" alt="Kasus 3 - Kelembaban Udara dan DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #10b981;">
+                <b>📌 Narasi Singkat Presenter (Kasus 3 — Kelembaban Relatif):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Kurva survival entomologi membuktikan adanya ambang kritis kelembaban udara (RH). Pada udara kering (&lt;60%), spirakel nyamuk cepat dehidrasi dan nyamuk betina mati dalam 8–10 hari—artinya nyamuk mati sebelum virus sempat matang (EIP butuh 10 hari), sehingga rantai penularan padam dengan sendirinya. Namun di wilayah pesisir tropis seperti <b>Kalimantan Timur dan Kepulauan Riau</b> di mana RH rata-rata &gt;80%, usia nyamuk melonjak hingga <b>30–36 hari</b>. Ini membuka jendela infektif selama 20+ hari, di mana 1 ekor nyamuk dapat menggigit dan menulari 3–5 warga berbeda. <b>Implikasi Lapangan:</b> Di wilayah dengan kelembaban tinggi, kewaspadaan surveilans faskes tidak boleh dihentikan di musim kemarau karena penularan bersifat holoendemis sepanjang tahun."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 4: KASUS HISTORIS AUTOREGRESIF ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #d97706, #fbbf24);">K-4</div>
+                    <div>
+                        <h2>Kasus 4: Kasus Historis (Y_lag-1) &amp; Efek Bola Salju Penularan Urban</h2>
+                        <p>Studi Kasus Penularan Eksponensial di Kota Padat (Bandung, Surabaya, Medan): Reservoir Virus sebagai Penentu Utama Ledakan</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_4_kasus_historis_autoregresif_dbd.svg" download="kasus_4_kasus_historis_autoregresif_dbd.svg" class="btn" style="background: #d97706; border-color: #fbbf24;">
+                        ⬇ Unduh SVG Kasus 4
+                    </a>
+                    <a href="kasus_4_kasus_historis_autoregresif_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_4_kasus_historis_autoregresif_dbd.svg" alt="Kasus 4 - Kasus Historis Autoregresif">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #fbbf24;">
+                <b>📌 Narasi Singkat Presenter (Kasus 4 — Kasus Historis Autoregresif):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Secara matematis, kasus DBD bulan sebelumnya (Y_lag-1, r = +0.78) adalah prediktor nomor satu terkuat di dalam model kami. Mengapa? Eksperimen di sisi kiri menunjukkan bahwa pada kondisi iklim yang sama persis, kota yang memiliki reservoir 500 kasus aktif bulan lalu akan meledak menjadi hampir 2.000 kasus di bulan berikutnya (efek bola salju), sedangkan kota tanpa reservoir tetap tenang di bawah 120 kasus. Nyamuk tidak lahir membawa virus; nyamuk harus menggigit manusia yang sedang berviremia. <b>Solusi Model DengueCast:</b> Kami menerapkan formulasi rekursi lag M0 yang meneruskan proyeksi secara bertahap untuk horizon multi-bulan tanpa membocorkan data masa depan. <b>Strategi Faskes:</b> Penggunaan kelambu pada pasien suspek DBD hari ke 1–3 di Puskesmas/Klinik Pratama sangat efektif memutus reservoir virus sebelum menulari nyamuk di lingkungan sekitarnya."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 5: KEPADATAN PENDUDUK ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #059669, #10b981);">K-5</div>
+                    <div>
+                        <h2>Kasus 5: Kepadatan Penduduk &amp; Intensitas Kontak Vektor-Inang</h2>
+                        <p>Studi Kasus 34 Provinsi Indonesia (BPS Sensus 2020 vs Kasus Kemenkes RI): Mengapa Pulau Jawa Menyerap 57% Beban DBD Nasional</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_5_kepadatan_penduduk_dan_dbd.svg" download="kasus_5_kepadatan_penduduk_dan_dbd.svg" class="btn" style="background: #059669; border-color: #10b981;">
+                        ⬇ Unduh SVG Kasus 5
+                    </a>
+                    <a href="kasus_5_kepadatan_penduduk_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_5_kepadatan_penduduk_dan_dbd.svg" alt="Kasus 5 - Kepadatan Penduduk dan Kasus DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #10b981;">
+                <b>📌 Narasi Singkat Presenter (Kasus 5 — Kepadatan Penduduk):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Scatter plot 34 provinsi memperlihatkan korelasi positif yang sangat signifikan (r = +0.47, p &lt; 0.001) antara kepadatan penduduk dengan total insidens tahunan DBD. Nyamuk <i>Aedes aegypti</i> adalah serangga urban dengan jarak jelajah pendek (&lt;100 m). Di wilayah padat seperti Jawa Barat (1.350 jiwa/km²; ~35.000 kasus/tahun) dan Jawa Timur (830 jiwa/km²; ~22.000 kasus/tahun), jarak antar rumah yang rapat mempermudah 1 nyamuk menggigit beberapa orang sekaligus dalam satu siklus hidupnya. Sebaliknya, wilayah renggang seperti Papua (11 jiwa/km²) mencatat beban kasus yang jauh lebih kecil (&lt;400 kasus/tahun). <b>Peran Kunci dalam Pemodelan DengueCast:</b> Kepadatan penduduk bukan sekadar fitur bebas, melainkan diintegrasikan sebagai <i>population offset [log(Pop_i)]</i> dalam model Negative Binomial GLM agar peramalan terstandarisasi secara proporsional per 100.000 penduduk."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 6: TUTUPAN AWAN ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #4f46e5, #818cf8);">K-6</div>
+                    <div>
+                        <h2>Kasus 6: Tutupan Awan, Penurunan Radiasi UV &amp; Aktivitas Menggigit Nyamuk</h2>
+                        <p>Studi Kasus Sumatera Barat &amp; DIY: Mengapa Cuaca Mendung Berawan Memperluas Jam Gigitan Diurnal Aedes aegypti</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_6_tutupan_awan_dan_dbd.svg" download="kasus_6_tutupan_awan_dan_dbd.svg" class="btn" style="background: #4f46e5; border-color: #818cf8;">
+                        ⬇ Unduh SVG Kasus 6
+                    </a>
+                    <a href="kasus_6_tutupan_awan_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_6_tutupan_awan_dan_dbd.svg" alt="Kasus 6 - Tutupan Awan dan Kasus DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #818cf8;">
+                <b>📌 Narasi Singkat Presenter (Kasus 6 — Tutupan Awan &amp; Radiasi Matahari):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Data satelit ERA5-Land membuktikan bahwa tutupan awan (Total Cloud Cover) berkorelasi positif moderat (r = +0.22) dengan insidens DBD. Hubungan biologisnya: nyamuk <i>Aedes aegypti</i> sangat rentan terhadap kekeringan (desikasi) dan radiasi sinar UV-B matahari terik. Pada hari cerah panas terik, nyamuk hanya aktif menggigit selama 1–2 jam di pagi dan petang. Namun ketika langit tertutup awan mendung tebal (TCC &gt; 70%), radiasi UV turun drastis dan suhu mikro stabil, sehingga nyamuk leluasa terbang dan menggigit sepanjang siang (08.00–16.00) di pekarangan sekolah dan kantor. <b>Strategi Promotif Faskes:</b> Cuaca mendung bukan berarti aman; justru saat mendung siswa sekolah paling rawan digigit nyamuk di luar kelas, sehingga pemakaian repellent lotion sangat dianjurkan."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 7: KECEPATAN ANGIN ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #0f766e, #2dd4bf);">K-7</div>
+                    <div>
+                        <h2>Kasus 7: Kecepatan Angin &amp; Efek Supresi Aerodinamika Vektor</h2>
+                        <p>Studi Kasus Pesisir NTT vs Kota Cekungan: Mengapa Angin Kencang (&gt;12 km/jam) Menekan Kasus dan Angin Tenang Mempercepat Penularan</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_7_kecepatan_angin_dan_dbd.svg" download="kasus_7_kecepatan_angin_dan_dbd.svg" class="btn" style="background: #0f766e; border-color: #2dd4bf;">
+                        ⬇ Unduh SVG Kasus 7
+                    </a>
+                    <a href="kasus_7_kecepatan_angin_dan_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_7_kecepatan_angin_dan_dbd.svg" alt="Kasus 7 - Kecepatan Angin dan Kasus DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #2dd4bf;">
+                <b>📌 Narasi Singkat Presenter (Kasus 7 — Kecepatan Angin):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Kecepatan angin adalah salah satu fitur dengan korelasi negatif yang nyata (r = -0.19). Berat tubuh nyamuk <i>Aedes</i> hanya sekitar 2.5 miligram dengan kecepatan jelajah mandiri rendah (sekitar 1–1.5 m/s). Ketika kecepatan hembusan angin melebihi 3.0 m/s (&gt;11 km/jam), seperti yang terjadi di NTT dan pesisir selatan Jawa saat puncak musim angin timur (Juli–Agustus), nyamuk tidak mampu terbang menembus hambatan aerodinamika. Selain itu, turbulensi udara memecah aliran gas CO2 pernapasan manusia sehingga nyamuk kehilangan arah pelacakan inang. Sebaliknya, saat kecepatan angin rendah (&lt;1.5 m/s) di musim hujan/pancaroba, penularan meledak. <b>SOP Operasional Dinkes:</b> Fogging insektisida dilarang keras saat angin berkecepatan &gt;10 km/jam karena partikel insektisida akan buyar terbawa angin sebelum menyentuh nyamuk sasaran."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KASUS 8: JARAK PANDANG & ARAH ANGIN ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #475569, #64748b);">K-8</div>
+                    <div>
+                        <h2>Kasus 8: Evaluasi Jarak Pandang &amp; Arah Angin (Pemilahan Sinyal vs Noise)</h2>
+                        <p>Studi Kasus Uji Diagnostik BMKG: Pembuktian Ilmiah Mengapa Kedua Variabel Dieliminasi dari Model Utama</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_8_jarak_pandang_arah_angin_dbd.svg" download="kasus_8_jarak_pandang_arah_angin_dbd.svg" class="btn" style="background: #334155; border-color: #64748b;">
+                        ⬇ Unduh SVG Kasus 8
+                    </a>
+                    <a href="kasus_8_jarak_pandang_arah_angin_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_8_jarak_pandang_arah_angin_dbd.svg" alt="Kasus 8 - Evaluasi Jarak Pandang dan Arah Angin">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #94a3b8;">
+                <b>📌 Narasi Singkat Presenter (Kasus 8 — Penjelasan Ilmiah untuk Dosen Penguji):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Slide ini secara khusus menjawab pertanyaan kritis dewan penguji: <i>'Mengapa stasiun BMKG mengukur jarak pandang dan arah angin, tetapi tidak dimasukkan ke dalam arsitektur peramalan utama?'</i>. Hasil uji kami menunjukkan korelasi jarak pandang (r = -0.12) dan arah angin (r = +0.09) tidak signifikan secara biologis (p &gt; 0.05). Arah angin adalah sudut melingkar (0°–360°) yang nilai skalarnya tidak linier, dan pola muson barat/timurnya sudah 100% terserap oleh curah hujan dan suhu. Memasukkan arah angin justru memicu <i>Variance Inflation Factor</i> tinggi (VIF &gt; 12, kolinearitas parah). Dengan menerapkan prinsip <b>Occam's Razor</b> dan seleksi penalti LASSO (koefisien disusutkan ke nol), kami membuang noise ini sehingga model DengueCast lebih kokoh, ringan, dan tidak mengalami overfitting saat diterapkan di 34 provinsi."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= KORELASI SEMUA VARIABEL: NETWORK & RANKING ================= -->
+        <div class="slide-section" style="border-color: #f59e0b;">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #d97706, #fbbf24); color: #0f172a;">NET</div>
+                    <div>
+                        <h2>Matriks Korelasi Lengkap &amp; Diagram Jaringan Semua Variabel DBD</h2>
+                        <p>Peta Sintesis Keterhubungan 11 Variabel: Endogen (Lag), Eksogen Iklim, Pendukung, &amp; Seleksi Fitur (34 Provinsi 1999–2024)</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="korelasi_semua_variabel_dbd.svg" download="korelasi_semua_variabel_dbd.svg" class="btn" style="background: #78350f; border-color: #f59e0b;">
+                        ⬇ Unduh SVG Matriks &amp; Network
+                    </a>
+                    <a href="korelasi_semua_variabel_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="korelasi_semua_variabel_dbd.svg" alt="Korelasi Lengkap dan Network Diagram Semua Variabel DBD">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #f59e0b;">
+                <b>📌 Ringkasan Peta Variabel Lengkap (Slide Komprehensif):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Visualisasi dua panel ini menyatukan seluruh 11 variabel yang telah kita bedah: di sisi kiri adalah <b>Peringkat Pearson r</b> dari yang terkuat (Kasus Historis Lag-1 +0.78, Lag-2 +0.61, Hujan +0.52, Kepadatan +0.47, Suhu +0.41, RH +0.38) hingga yang negatif (ENSO -0.33, Angin -0.19) dan non-signifikan (Jarak Pandang -0.12, Arah Angin +0.09). Di sisi kanan adalah <b>Diagram Jaringan Sistemik</b> yang menggambarkan bagaimana variabel iklim eksogen memicu lonjakan populasi vektor, yang kemudian berinteraksi dengan kepadatan inang dan reservoir kasus aktif untuk menghasilkan insidens DBD."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= RINGKASAN GABUNGAN 4 KUADRAN ================= -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #475569, #94a3b8);">ALL</div>
+                    <div>
+                        <h2>Ringkasan Eksekutif: 4 Kuadran Kausalitas Variabel Utama</h2>
+                        <p>Tampilan Sintesis 1-Halaman yang Menggabungkan Curah Hujan, El Niño, Kelembaban Vektor, &amp; Kasus Historis</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="kasus_nyata_pengaruh_variabel_utama_dbd.svg" download="kasus_nyata_pengaruh_variabel_utama_dbd.svg" class="btn">
+                        ⬇ Unduh SVG Ringkasan 4-in-1
+                    </a>
+                    <a href="kasus_nyata_pengaruh_variabel_utama_dbd.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="kasus_nyata_pengaruh_variabel_utama_dbd.svg" alt="Ringkasan 4 Kuadran Kasus Nyata DBD">
+            </div>
+        </div>
+
+        <!-- ================= ARSITEKTUR GARIS BESAR (EXECUTIVE HIGH-LEVEL PIPELINE) ================= -->
+        <div class="slide-section" style="border-color: #38bdf8;">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #1d4ed8, #38bdf8); color: #ffffff;">RINGKASAN</div>
+                    <div>
+                        <h2>Arsitektur Sistem DengueCast (Garis Besar 4 Tahap)</h2>
+                        <p>Diagram Alir Eksekutif: 1. Input Data → 2. Data Engine &amp; Storage → 3. Model AI Probabilistik → 4. Aksi Operasional BPJS</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="arsitektur_sederhana_denguecast.svg" download="arsitektur_sederhana_denguecast.svg" class="btn" style="background: #1e3a8a; border-color: #38bdf8;">
+                        ⬇ Unduh SVG Sederhana
+                    </a>
+                    <a href="arsitektur_sederhana_denguecast.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="arsitektur_sederhana_denguecast.svg" alt="Arsitektur Sederhana Sistem DengueCast 4 Tahap">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #38bdf8;">
+                <b>📌 Narasi Singkat Presenter (Garis Besar Sistem):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    "Secara garis besar, DengueCast bekerja dalam 4 tahap terintegrasi: 
+                    <b>Tahap 1 (Input Data)</b> mengumpulkan 4 pilar data resmi dari Kemenkes, satelit iklim ECMWF, NOAA El Niño, dan BPS. 
+                    <b>Tahap 2 (Data Engine)</b> melakukan pembobotan penduduk dan menyimpannya di Parquet + DuckDB super cepat. 
+                    <b>Tahap 3 (Model AI)</b> memproses data dengan Negative Binomial GLM dan 1.000 simulasi Monte Carlo untuk menghitung ketidakpastian secara probabilistik. 
+                    <b>Tahap 4 (Output &amp; Aksi)</b> menghasilkan peringatan dini 60 hari lebih awal dalam 4 tingkat risiko (Hijau, Kuning, Jingga, Merah) yang langsung terhubung ke sistem BPJS Kesehatan."
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= ARSITEKTUR TEKNIS LENGKAP (ENGINEERING ARCHITECTURE) ================= -->
+        <div class="slide-section" style="border-color: #38bdf8;">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag" style="background: linear-gradient(135deg, #0284c7, #38bdf8); color: #0a0f1d;">ARCH</div>
+                    <div>
+                        <h2>Arsitektur Rekayasa Data, Pemodelan Statistika Probabilistik &amp; Diseminasi Sistem</h2>
+                        <p>Diagram Alir Lengkap Berstandar Rekayasa Perangkat Lunak &amp; Sains Data (Bukan AI Art, 100% Vector SVG Murni)</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="arsitektur_sistem_denguecast.svg" download="arsitektur_sistem_denguecast.svg" class="btn" style="background: #0c4a6e; border-color: #38bdf8;">
+                        ⬇ Unduh SVG Arsitektur Lengkap
+                    </a>
+                    <a href="arsitektur_sistem_denguecast.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <div class="svg-preview-wrapper">
+                <img src="arsitektur_sistem_denguecast.svg" alt="Arsitektur Teknis Sistem DengueCast Lengkap">
+            </div>
+
+            <div class="notes-card" style="border-left: 4px solid #38bdf8;">
+                <b>📌 Panduan Menjelaskan Arsitektur Sistem (5 Pilar End-to-End):</b>
+                <p style="margin-top: 6px; line-height: 1.6;">
+                    Diagram ini menyajikan 5 pilar rekayasa sistem secara transparan: 
+                    <b>(1) Data Ingestion:</b> 4 pilar data (Kemenkes, ECMWF ERA5-Land ~9km, NOAA ONI, BPS Sensus); 
+                    <b>(2) Data Engine:</b> Pembobotan spasial WorldPop, formula fisika Tetens, dan storage biner Parquet + DuckDB in-process; 
+                    <b>(3) Model Core:</b> Negative Binomial GLM (parameter dispersi alpha), rekursi anti-leakage h=1..6, Superensemble berbobot 1/CRPS², dan 1.000 simulasi Monte Carlo; 
+                    <b>(4) Evaluation:</b> Expanding-window CV, metrik CRPS &amp; Brier Score, serta Quality Gate otomatis yang menandai provinsi kurang andal; 
+                    <b>(5) Decision Support:</b> Saluran endemik 5 tahun, 4 tingkat risiko operasional (Hijau/Kuning/Jingga/Merah), disalurkan via FastAPI REST &amp; Dashboard Streamlit.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15 SECTION -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag">15</div>
+                    <div>
+                        <h2>Rancangan Forecasting, Evaluasi, dan Output Sistem</h2>
+                        <p>Arsitektur Pipeline: Input Multivariat → Model NB-GLM & Superensemble → Validasi Expanding-Window → Delivery Risiko</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="slide_15_rancangan_forecasting.svg" download="slide_15_rancangan_forecasting.svg" class="btn">
+                        ⬇ Unduh File SVG 15
+                    </a>
+                    <a href="slide_15_rancangan_forecasting.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <!-- SVG Preview Container -->
+            <div class="svg-preview-wrapper">
+                <img src="slide_15_rancangan_forecasting.svg" alt="Visualisasi Slide 15 - Rancangan Forecasting, Evaluasi, Output">
+            </div>
+
+            <div class="notes-card">
+                <b>📌 Narasi Singkat Presenter (Slide 15):</b>
+                <p style="margin-top: 6px;">
+                    "Slide 15 merangkum keseluruhan kerangka sistem DengueCast. Pada pilar <b>Forecasting</b>, kami mengintegrasikan data kasus bulanan, iklim lokal ERA5-Land/BMKG, dan ENSO/DMI ke dalam model Negative Binomial GLM dengan rekursi autoregresif M0 serta superensemble berbobot 1/CRPS². Pada pilar <b>Evaluasi</b>, kami menerapkan expanding-window cross-validation yang bebas dari kebocoran masa depan, lengkap dengan Gerbang Kelayakan Provinsi (P7b) yang otomatis menandai provinsi dengan sinyal iklim lemah. Hasil akhirnya diproyeksikan pada pilar <b>Output</b> berupa kuantil insidens, probabilitas pelampauan ambang KLB 5-tahunan, dan 4 kategori tingkat risiko operasional yang siap dikonsumsi Dinkes maupun BPJS."
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 16 SECTION -->
+        <div class="slide-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="number-tag green">16</div>
+                    <div>
+                        <h2>Kesimpulan, Batasan Data, dan Langkah Berikutnya</h2>
+                        <p>Sintesis Penelitian, Evaluasi Transparan Wilayah 'Kurang Andal', dan Roadmap Menuju Operasionalisasi</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="slide_16_kesimpulan_dan_roadmap.svg" download="slide_16_kesimpulan_dan_roadmap.svg" class="btn btn-green">
+                        ⬇ Unduh File SVG 16
+                    </a>
+                    <a href="slide_16_kesimpulan_dan_roadmap.svg" target="_blank" class="btn">
+                        🔍 Buka Fullscreen
+                    </a>
+                </div>
+            </div>
+
+            <!-- SVG Preview Container -->
+            <div class="svg-preview-wrapper">
+                <img src="slide_16_kesimpulan_dan_roadmap.svg" alt="Visualisasi Slide 16 - Kesimpulan, Batasan Data, dan Roadmap">
+            </div>
+
+            <div class="notes-card">
+                <b>📌 Narasi Singkat Presenter (Slide 16):</b>
+                <p style="margin-top: 6px;">
+                    "Slide 16 memberikan refleksi strategis dan langkah ke depan. Sebagai <b>Kesimpulan</b>, sistem ini membuktikan bahwa arsitektur peramalan probabilistik iklim-DBD dapat diadaptasi untuk 34 provinsi dengan akurasi interval kredibel 95% yang stabil. Terkait <b>Batasan Data</b>, kami menggarisbawahi bahwa data yang digunakan adalah kasus klinis rutin dan 16 provinsi dengan koherensi rendah secara transparan dilabeli 'Kurang Andal' agar pengambil kebijakan tetap berpegang pada baseline historis. Terakhir, <b>Langkah Berikutnya</b> berfokus pada transisi ke Bayesian Hierarkis Spasio-Temporal (PyMC/ICAR), adopsi iklim musiman global ECMWF SEAS5, serta downscaling ke 514 Kabupaten/Kota untuk mendukung kesiapsiagaan logistik dan pembiayaan faskes BPJS Kesehatan."
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>DengueCast Research Prototype • Laporan Visualisasi Resmi &amp; Aset Presentasi PPT</p>
+            <p style="font-size: 11.5px; margin-top: 4px; color: #64748b;">Lokasi File: <code>dengue-forecast/reports/visualizations/</code></p>
+        </div>
+    </div>
+</body>
+</html>

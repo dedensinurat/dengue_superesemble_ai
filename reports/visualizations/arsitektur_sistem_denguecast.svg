@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="50%" stop-color="#0e1726"/>
+      <stop offset="100%" stop-color="#070b14"/>
+    </linearGradient>
+
+    <!-- Card Backgrounds -->
+    <linearGradient id="colBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#151e32" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0d1424" stop-opacity="0.98"/>
+    </linearGradient>
+
+    <!-- Box Backgrounds -->
+    <linearGradient id="boxBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b253b"/>
+      <stop offset="100%" stop-color="#111a2d"/>
+    </linearGradient>
+
+    <!-- Formula Box Background -->
+    <linearGradient id="formulaBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d233a"/>
+      <stop offset="100%" stop-color="#132e4c"/>
+    </linearGradient>
+
+    <!-- Arrow Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#c084fc"/>
+    </marker>
+
+    <!-- Drop Shadows -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1600" height="900" fill="url(#bgGrad)"/>
+
+  <!-- GRID PATTERN -->
+  <g stroke="#1e293b" stroke-width="0.5" opacity="0.25">
+    <line x1="0" y1="80" x2="1600" y2="80"/>
+    <line x1="0" y1="855" x2="1600" y2="855"/>
+    <line x1="322" y1="80" x2="322" y2="855"/>
+    <line x1="634" y1="80" x2="634" y2="855"/>
+    <line x1="954" y1="80" x2="954" y2="855"/>
+    <line x1="1264" y1="80" x2="1264" y2="855"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- HEADER BAR -->
+  <!-- ============================================================ -->
+  <g transform="translate(40, 18)">
+    <rect x="0" y="0" width="365" height="22" rx="11" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="11" cy="11" r="3.5" fill="#38bdf8"/>
+    <text x="22" y="15" fill="#7dd3fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="700" letter-spacing="1">
+      DENGUECAST • ARSITEKTUR TEKNIS &amp; ALGORITMA SISTEM
+    </text>
+
+    <text x="0" y="44" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800">
+      Arsitektur Rekayasa Data, Pemodelan Statistika Probabilistik &amp; Diseminasi Sistem
+    </text>
+    <text x="0" y="60" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11">
+      Diagram Alir End-to-End: Dari Ingesti Multi-Sumber Satelit &amp; Kemenkes hingga Peringatan Dini BPJS Kesehatan (Lead-Time 1–6 Bulan)
+    </text>
+  </g>
+
+  <!-- System Spec Tag (Right Top) -->
+  <g transform="translate(1330, 20)">
+    <rect x="0" y="0" width="230" height="42" rx="8" fill="#111c30" stroke="#334155" stroke-width="1"/>
+    <circle cx="16" cy="21" r="4" fill="#10b981"/>
+    <text x="28" y="19" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">PRODUCTION ARCHITECTURE</text>
+    <text x="28" y="32" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">Python 3.12 • DuckDB • Parquet • GLM</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- COLUMN 1: DATA SOURCES & INGESTION -->
+  <!-- ============================================================ -->
+  <g transform="translate(30, 95)">
+    <!-- Column Frame -->
+    <rect x="0" y="0" width="280" height="745" rx="10" fill="url(#colBg)" stroke="#1e3a8a" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <path d="M 0 10 C 0 4.477 4.477 0 10 0 L 270 0 C 275.523 0 280 4.477 280 10 L 280 36 L 0 36 Z" fill="#1e3a8a" fill-opacity="0.4"/>
+    <rect x="12" y="10" width="4" height="16" rx="2" fill="#38bdf8"/>
+    <text x="24" y="22" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">1. DATA SOURCES &amp; INGESTION</text>
+
+    <!-- Box 1.1: Kasus DBD -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="256" height="150" rx="7" fill="url(#boxBg)" stroke="#2563eb" stroke-width="0.8"/>
+      <rect x="10" y="8" width="165" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">KASUS DBD SURVEILANS</text>
+      
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• Kemenkes RI &amp; OpenDengue v1.3</text>
+      <text x="20" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• ICD-10: A90 (DHF) &amp; A91 (DSS)</text>
+      <text x="20" y="70" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Cakupan: 34 Provinsi Indonesia</text>
+      <text x="20" y="84" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Rentang Waktu: 1999 s/d 2024 (25 Thn)</text>
+      <text x="20" y="98" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Resolusi: Bulanan (Aggregated Cases)</text>
+
+      <rect x="10" y="112" width="236" height="26" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="16" y="129" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600">Output: cases.parquet (Validated)</text>
+    </g>
+
+    <!-- Box 1.2: Iklim Satelit -->
+    <g transform="translate(12, 210)">
+      <rect x="0" y="0" width="256" height="162" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="160" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">IKLIM MIKRO SATELIT</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• ECMWF ERA5-Land &amp; NASA POWER</text>
+      <text x="20" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Grid Resolusi Halus ~9 km x 9 km</text>
+      <text x="20" y="70" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Curah Hujan Bulanan (mm/bulan)</text>
+      <text x="20" y="84" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Suhu Udara 2m (Tmean, Tmin, Tmax)</text>
+      <text x="20" y="98" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Titik Embun 2m (Dewpoint Temp)</text>
+      <text x="20" y="112" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Kecepatan Angin 10m &amp; Tutupan Awan</text>
+
+      <rect x="10" y="124" width="236" height="26" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="16" y="141" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600">Output: climate_obs.parquet</text>
+    </g>
+
+    <!-- Box 1.3: Sirkulasi Global ENSO/IOD -->
+    <g transform="translate(12, 384)">
+      <rect x="0" y="0" width="256" height="120" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="165" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">SIRKULASI IKLIM GLOBAL</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• NOAA CPC: Oceanic Niño Index (ONI)</text>
+      <text x="20" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Wilayah Nino 3.4 (Samudra Pasifik)</text>
+      <text x="12" y="72" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• BoM: Dipole Mode Index (DMI)</text>
+      <text x="20" y="86" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Indian Ocean Dipole (Samudra Hindia)</text>
+
+      <rect x="10" y="93" width="236" height="20" rx="3" fill="#0f172a"/>
+      <text x="16" y="107" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">Output: enso.parquet (1999–2024)</text>
+    </g>
+
+    <!-- Box 1.4: Demografi BPS & Geospasial -->
+    <g transform="translate(12, 516)">
+      <rect x="0" y="0" width="256" height="135" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="165" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">DEMOGRAFI &amp; GEOMETRI</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• BPS Sensus Penduduk 2010 &amp; 2020</text>
+      <text x="20" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Proyeksi Tahunan Resmi BPS 2021–2025</text>
+      <text x="12" y="72" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• WorldPop Grid Kepadatan 100m</text>
+      <text x="12" y="88" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• GeoPandas: 34 Polygon Provinsi</text>
+
+      <rect x="10" y="102" width="236" height="24" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="16" y="118" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600">Output: population.parquet &amp; regions.csv</text>
+    </g>
+
+    <!-- Ingestion Pipeline status -->
+    <rect x="12" y="662" width="256" height="70" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="682" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">Pipeline Ingesti Otomatis:</text>
+    <text x="20" y="698" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Modul: src/denguecast/data/ingest/</text>
+    <text x="20" y="712" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• REST API Client, Httpx, NetCDF Parser</text>
+    <text x="20" y="724" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ In-Memory Hash Validation (cases.hash)</text>
+  </g>
+
+  <!-- Connectors Col 1 -> Col 2 -->
+  <line x1="310" y1="210" x2="340" y2="210" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="310" y1="440" x2="340" y2="440" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="310" y1="580" x2="340" y2="580" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ============================================================ -->
+  <!-- COLUMN 2: DATA PROCESSING & FEATURE STORE -->
+  <!-- ============================================================ -->
+  <g transform="translate(345, 95)">
+    <rect x="0" y="0" width="280" height="745" rx="10" fill="url(#colBg)" stroke="#0284c7" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <path d="M 0 10 C 0 4.477 4.477 0 10 0 L 270 0 C 275.523 0 280 4.477 280 10 L 280 36 L 0 36 Z" fill="#0284c7" fill-opacity="0.35"/>
+    <rect x="12" y="10" width="4" height="16" rx="2" fill="#38bdf8"/>
+    <text x="24" y="22" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">2. DATA ENGINE &amp; FEATURE STORE</text>
+
+    <!-- Box 2.1: Population-Weighted Aggregation -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="256" height="125" rx="7" fill="url(#boxBg)" stroke="#38bdf8" stroke-width="0.8"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">POPULATION-WEIGHTED ENGINE</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Pembobotan Spasial Iklim (WorldPop):</text>
+      <rect x="10" y="50" width="236" height="42" rx="4" fill="url(#formulaBg)" stroke="#0284c7" stroke-width="0.6"/>
+      <text x="18" y="66" fill="#93c5fd" font-family="'Consolas', monospace" font-size="9.5" font-weight="700">Iklim_prov = Σ(Grid_c · Pop_c)</text>
+      <text x="18" y="82" fill="#93c5fd" font-family="'Consolas', monospace" font-size="9.5" font-weight="700">             / Σ(Pop_c)</text>
+
+      <text x="12" y="108" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">✓ Mencegah bias cuaca hutan rimba kosong</text>
+    </g>
+
+    <!-- Box 2.2: Tetens Formula (RH) -->
+    <g transform="translate(12, 185)">
+      <rect x="0" y="0" width="256" height="115" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="190" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">REKONSTRUKSI FISIS KELEMBABAN</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Formula Tetens (Suhu &amp; Titik Embun):</text>
+      <rect x="10" y="48" width="236" height="34" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+      <text x="16" y="64" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9">RH = 100 · exp[17.27·Td/(Td+237.3)]</text>
+      <text x="56" y="76" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9">/ exp[17.27·T/(T+237.3)]</text>
+
+      <text x="12" y="98" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ 100% lengkap tanpa sensor rusak BMKG</text>
+    </g>
+
+    <!-- Box 2.3: Storage Engine DuckDB -->
+    <g transform="translate(12, 312)">
+      <rect x="0" y="0" width="256" height="140" rx="7" fill="url(#boxBg)" stroke="#22c55e" stroke-width="0.8"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#14532d"/>
+      <text x="16" y="21" fill="#4ade80" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">HIGH-PERFORMANCE OLAP ENGINE</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">• In-Process DuckDB (denguecast.duckdb)</text>
+      <text x="20" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Format Biner Kolumnar: Apache Parquet</text>
+      <text x="20" y="70" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Zero DB Server Overhead (In-Memory RAM)</text>
+      <text x="20" y="84" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Kueri Analitik 25 Tahun: Latensi &lt; 10 ms</text>
+
+      <rect x="10" y="98" width="236" height="30" rx="4" fill="#0f172a" stroke="#166534" stroke-width="0.8"/>
+      <text x="16" y="117" fill="#4ade80" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">Tabel Terindeks: cases, climate, enso</text>
+    </g>
+
+    <!-- Box 2.4: Feature Engineering Matrix -->
+    <g transform="translate(12, 464)">
+      <rect x="0" y="0" width="256" height="268" rx="7" fill="url(#boxBg)" stroke="#38bdf8" stroke-width="1"/>
+      <rect x="10" y="8" width="190" height="18" rx="4" fill="#1e3a8a"/>
+      <text x="16" y="21" fill="#93c5fd" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">FEATURE ENGINEERING MATRIX</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">Fitur Input Model Latih (X):</text>
+      <text x="14" y="58" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">1. cases_lag1 (Y_t-1) ── r = +0.78</text>
+      <text x="22" y="70" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Autoregresif: Reservoir virus bulan lalu</text>
+
+      <text x="14" y="86" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">2. precip_lag2 (Lag-2) ── r = +0.52</text>
+      <text x="22" y="98" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Jeda biologis 60 hari genangan &amp; larva</text>
+
+      <text x="14" y="114" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">3. temp_mean_lag02 ── r = +0.41</text>
+      <text x="22" y="126" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Masa inkubasi virus di nyamuk (EIP)</text>
+
+      <text x="14" y="142" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">4. relative_humidity_lag1 ── r = +0.38</text>
+      <text x="22" y="154" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Baseline floor: Usia hidup nyamuk (30 hr)</text>
+
+      <text x="14" y="170" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">5. oni_index (NOAA ONI) ── ρ = +0.83</text>
+      <text x="22" y="182" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Pemicu siklus KLB nasional (El Niño)</text>
+
+      <text x="14" y="198" fill="#f87171" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">6. wind_speed_10m ── r = -0.19</text>
+      <text x="22" y="210" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Koreksi supresi (hambatan aerodinamika)</text>
+
+      <text x="14" y="226" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">7. sin_month, cos_month</text>
+      <text x="22" y="238" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Harmonik siklus musiman kalender masehi</text>
+
+      <rect x="10" y="246" width="236" height="16" rx="3" fill="#0f172a"/>
+      <text x="16" y="258" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="700">Offset: log(Populasi / 100.000)</text>
+    </g>
+  </g>
+
+  <!-- Connectors Col 2 -> Col 3 -->
+  <line x1="625" y1="210" x2="655" y2="210" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="625" y1="580" x2="655" y2="580" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ============================================================ -->
+  <!-- COLUMN 3: STATISTICAL CORE & SUPERENSEMBLE -->
+  <!-- ============================================================ -->
+  <g transform="translate(660, 95)">
+    <rect x="0" y="0" width="295" height="745" rx="10" fill="url(#colBg)" stroke="#2563eb" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <path d="M 0 10 C 0 4.477 4.477 0 10 0 L 285 0 C 290.523 0 295 4.477 295 10 L 295 36 L 0 36 Z" fill="#2563eb" fill-opacity="0.35"/>
+    <rect x="12" y="10" width="4" height="16" rx="2" fill="#60a5fa"/>
+    <text x="24" y="22" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">3. MODEL ENGINE &amp; ENSEMBLE</text>
+
+    <!-- Box 3.1: Negative Binomial GLM Core -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="271" height="195" rx="7" fill="url(#boxBg)" stroke="#2563eb" stroke-width="1.2"/>
+      <rect x="10" y="8" width="215" height="18" rx="4" fill="#1e3a8a"/>
+      <text x="16" y="21" fill="#93c5fd" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">NEGATIVE BINOMIAL GLM (NB-GLM)</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Persamaan Regresi (Log-Link):</text>
+      <rect x="8" y="48" width="255" height="52" rx="5" fill="url(#formulaBg)" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="14" y="65" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9.5" font-weight="700">log(μ[i,t]) = α_i + m(t)</text>
+      <text x="14" y="79" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9.5" font-weight="700">             + log(Pop[i,t] / 100k)</text>
+      <text x="14" y="93" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9.5" font-weight="700">             + ρ·log(Y_lag1 + 1) + Σ β_k·X_k</text>
+
+      <!-- Dispersion Parameter explanation -->
+      <g transform="translate(8, 108)">
+        <rect x="0" y="0" width="255" height="42" rx="4" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+        <text x="10" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">Mengapa Bukan Poisson Biasa?</text>
+        <text x="10" y="30" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Data DBD mengalami Overdispersi: Var(Y) = μ + α·μ²</text>
+      </g>
+
+      <text x="12" y="168" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">• alpha (α): Parameter dispersi empiris</text>
+      <text x="12" y="182" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">• α_i: Intercept spesifik per provinsi</text>
+    </g>
+
+    <!-- Box 3.2: Multi-Horizon Recursive Engine -->
+    <g transform="translate(12, 252)">
+      <rect x="0" y="0" width="271" height="110" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="190" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">MULTI-HORIZON RECURSION</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">• Lead 1 Bulan (h=1): Menggunakan Y(t-1) aktual</text>
+      <text x="12" y="58" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">• Lead 2–6 Bulan (h ≥ 2): Rekursi Autoregresif</text>
+      <text x="20" y="72" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Model M0 memproyeksikan Y_hat(t+1) sebagai lag</text>
+      <text x="20" y="84" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">untuk horizon berikutnya secara bertingkat.</text>
+      <text x="12" y="100" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ Strictly Anti-Leakage (Zero Data Future Leak)</text>
+    </g>
+
+    <!-- Box 3.3: Superensemble Stacking -->
+    <g transform="translate(12, 370)">
+      <rect x="0" y="0" width="271" height="175" rx="7" fill="url(#boxBg)" stroke="#f59e0b" stroke-width="1"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#713f12"/>
+      <text x="16" y="21" fill="#fde047" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">SUPERENSEMBLE STACKING (K=4)</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Pembobotan Berbasis 1/CRPS²:</text>
+      <rect x="8" y="48" width="255" height="38" rx="4" fill="#0f172a" stroke="#b45309" stroke-width="0.8"/>
+      <text x="16" y="66" fill="#fbbf24" font-family="'Consolas', monospace" font-size="10" font-weight="700">Bobot w_i = (1 / CRPS_i²)</text>
+      <text x="85" y="79" fill="#fbbf24" font-family="'Consolas', monospace" font-size="10" font-weight="700">/ Σ_j (1 / CRPS_j²)</text>
+
+      <text x="12" y="104" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="600">• Model Kandidat yang Dikombinasi:</text>
+      <text x="20" y="118" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">1. M_Full: Model Iklim Lengkap + ENSO</text>
+      <text x="20" y="130" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">2. M_Autoregressive: Model Kasus Murni</text>
+      <text x="20" y="142" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">3. B1 &amp; B2: Baseline Historis Musiman 5 Thn</text>
+      <text x="12" y="160" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ Bobot dioptimasi spesifik per lead horizon (h=1..6)</text>
+    </g>
+
+    <!-- Box 3.4: Monte Carlo Simulator -->
+    <g transform="translate(12, 553)">
+      <rect x="0" y="0" width="271" height="178" rx="7" fill="url(#boxBg)" stroke="#c084fc" stroke-width="1.2"/>
+      <rect x="10" y="8" width="215" height="18" rx="4" fill="#3b0764"/>
+      <text x="16" y="21" fill="#e9d5ff" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">1.000 MONTE CARLO SIMULATOR</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Posterior Parameter Uncertainty:</text>
+      <text x="14" y="58" fill="#c084fc" font-family="'Consolas', monospace" font-size="9.5">1. Sampel β ~ MVN(β_hat, Cov(β))</text>
+      <text x="14" y="72" fill="#c084fc" font-family="'Consolas', monospace" font-size="9.5">2. Hitung μ_s = exp(X · β_s + Offset)</text>
+      <text x="14" y="86" fill="#c084fc" font-family="'Consolas', monospace" font-size="9.5">3. Sampel Y_s ~ NegBinom(μ_s, α)</text>
+
+      <!-- Percentiles visual bar -->
+      <g transform="translate(8, 98)">
+        <rect x="0" y="0" width="255" height="45" rx="4" fill="#0f172a" stroke="#6b21a8" stroke-width="0.8"/>
+        <text x="10" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">Interval Ketidakpastian Penuh:</text>
+        <text x="10" y="32" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">P2.5 (Bawah)</text>
+        <text x="105" y="32" fill="#4ade80" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">P50 (Median)</text>
+        <text x="195" y="32" fill="#f43f5e" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">P97.5 (Krisis)</text>
+      </g>
+
+      <text x="12" y="162" fill="#e9d5ff" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ Menghasilkan kurva densitas probabilitas riil</text>
+    </g>
+  </g>
+
+  <!-- Connectors Col 3 -> Col 4 -->
+  <line x1="955" y1="210" x2="985" y2="210" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="955" y1="580" x2="985" y2="580" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- ============================================================ -->
+  <!-- COLUMN 4: VALIDATION & QUALITY GATE -->
+  <!-- ============================================================ -->
+  <g transform="translate(990, 95)">
+    <rect x="0" y="0" width="275" height="745" rx="10" fill="url(#colBg)" stroke="#6b21a8" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <path d="M 0 10 C 0 4.477 4.477 0 10 0 L 265 0 C 270.523 0 275 4.477 275 10 L 275 36 L 0 36 Z" fill="#6b21a8" fill-opacity="0.35"/>
+    <rect x="12" y="10" width="4" height="16" rx="2" fill="#c084fc"/>
+    <text x="24" y="22" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">4. EVALUATION &amp; QUALITY GATE</text>
+
+    <!-- Box 4.1: Expanding Window -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="251" height="120" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">EXPANDING-WINDOW CV</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Simulasi Prospektif Waktu Riil:</text>
+      <text x="14" y="58" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Model hanya dilatih pada data ≤ origin</text>
+      <text x="14" y="72" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Window digeser maju bulan demi bulan</text>
+      <text x="14" y="86" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Menguji performa di 84 bulan out-of-sample</text>
+      <text x="12" y="106" fill="#f43f5e" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ Evaluasi Tanpa Kebocoran Informasi</text>
+    </g>
+
+    <!-- Box 4.2: Scoring Metrics Matrix -->
+    <g transform="translate(12, 178)">
+      <rect x="0" y="0" width="251" height="235" rx="7" fill="url(#boxBg)" stroke="#a855f7" stroke-width="1"/>
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#e9d5ff" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">METRIK VALIDASI PROBABILISTIK</text>
+
+      <g transform="translate(8, 36)">
+        <rect x="0" y="0" width="235" height="38" rx="4" fill="#0f172a"/>
+        <text x="8" y="15" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">CRPS &amp; CRPSS (Skill Score):</text>
+        <text x="8" y="28" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Mengukur ketepatan kurva probabilitas vs realitas</text>
+      </g>
+
+      <g transform="translate(8, 80)">
+        <rect x="0" y="0" width="235" height="38" rx="4" fill="#0f172a"/>
+        <text x="8" y="15" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">Cakupan Empiris 95% (Coverage):</text>
+        <text x="8" y="28" fill="#10b981" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">Tercapai 88%–97% (Kalibrasi Sehat)</text>
+      </g>
+
+      <g transform="translate(8, 124)">
+        <rect x="0" y="0" width="235" height="38" rx="4" fill="#0f172a"/>
+        <text x="8" y="15" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">Brier Score &amp; ROC-AUC:</text>
+        <text x="8" y="28" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Ketepatan klasifikasi kejadian KLB (0.25, 0.5, 0.75)</text>
+      </g>
+
+      <g transform="translate(8, 168)">
+        <rect x="0" y="0" width="235" height="38" rx="4" fill="#0f172a"/>
+        <text x="8" y="15" fill="#f43f5e" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">Sensitivitas &amp; Nilai Prediksi Positif:</text>
+        <text x="8" y="28" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Rasio deteksi wabah nyata vs false alarm</text>
+      </g>
+
+      <rect x="8" y="212" width="235" height="15" rx="3" fill="#1e293b"/>
+      <text x="14" y="223" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8">Output: eval_scores.parquet</text>
+    </g>
+
+    <!-- Box 4.3: Automated Quality Gate -->
+    <g transform="translate(12, 423)">
+      <rect x="0" y="0" width="251" height="175" rx="7" fill="url(#boxBg)" stroke="#f43f5e" stroke-width="1.2"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#881337"/>
+      <text x="16" y="21" fill="#fecdd3" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">GERBANG KELAYAKAN (P7b)</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">Kriteria Status 'Andal' (Reliable):</text>
+      <text x="14" y="58" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9.5">• Median CRPSS(h 1-3) &gt; 0</text>
+      <text x="14" y="72" fill="#38bdf8" font-family="'Consolas', monospace" font-size="9.5">• Lower Bootstrap CI &gt; 0</text>
+
+      <rect x="8" y="82" width="235" height="48" rx="4" fill="#0f172a" stroke="#881337" stroke-width="0.8"/>
+      <text x="12" y="98" fill="#f87171" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">Auto-Flag: 'Kurang Andal'</text>
+      <text x="12" y="112" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Bila sinyal iklim gagal mengalahkan baseline musiman,</text>
+      <text x="12" y="122" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">sistem menyarankan pantau saluran endemik.</text>
+
+      <text x="12" y="148" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600">• Uji Sensitivitas COVID-19 (2020–2021)</text>
+      <text x="12" y="162" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Memastikan model kebal anomali lockdown faskes</text>
+    </g>
+
+    <!-- Box 4.4: Storage Persistence -->
+    <g transform="translate(12, 608)">
+      <rect x="0" y="0" width="251" height="125" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <text x="12" y="24" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700">Integritas Pipeline &amp; Audit Trail:</text>
+      <text x="14" y="42" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Validasi checksum file: *.hash</text>
+      <text x="14" y="56" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Audit metadata: synthetic_metadata.json</text>
+      <text x="14" y="70" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Reproducible Seed: 42 (Monte Carlo)</text>
+      <rect x="10" y="86" width="231" height="26" rx="4" fill="#0f172a"/>
+      <text x="16" y="103" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">✓ Audit-Ready untuk Klaim BPJS</text>
+    </g>
+  </g>
+
+  <!-- Connectors Col 4 -> Col 5 -->
+  <line x1="1265" y1="210" x2="1295" y2="210" stroke="#10b981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1265" y1="580" x2="1295" y2="580" stroke="#10b981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- ============================================================ -->
+  <!-- COLUMN 5: DECISION SUPPORT & OUTPUT CHANNELS -->
+  <!-- ============================================================ -->
+  <g transform="translate(1300, 95)">
+    <rect x="0" y="0" width="270" height="745" rx="10" fill="url(#colBg)" stroke="#059669" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <path d="M 0 10 C 0 4.477 4.477 0 10 0 L 260 0 C 265.523 0 270 4.477 270 10 L 270 36 L 0 36 Z" fill="#059669" fill-opacity="0.35"/>
+    <rect x="12" y="10" width="4" height="16" rx="2" fill="#34d399"/>
+    <text x="24" y="22" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700">5. DECISION SUPPORT &amp; OUTPUT</text>
+
+    <!-- Box 5.1: Saluran Endemik & Probabilitas KLB -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="246" height="145" rx="7" fill="url(#boxBg)" stroke="#10b981" stroke-width="0.8"/>
+      <rect x="10" y="8" width="185" height="18" rx="4" fill="#064e3b"/>
+      <text x="16" y="21" fill="#a7f3d0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">SALURAN ENDEMIK &amp; AMBANG</text>
+
+      <text x="12" y="42" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600">Ambang Historis 5 Tahun:</text>
+      <text x="14" y="58" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Rata-rata Bulanan (Baseline Normal)</text>
+      <text x="14" y="72" fill="#fbbf24" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Ambang Waspada: Mean + 1SD</text>
+      <text x="14" y="86" fill="#f43f5e" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Ambang KLB Resmi: Mean + 2SD</text>
+
+      <rect x="8" y="96" width="230" height="38" rx="4" fill="#0f172a" stroke="#047857" stroke-width="0.8"/>
+      <text x="14" y="112" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">Probabilitas Pelampauan (P_exceed):</text>
+      <text x="14" y="126" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Proporsi dari 1.000 sampel yang tembus KLB</text>
+    </g>
+
+    <!-- Box 5.2: 4 Tingkat Risiko Operasional -->
+    <g transform="translate(12, 203)">
+      <rect x="0" y="0" width="246" height="245" rx="7" fill="url(#boxBg)" stroke="#334155" stroke-width="0.8"/>
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#1e293b"/>
+      <text x="16" y="21" fill="#6ee7b7" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">4 TINGKAT AKSI OPERASIONAL</text>
+
+      <!-- Level Hijau -->
+      <g transform="translate(8, 34)">
+        <rect x="0" y="0" width="230" height="42" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+        <circle cx="12" cy="14" r="4" fill="#10b981"/>
+        <text x="22" y="16" fill="#ecfdf5" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">HIJAU: RISIKO RENDAH</text>
+        <text x="10" y="32" fill="#a7f3d0" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Kasus &lt; Rata-rata ── Surveilans rutin Faskes</text>
+      </g>
+
+      <!-- Level Kuning -->
+      <g transform="translate(8, 82)">
+        <rect x="0" y="0" width="230" height="42" rx="4" fill="#713f12" stroke="#eab308" stroke-width="0.8"/>
+        <circle cx="12" cy="14" r="4" fill="#eab308"/>
+        <text x="22" y="16" fill="#fefce8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">KUNING: RISIKO SEDANG</text>
+        <text x="10" y="32" fill="#fef08a" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">Mean s/d +1SD ── Siaga &amp; gerakan PSN 3M</text>
+      </g>
+
+      <!-- Level Jingga -->
+      <g transform="translate(8, 130)">
+        <rect x="0" y="0" width="230" height="42" rx="4" fill="#7c2d12" stroke="#f97316" stroke-width="0.8"/>
+        <circle cx="12" cy="14" r="4" fill="#f97316"/>
+        <text x="22" y="16" fill="#fff7ed" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">JINGGA: RISIKO TINGGI</text>
+        <text x="10" y="32" fill="#fed7aa" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">+1SD s/d +2SD ── Siapkan cairan infus &amp; NS1</text>
+      </g>
+
+      <!-- Level Merah -->
+      <g transform="translate(8, 178)">
+        <rect x="0" y="0" width="230" height="42" rx="4" fill="#881337" stroke="#f43f5e" stroke-width="0.8"/>
+        <circle cx="12" cy="14" r="4" fill="#f43f5e"/>
+        <text x="22" y="16" fill="#fff1f2" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">MERAH: KLB DARURAT</text>
+        <text x="10" y="32" fill="#fecdd3" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">&gt; +2SD ── Ekspansi Bed RSUD &amp; Dana Darurat</text>
+      </g>
+
+      <text x="12" y="234" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="600">✓ Mengubah statistik jadi protokol medis</text>
+    </g>
+
+    <!-- Box 5.3: Dissemination Platforms -->
+    <g transform="translate(12, 458)">
+      <rect x="0" y="0" width="246" height="275" rx="7" fill="url(#boxBg)" stroke="#059669" stroke-width="1.2"/>
+      <rect x="10" y="8" width="195" height="18" rx="4" fill="#064e3b"/>
+      <text x="16" y="21" fill="#a7f3d0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700">KANAL DISEMINASI AKHIR</text>
+
+      <!-- FastAPI Subcard -->
+      <g transform="translate(8, 34)">
+        <rect x="0" y="0" width="230" height="78" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+        <rect x="8" y="6" width="115" height="16" rx="3" fill="#1e3a8a"/>
+        <text x="12" y="17" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="700">FASTAPI REST SERVICE</text>
+        <text x="8" y="36" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Integrasi Langsung SIM-BPJS</text>
+        <text x="8" y="50" fill="#94a3b8" font-family="'Consolas', monospace" font-size="8.5">GET /v1/forecasts/{provinsi}</text>
+        <text x="8" y="64" fill="#94a3b8" font-family="'Consolas', monospace" font-size="8.5">GET /v1/evaluation/crps</text>
+        <text x="8" y="74" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="600">Swagger UI: localhost:8000/docs</text>
+      </g>
+
+      <!-- Streamlit Subcard -->
+      <g transform="translate(8, 118)">
+        <rect x="0" y="0" width="230" height="85" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="0.8"/>
+        <rect x="8" y="6" width="145" height="16" rx="3" fill="#14532d"/>
+        <text x="12" y="17" fill="#4ade80" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="700">STREAMLIT ANALYTICS UI</text>
+        <text x="8" y="36" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Peta Choropleth Risiko Spasial 34 Prov</text>
+        <text x="8" y="50" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Fan Chart Interaktif Lead 1–6 Bulan</text>
+        <text x="8" y="64" fill="#e2e8f0" font-family="'Segoe UI', Roboto, sans-serif" font-size="9">• Visualisasi Saluran Endemik Historis</text>
+        <text x="8" y="78" fill="#4ade80" font-family="'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="600">Web Dashboard: localhost:8501</text>
+      </g>
+
+      <rect x="8" y="210" width="230" height="55" rx="4" fill="#0f172a" stroke="#047857" stroke-width="0.8"/>
+      <text x="14" y="226" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="700">Manfaat Konkret bagi BPJS:</text>
+      <text x="14" y="240" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">1. Golden Window 60 Hari Siaga Klaim</text>
+      <text x="14" y="254" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5">2. Efisiensi Alokasi Biaya &amp; Logistik Faskes</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER BAR -->
+  <!-- ============================================================ -->
+  <g transform="translate(30, 858)">
+    <rect x="0" y="0" width="1540" height="30" rx="5" fill="#0c1322" stroke="#1e293b" stroke-width="1"/>
+    <text x="16" y="19" fill="#64748b" font-family="'Segoe UI', Roboto, sans-serif" font-size="10">
+      Arsitektur Sistem DengueCast • Sumber Data: Kemenkes RI (OpenDengue v1.3), ECMWF ERA5-Land, NOAA CPC, BoM Australia, &amp; BPS Sensus Penduduk
+    </text>
+    <text x="1524" y="19" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600" text-anchor="end">
+      Fondasi: D-MOSS Adaptation (Colón-González dkk. 2021) • Modifikasi: Python DuckDB + Population Weighting + Superensemble 1/CRPS²
+    </text>
+  </g>
+</svg>

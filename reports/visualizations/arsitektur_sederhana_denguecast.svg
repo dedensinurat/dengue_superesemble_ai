@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#080c14"/>
+    </linearGradient>
+
+    <!-- Card Backgrounds -->
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Header Gradients -->
+    <linearGradient id="hBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="hCyan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="hPurple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="hGreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1600" height="900" fill="url(#bgGrad)"/>
+
+  <!-- ================= HEADER ================= -->
+  <g transform="translate(80, 50)">
+    <text x="0" y="32" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" letter-spacing="1.5">
+      DENGUECAST • ARSITEKTUR SEDERHANA
+    </text>
+    <text x="0" y="74" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="800">
+      Arsitektur Sistem Peramalan DBD (4 Tahap Utama)
+    </text>
+    <text x="0" y="104" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="16">
+      Alur sederhana: dari data mentah hingga keputusan pencegahan Kejadian Luar Biasa (KLB) untuk BPJS Kesehatan
+    </text>
+  </g>
+
+  <!-- ================= 4 BOXES ROW ================= -->
+
+  <!-- BOX 1: INPUT DATA -->
+  <g transform="translate(80, 200)">
+    <rect x="0" y="0" width="310" height="540" rx="16" fill="url(#cardGrad)" stroke="#1e3a8a" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <path d="M 0 16 C 0 7.163 7.163 0 16 0 L 294 0 C 302.837 0 310 7.163 310 16 L 310 70 L 0 70 Z" fill="url(#hBlue)"/>
+    <text x="24" y="32" fill="#bfdbfe" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1">TAHAP 1</text>
+    <text x="24" y="56" fill="#ffffff" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800">INPUT DATA</text>
+
+    <!-- Content Items -->
+    <g transform="translate(24, 100)">
+      <!-- Item 1 -->
+      <circle cx="12" cy="12" r="10" fill="#1e3a8a"/>
+      <text x="12" y="16" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">1</text>
+      <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Kasus DBD Historis</text>
+      <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Data 25 tahun dari Kemenkes RI di 34 provinsi.</text>
+
+      <!-- Item 2 -->
+      <g transform="translate(0, 75)">
+        <circle cx="12" cy="12" r="10" fill="#1e3a8a"/>
+        <text x="12" y="16" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">2</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Cuaca Satelit</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Curah hujan, suhu udara, dan kelembaban (ERA5-Land).</text>
+      </g>
+
+      <!-- Item 3 -->
+      <g transform="translate(0, 160)">
+        <circle cx="12" cy="12" r="10" fill="#1e3a8a"/>
+        <text x="12" y="16" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">3</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Iklim Global El Niño</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Indeks anomali laut Pasifik dari NOAA (pemicu KLB).</text>
+      </g>
+
+      <!-- Item 4 -->
+      <g transform="translate(0, 245)">
+        <circle cx="12" cy="12" r="10" fill="#1e3a8a"/>
+        <text x="12" y="16" fill="#60a5fa" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">4</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Jumlah Penduduk</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Data sensus BPS untuk menghitung rasio per kapita.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Badge -->
+    <rect x="20" y="465" width="270" height="48" rx="8" fill="#0f172a" stroke="#1e3a8a" stroke-width="1"/>
+    <text x="155" y="495" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">✓ Sumber Data Resmi Tervalidasi</text>
+  </g>
+
+  <!-- ARROW 1 -> 2 -->
+  <g transform="translate(410, 460)">
+    <circle cx="15" cy="0" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+    <path d="M 8 -6 L 18 0 L 8 6" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- BOX 2: PENGOLAHAN DATA -->
+  <g transform="translate(460, 200)">
+    <rect x="0" y="0" width="310" height="540" rx="16" fill="url(#cardGrad)" stroke="#0284c7" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <path d="M 0 16 C 0 7.163 7.163 0 16 0 L 294 0 C 302.837 0 310 7.163 310 16 L 310 70 L 0 70 Z" fill="url(#hCyan)"/>
+    <text x="24" y="32" fill="#cffafe" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1">TAHAP 2</text>
+    <text x="24" y="56" fill="#ffffff" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800">PENGOLAHAN DATA</text>
+
+    <!-- Content Items -->
+    <g transform="translate(24, 100)">
+      <!-- Item 1 -->
+      <circle cx="12" cy="12" r="10" fill="#0c4a6e"/>
+      <text x="12" y="16" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">1</text>
+      <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Pembobotan Penduduk</text>
+      <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Fokus cuaca di kawasan permukiman (WorldPop), bukan hutan kosong.</text>
+
+      <!-- Item 2 -->
+      <g transform="translate(0, 85)">
+        <circle cx="12" cy="12" r="10" fill="#0c4a6e"/>
+        <text x="12" y="16" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">2</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Jeda Waktu 60 Hari (Lag)</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Mengunci siklus genangan air hujan menjadi nyamuk dewasa.</text>
+      </g>
+
+      <!-- Item 3 -->
+      <g transform="translate(0, 175)">
+        <circle cx="12" cy="12" r="10" fill="#0c4a6e"/>
+        <text x="12" y="16" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">3</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Database Cepat (DuckDB)</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Format Parquet biner: kueri 25 tahun selesai di bawah 10 milidetik.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Badge -->
+    <rect x="20" y="465" width="270" height="48" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+    <text x="155" y="495" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">⚡ Ringan, Cepat &amp; Bebas Bias</text>
+  </g>
+
+  <!-- ARROW 2 -> 3 -->
+  <g transform="translate(790, 460)">
+    <circle cx="15" cy="0" r="18" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+    <path d="M 8 -6 L 18 0 L 8 6" fill="none" stroke="#06b6d4" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- BOX 3: MESIN PREDIKSI AI -->
+  <g transform="translate(840, 200)">
+    <rect x="0" y="0" width="310" height="540" rx="16" fill="url(#cardGrad)" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <path d="M 0 16 C 0 7.163 7.163 0 16 0 L 294 0 C 302.837 0 310 7.163 310 16 L 310 70 L 0 70 Z" fill="url(#hPurple)"/>
+    <text x="24" y="32" fill="#ede9fe" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1">TAHAP 3</text>
+    <text x="24" y="56" fill="#ffffff" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800">MESIN PREDIKSI AI</text>
+
+    <!-- Content Items -->
+    <g transform="translate(24, 100)">
+      <!-- Item 1 -->
+      <circle cx="12" cy="12" r="10" fill="#3b0764"/>
+      <text x="12" y="16" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">1</text>
+      <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Negative Binomial GLM</text>
+      <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Algoritma khusus menangani lonjakan epidemi ekstrem (anti-overdispersi).</text>
+
+      <!-- Item 2 -->
+      <g transform="translate(0, 85)">
+        <circle cx="12" cy="12" r="10" fill="#3b0764"/>
+        <text x="12" y="16" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">2</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Superensemble (1/CRPS²)</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Menggabungkan model iklim dan histori; model paling akurat diberi bobot utama.</text>
+      </g>
+
+      <!-- Item 3 -->
+      <g transform="translate(0, 175)">
+        <circle cx="12" cy="12" r="10" fill="#3b0764"/>
+        <text x="12" y="16" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">3</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">1.000 Simulasi Probabilitas</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Menghitung rentang skenario: moderat (P50) hingga krisis darurat (P97.5).</text>
+      </g>
+    </g>
+
+    <!-- Bottom Badge -->
+    <rect x="20" y="465" width="270" height="48" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="1"/>
+    <text x="155" y="495" fill="#c084fc" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">🧠 Bukan Tebakan Kaku, tapi Probabilitas</text>
+  </g>
+
+  <!-- ARROW 3 -> 4 -->
+  <g transform="translate(1170, 460)">
+    <circle cx="15" cy="0" r="18" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <path d="M 8 -6 L 18 0 L 8 6" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- BOX 4: OUTPUT UNTUK BPJS -->
+  <g transform="translate(1220, 200)">
+    <rect x="0" y="0" width="300" height="540" rx="16" fill="url(#cardGrad)" stroke="#059669" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Header -->
+    <path d="M 0 16 C 0 7.163 7.163 0 16 0 L 284 0 C 292.837 0 300 7.163 300 16 L 300 70 L 0 70 Z" fill="url(#hGreen)"/>
+    <text x="24" y="32" fill="#d1fae5" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" letter-spacing="1">TAHAP 4</text>
+    <text x="24" y="56" fill="#ffffff" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800">OUTPUT UNTUK BPJS</text>
+
+    <!-- Content Items -->
+    <g transform="translate(24, 100)">
+      <!-- Item 1 -->
+      <circle cx="12" cy="12" r="10" fill="#064e3b"/>
+      <text x="12" y="16" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">1</text>
+      <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">Peringatan Dini 1–6 Bulan</text>
+      <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Waktu emas 60 hari untuk siaga klaim sebelum faskes penuh.</text>
+
+      <!-- Item 2 -->
+      <g transform="translate(0, 85)">
+        <circle cx="12" cy="12" r="10" fill="#064e3b"/>
+        <text x="12" y="16" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">2</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">4 Status Risiko Berwarna</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">Hijau (Rutin), Kuning (Waspada), Jingga (Siaga), Merah (KLB Darurat).</text>
+      </g>
+
+      <!-- Item 3 -->
+      <g transform="translate(0, 175)">
+        <circle cx="12" cy="12" r="10" fill="#064e3b"/>
+        <text x="12" y="16" fill="#34d399" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">3</text>
+        <text x="32" y="16" fill="#f8fafc" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700">REST API &amp; Dashboard Web</text>
+        <text x="32" y="36" fill="#94a3b8" font-family="'Segoe UI', Roboto, sans-serif" font-size="13">FastAPI siap integrasi SIM-BPJS + Dashboard interaktif Streamlit.</text>
+      </g>
+    </g>
+
+    <!-- Bottom Badge -->
+    <rect x="20" y="465" width="260" height="48" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+    <text x="150" y="495" fill="#a7f3d0" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">🛡️ Efisiensi Anggaran &amp; Logistik RSUD</text>
+  </g>
+
+  <!-- ================= FOOTER ================= -->
+  <g transform="translate(80, 820)">
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#1e293b" stroke-width="1"/>
+    <text x="0" y="28" fill="#64748b" font-family="'Segoe UI', Roboto, sans-serif" font-size="12">
+      DengueCast Indonesia • Prototipe Sistem Peramalan Dini DBD Berbasis Iklim &amp; AI untuk BPJS Kesehatan
+    </text>
+    <text x="1440" y="28" fill="#38bdf8" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="end">
+      Format: 100% Vector SVG Widescreen (16:9)
+    </text>
+  </g>
+</svg>
