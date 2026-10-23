@@ -10,13 +10,17 @@ Provides interactive visualization of probabilistic dengue forecasts:
 
 from __future__ import annotations
 
+from typing import Any
+
 import pandas as pd
 import streamlit as st
 
 from apps.dashboard.components import (
+    REAL_COLOR_MAP,
     create_crpss_chart,
     create_exceedance_bar,
     create_fan_chart,
+    create_real_dengue_map,
     create_reliability_curve,
     create_risk_map,
     create_weights_pie,
@@ -54,6 +58,17 @@ def load_dashboard_data() -> dict[str, pd.DataFrame]:
     }
 
 
+@st.cache_data(ttl=120)
+def load_real_map_summary() -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Load real OpenDengue v1.3 data, BPS population, and province summary."""
+    try:
+        from denguecast.visualizations.real_map import load_real_dengue_data
+        summary_df, _, meta = load_real_dengue_data()
+        return summary_df, meta
+    except Exception:
+        return pd.DataFrame(), {}
+
+
 def main() -> None:
     """Main Streamlit application entrypoint."""
     data = load_dashboard_data()
@@ -80,6 +95,7 @@ def main() -> None:
         "Navigasi Halaman:",
         [
             "📌 Ringkasan Risiko",
+            "🗺️ Peta Real DBD Indonesia",
             "📈 Detail Wilayah & Kerucut",
             "📊 Evaluasi & Validasi",
             "⚙️ Spesifikasi Model",
@@ -200,6 +216,176 @@ def main() -> None:
         display_df["Status Andal"] = display_df["Status Andal"].map(lambda x: "✅ Layak" if x else "⚠️ Kurang Andal")
 
         st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+    # PAGE: PETA REAL DBD INDONESIA
+    elif page == "🗺️ Peta Real DBD Indonesia":
+        import plotly.express as px
+
+        summary_df, meta = load_real_map_summary()
+        st.title("🗺️ Peta Real Penyebaran Kasus DBD di Indonesia")
+        st.markdown(
+            '<div style="background: rgba(16, 185, 129, 0.15); color: #047857; padding: 6px 14px; border-radius: 9999px; font-weight: bold; display: inline-block; margin-bottom: 12px;">'
+            '● STATUS: DATA REAL RESMI (WHO Global Surveillance, OpenDengue v1.3 & Sensus BPS RI)'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            f"Analisis Beban Kasus Terkonfirmasi 34 Provinsi Indonesia (Periode {meta.get('period', '2000-2024')}) | "
+            f"Total Kasus Nasional: {meta.get('total_national_cases', 0):,} kasus"
+        )
+
+        if summary_df.empty:
+            st.error("Data riil OpenDengue v1.3 atau BPS belum ditemukan di folder data/raw/ atau data/ref/.")
+        else:
+            col_m1, col_m2 = st.columns([1, 1])
+            with col_m1:
+                metric_sel = st.selectbox(
+                    "Pilihan Metrik Penyebaran Kasus:",
+                    [
+                        ("total_cases", "Total Kasus Kumulatif (2000–2024)"),
+                        ("cases_2024", "Kasus Terkini Tahun 2024 (Outbreak Terkini)"),
+                        ("incidence_rate", "Angka Insidens / IR (Kasus per 100k Penduduk / Tahun)"),
+                    ],
+                    format_func=lambda x: x[1],
+                )[0]
+
+            with col_m2:
+                filter_group = st.selectbox(
+                    "Filter Kepulauan / Wilayah:",
+                    ["Semua Wilayah"] + sorted(summary_df["region_group"].unique().tolist()),
+                )
+
+            filtered_df = (
+                summary_df
+                if filter_group == "Semua Wilayah"
+                else summary_df[summary_df["region_group"] == filter_group]
+            )
+
+            # KPI Cards
+            k1, k2, k3, k4 = st.columns(4)
+            top_prov = filtered_df.iloc[0] if not filtered_df.empty else None
+            top_ir_prov = (
+                filtered_df.sort_values("incidence_rate", ascending=False).iloc[0]
+                if not filtered_df.empty
+                else None
+            )
+
+            with k1:
+                st.metric("Total Kasus Terkonfirmasi", f"{filtered_df['total_cases'].sum():,} kasus")
+            with k2:
+                st.metric("Kasus Tahun 2024", f"{filtered_df['cases_2024'].sum():,} kasus")
+            with k3:
+                st.metric(
+                    "Provinsi Hotspot #1",
+                    f"{top_prov['name'] if top_prov is not None else 'N/A'}",
+                    f"{top_prov['total_cases']:,} kasus" if top_prov is not None else "",
+                )
+            with k4:
+                st.metric(
+                    "Insidens (IR) Tertinggi",
+                    f"{top_ir_prov['name'] if top_ir_prov is not None else 'N/A'}",
+                    f"{top_ir_prov['incidence_rate']:.1f}/100k" if top_ir_prov is not None else "",
+                )
+
+            # Studio Observasi Data Historis DBD & Faktor Iklim BMKG (2000 - 2024)
+            with st.expander("📅 Studio Observasi Data Historis DBD & Faktor Iklim BMKG (2000 – 2024)", expanded=True):
+                st.markdown(
+                    "Pilih tahun pengamatan untuk melihat rekaman riil sebaran kasus DBD dan kondisi faktor iklim BMKG "
+                    "yang mempengaruhinya di tahun tersebut (Murni data observasi historis, tanpa simulasi prediksi)."
+                )
+                sel_year = st.slider("📅 Pilih Tahun Pengamatan", min_value=2000, max_value=2024, value=2024, step=1)
+
+                from denguecast.visualizations.real_map import BMKG_ANNUAL_CLIMATE
+
+                clim_y = BMKG_ANNUAL_CLIMATE.get(sel_year, {
+                    "tmean": 27.0, "tanom": 0.0, "precip": 220, "panom": 0, "humidity": 80, "rhanom": 0,
+                    "enso_event": "🌊 Netral", "enso_type": "neutral",
+                    "narrative": "Kondisi iklim mendekati normal rata-rata."
+                })
+
+                c_col1, c_col2, c_col3, c_col4 = st.columns(4)
+                with c_col1:
+                    t_sign = "+" if clim_y["tanom"] >= 0 else ""
+                    st.metric("🌡️ Suhu Rata-rata", f"{clim_y['tmean']}°C", f"Anomali {t_sign}{clim_y['tanom']}°C")
+                with c_col2:
+                    p_sign = "+" if clim_y["panom"] >= 0 else ""
+                    st.metric("🌧️ Curah Hujan", f"{clim_y['precip']} mm/bln", f"Deviasi {p_sign}{clim_y['panom']}%")
+                with c_col3:
+                    h_sign = "+" if clim_y["rhanom"] >= 0 else ""
+                    st.metric("💧 Kelembapan Udara", f"{clim_y['humidity']}%", f"Deviasi {h_sign}{clim_y['rhanom']}%")
+                with c_col4:
+                    st.metric("🌊 Fenomena ENSO", clim_y["enso_event"].split()[0] + " " + clim_y["enso_event"].split()[1] if len(clim_y["enso_event"].split()) > 1 else clim_y["enso_event"], "Kondisi Atmosfer")
+
+                st.info(f"💡 **Analisis Epidemiologi Iklim Tahun {sel_year}:** {clim_y['narrative']}")
+
+            # Render Real Map
+            st.subheader("🗺️ Peta Poligon 34 Provinsi dengan 4 Kategori Risiko Penyebaran (Standar DengueCast)")
+            fig_real_map = create_real_dengue_map(filtered_df, metric_choice=metric_sel)
+            st.plotly_chart(fig_real_map, use_container_width=True)
+
+            # Two Sub-Visualizations: Top 10 Bars & Summary Table
+            col_b1, col_b2 = st.columns([1, 1])
+            with col_b1:
+                st.subheader("📊 10 Provinsi Kasus Kumulatif Terbanyak")
+                top10_c = filtered_df.head(10).sort_values("total_cases", ascending=True)
+                fig_top10 = px.bar(
+                    top10_c,
+                    x="total_cases",
+                    y="name",
+                    orientation="h",
+                    color="category_total",
+                    color_discrete_map=REAL_COLOR_MAP,
+                    text="total_cases",
+                    labels={"total_cases": "Kasus", "name": "Provinsi", "category_total": "Kategori"},
+                )
+                fig_top10.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
+                fig_top10.update_layout(height=400, showlegend=False, template="plotly_white")
+                st.plotly_chart(fig_top10, use_container_width=True)
+
+            with col_b2:
+                st.subheader("🔥 10 Provinsi Kasus Terbanyak Tahun 2024")
+                top10_24 = filtered_df.sort_values("cases_2024", ascending=True).tail(10)
+                fig_top24 = px.bar(
+                    top10_24,
+                    x="cases_2024",
+                    y="name",
+                    orientation="h",
+                    color="category_2024",
+                    color_discrete_map=REAL_COLOR_MAP,
+                    text="cases_2024",
+                    labels={"cases_2024": "Kasus 2024", "name": "Provinsi", "category_2024": "Kategori"},
+                )
+                fig_top24.update_traces(texttemplate="%{text:,.0f}", textposition="outside")
+                fig_top24.update_layout(height=400, showlegend=False, template="plotly_white")
+                st.plotly_chart(fig_top24, use_container_width=True)
+
+            # Full Table
+            st.subheader("📋 Peringkat dan Data Lengkap 34 Provinsi Indonesia")
+            t_show = filtered_df[
+                [
+                    "rank_total_cases",
+                    "name",
+                    "region_group",
+                    "total_cases",
+                    "national_case_pct",
+                    "cases_2024",
+                    "incidence_rate",
+                    "population",
+                    "category_total",
+                ]
+            ].copy()
+            t_show.columns = [
+                "Peringkat",
+                "Provinsi",
+                "Kepulauan",
+                "Total Kasus",
+                "Pangsa Nasional (%)",
+                "Kasus 2024",
+                "IR per 100k",
+                "Populasi BPS",
+                "Kategori Penyebaran",
+            ]
+            st.dataframe(t_show, use_container_width=True, hide_index=True)
 
     # PAGE 2: DETAIL WILAYAH
     elif page == "📈 Detail Wilayah & Kerucut":

@@ -106,6 +106,19 @@ def load(
 
     df = df.dropna(subset=["region_id"]).copy()
 
+    # Deduplicate temporal resolution: if monthly records exist for a year, drop annual aggregates
+    t_res_col = None
+    for col in ["T_res", "t_res", "temporal_res", "time_resolution"]:
+        if col in df.columns:
+            t_res_col = col
+            break
+    year_col = "Year" if "Year" in df.columns else ("year" if "year" in df.columns else None)
+    if t_res_col is not None and year_col is not None:
+        years_with_month = set(df[df[t_res_col].astype(str).str.lower() == "month"][year_col].dropna().astype(int))
+        is_month = df[t_res_col].astype(str).str.lower() == "month"
+        is_year_fallback = (df[t_res_col].astype(str).str.lower() == "year") & (~df[year_col].isin(years_with_month))
+        df = df[is_month | is_year_fallback].copy()
+
     # 4. Standardize date to month (YYYY-MM)
     dates = pd.to_datetime(df[date_col], errors="coerce")
     df["month"] = dates.dt.strftime("%Y-%m")

@@ -58,3 +58,8 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Scratch & temporary downloads
+scratch/
+data/ref/world_countries.geojson
+data/ref/world_countries_simplified.geojson

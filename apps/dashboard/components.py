@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -141,6 +143,135 @@ def create_risk_map(
             title_text="",
         ),
         height=480,
+    )
+    return fig
+
+
+REAL_COLOR_MAP = {
+    "Awas": "#d7191c",      # Vivid Red
+    "Siaga": "#fdae61",     # Warm Amber-Orange
+    "Waspada": "#abdda4",   # Soft Green-Teal
+    "Rendah": "#2b83ba",    # Slate Blue
+}
+
+REAL_CATEGORY_ORDER = [
+    "Awas",
+    "Siaga",
+    "Waspada",
+    "Rendah",
+]
+
+
+def create_real_dengue_map(
+    summary_df: pd.DataFrame,
+    metric_choice: str = "total_cases",
+    geojson_path: str = "data/ref/indonesia_provinces.geojson",
+) -> go.Figure:
+    """Render real Indonesia dengue distribution map using official boundaries."""
+    geo_file = Path(geojson_path)
+    cat_col = "category_total"
+    val_col = "total_cases"
+    val_title = "Total Kasus Kumulatif (2000-2024)"
+
+    if metric_choice == "cases_2024":
+        cat_col = "category_2024"
+        val_col = "cases_2024"
+        val_title = "Kasus Tahun 2024 (Outbreak Terkini)"
+    elif metric_choice == "incidence_rate":
+        cat_col = "category_ir"
+        val_col = "incidence_rate"
+        val_title = "Angka Insidens (IR per 100k Penduduk)"
+
+    if geo_file.exists():
+        with open(geo_file, encoding="utf-8") as f:
+            geojson_data = json.load(f)
+
+        fig = px.choropleth_map(
+            summary_df,
+            geojson=geojson_data,
+            locations="region_id",
+            featureidkey="id",
+            color=cat_col,
+            color_discrete_map=REAL_COLOR_MAP,
+            category_orders={cat_col: REAL_CATEGORY_ORDER},
+            hover_name="name",
+            hover_data={
+                "region_id": True,
+                val_col: True,
+                "total_cases": ":,",
+                "cases_2024": ":,",
+                "incidence_rate": ":.1f",
+                "national_case_pct": ":.2f",
+                "rank_total_cases": True,
+                cat_col: True,
+            },
+            labels={
+                cat_col: "Kategori Penyebaran",
+                val_col: val_title,
+                "total_cases": "Total Kasus Kumulatif",
+                "cases_2024": "Kasus 2024",
+                "incidence_rate": "Insidens per 100k",
+                "national_case_pct": "% Nasional",
+                "rank_total_cases": "Peringkat Nasional",
+            },
+            map_style="open-street-map",
+            center={"lat": -2.5, "lon": 118.0},
+            zoom=3.8,
+            opacity=0.65,
+        )
+    else:
+        fig = px.scatter_map(
+            summary_df,
+            lat="lat",
+            lon="lon",
+            color=cat_col,
+            color_discrete_map=REAL_COLOR_MAP,
+            category_orders={cat_col: REAL_CATEGORY_ORDER},
+            size=np.maximum(10, np.sqrt(summary_df["total_cases"]) / 22),
+            hover_name="name",
+            hover_data={
+                "region_id": True,
+                val_col: True,
+                "total_cases": ":,",
+                "incidence_rate": ":.1f",
+            },
+            map_style="open-street-map",
+            center={"lat": -2.5, "lon": 118.0},
+            zoom=3.8,
+        )
+
+    # Add Bubble Markers on Centroids for visual pop
+    if "lon" in summary_df and "lat" in summary_df:
+        fig.add_trace(
+            go.Scattermap(
+                lon=summary_df["lon"],
+                lat=summary_df["lat"],
+                hovertext=summary_df["name"],
+                hoverinfo="text",
+                mode="markers",
+                marker=dict(
+                    size=np.maximum(8, np.sqrt(summary_df["total_cases"]) / 24),
+                    color=summary_df[cat_col].map(REAL_COLOR_MAP),
+                    opacity=0.9,
+                ),
+                showlegend=False,
+                name="Centroid Titik",
+            )
+        )
+
+    fig.update_layout(
+        template="plotly_white",
+        height=540,
+        margin=dict(l=0, r=0, t=30, b=0),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            title_text="<b>Kategori Penyebaran Kasus:</b> ",
+            font=dict(size=12),
+        ),
     )
     return fig
 

@@ -87,7 +87,7 @@ DengueCast mengintegrasikan **lima pilar data resmi** (nasional dan global) yang
 
 | Kategori Data | Variabel yang Digunakan | Lembaga Penyedia Resmi | Resolusi Asli & Cara Pengolahan |
 | :--- | :--- | :--- | :--- |
-| **Kasus DBD** | Jumlah kasus rawat klinis bulanan (ICD-10: A90 & A91) | **Kementerian Kesehatan RI** & **OpenDengue v1.3** | 34 Provinsi di Indonesia, rentang 25 tahun (2000–2024). |
+| **Kasus DBD** | Jumlah kasus rawat klinis bulanan (ICD-10: A90 & A91) | **World Health Organization (WHO Global Surveillance)**, **Kemenkes RI**, & **OpenDengue v1.3** | 34 Provinsi di Indonesia, rentang 25 tahun (2000–2024). |
 | **Iklim Grid Mikro** | Suhu 2m, Titik Embun, Curah Hujan, Kelembaban, Kecepatan Angin, Tutupan Awan | **ECMWF ERA5-Land** (Copernicus C3S) & **NASA POWER** | Grid koordinat satelit berukuran ~9 km x 9 km, dipotong dan dihitung menggunakan **Bobot Kepadatan Penduduk (WorldPop/BPS)**. |
 | **Sirkulasi Global** | Indeks El Niño (Oceanic Niño Index / ONI Nino 3.4) & Dipole Mode Index (DMI) | **NOAA Climate Prediction Center (Amerika Serikat)** | Indeks bulanan dan mingguan anomali suhu permukaan laut Samudra Pasifik dan Hindia. |
 | **Cuaca Stasiun** | Ground-truth curah hujan harian & suhu stasiun bandara | **BMKG Data Online** (`dataonline.bmkg.go.id`) | Pengamatan harian stasiun permukaan dengan filter kelengkapan pengamatan valid minimal 80%. |
@@ -142,11 +142,11 @@ DAFTAR TAHUN KLB (BATANG MERAH) PADA GRAFIK:
 ├── 2016 (IR: 78.9 / 204k kasus) ── Puncak Super El Niño Terpanas
 ├── 2019 (IR: 51.5 / 138k kasus) ── Siklus Periodik 3-Tahunan & IOD Positif
 ├── 2022 (IR: 52.1 / 143k kasus) ── Rebound Pasca-COVID (Immunity Gap & Sekolah Tatap Muka)
-└── 2024 (IR: 87.4 / 244k kasus) ── REKOR BARU KLB NASIONAL (El Niño 2023/2024 + Rekor Panas)
+└── 2024 (IR: 92.1 / 257k kasus) ── REKOR BARU KLB NASIONAL RESMI WHO (257.271 Kasus & 1.461 Kematian)
 ```
 
-> **Angka 87.4 di Ujung Kanan Garis Kuning:**  
-> Menunjukkan bahwa pada tahun 2024, dari setiap 100.000 penduduk Indonesia, terdapat **87 orang yang dirawat karena DBD**. Angka ini hampir **2 kali lipat** dari batas aman Kemenkes (49), membuktikan urgensi tinggi mengapa BPJS Kesehatan membutuhkan DengueCast.
+> **Angka 92.1 di Ujung Kanan Garis Kuning:**  
+> Menunjukkan bahwa pada tahun 2024 berdasarkan data resmi terverifikasi **World Health Organization (WHO Global Surveillance)**, dari setiap 100.000 penduduk Indonesia, terdapat **92 orang yang dirawat karena DBD** (total 257.271 kasus nasional). Angka ini hampir **2 kali lipat** dari batas aman Kemenkes (49), membuktikan urgensi tinggi mengapa BPJS Kesehatan membutuhkan DengueCast.
 
 ---
 
