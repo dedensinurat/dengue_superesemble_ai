@@ -1473,35 +1473,88 @@ def generate_interactive_html_map(
             background: #e2e8f0;
         }}
 
-        /* FLOATING MAP CONTROLS */
+        /* FLOATING BOTTOM HORIZONTAL LEGEND BAR */
         .map-floating-legend {{
             position: absolute;
-            top: 75px;
+            bottom: 10px;
             left: 12px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 10px 14px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-            min-width: 195px;
-            max-width: 230px;
-            font-size: 11.5px;
+            border-radius: 9999px;
+            padding: 5px 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            max-width: calc(100% - 250px);
+            overflow-x: auto;
+            white-space: nowrap;
+        }}
+        .map-floating-legend::-webkit-scrollbar {{
+            height: 2px;
+        }}
+        .map-floating-legend::-webkit-scrollbar-thumb {{
+            background: #cbd5e1;
+        }}
+        .legend-horizontal-wrap {{
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }}
+        .legend-title-inline {{
+            font-size: 11px;
+            font-weight: 800;
+            color: #0f172a;
+            white-space: nowrap;
+        }}
+        .legend-item {{
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #334155;
+            white-space: nowrap;
+        }}
+        .legend-swatch {{
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }}
+        .legend-count-tag {{
+            font-size: 10px;
+            font-weight: 800;
+            color: #0f172a;
+            background: #f1f5f9;
+            padding: 0 4px;
+            border-radius: 4px;
+            margin-left: 2px;
+        }}
+        .legend-divider {{
+            width: 1px;
+            height: 16px;
+            background: #cbd5e1;
+            flex-shrink: 0;
         }}
         .legend-gradient-bar {{
-            width: 100%;
-            height: 10px;
+            width: 120px;
+            height: 8px;
             border-radius: 4px;
-            margin: 5px 0 3px 0;
+            margin: 0 0 2px 0;
             border: 1px solid rgba(0, 0, 0, 0.12);
         }}
         .legend-ticks {{
             display: flex;
             justify-content: space-between;
-            font-size: 9px;
+            font-size: 8px;
             color: #64748b;
             font-weight: 600;
+            width: 120px;
         }}
         .legend-section-title {{
             font-size: 10px;
@@ -1509,7 +1562,7 @@ def generate_interactive_html_map(
             color: #0f172a;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            margin: 6px 0 2px 0;
+            margin: 0 4px 0 0;
         }}
         .wind-div-icon {{
             background: transparent;
@@ -1532,21 +1585,21 @@ def generate_interactive_html_map(
             gap: 3px;
         }}
         .map-floating-legend b {{
-            display: block;
-            margin-bottom: 6px;
-            font-size: 12px;
+            display: inline;
+            margin-bottom: 0;
+            font-size: 11px;
             color: var(--text-main);
         }}
         .legend-row {{
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
+            gap: 5px;
+            margin-bottom: 0;
             color: var(--text-sub);
         }}
         .legend-dot {{
-            width: 11px;
-            height: 11px;
+            width: 12px;
+            height: 12px;
             border-radius: 3px;
         }}
 
@@ -1739,17 +1792,7 @@ def generate_interactive_html_map(
         }}
 
         .map-floating-scale {{
-            position: absolute;
-            bottom: 8px;
-            left: 12px;
-            z-index: 1000;
-            background: rgba(255,255,255,0.85);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 10.5px;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-sub);
-            border: 1px solid #e2e8f0;
+            display: none !important;
         }}
 
         /* RIGHT PANEL COLUMN (Historical Event & Sparkline) */
@@ -2148,30 +2191,21 @@ def generate_interactive_html_map(
         <div class="main-layout">
             <!-- LEFT: MAP CARD WITH FLOATING CONTROLS -->
             <div class="map-card">
-                <!-- Floating Legend Container -->
+                <!-- Floating Legend Container (Horizontal Bottom Bar) -->
                 <div class="map-floating-legend" id="map-legend-box">
                     <div id="legend-content">
-                        <b>Tingkat Risiko DBD (<span id="leg-year-label">2024</span>)</b>
-                        <div class="legend-row">
-                            <div class="legend-dot" style="background: #a64920;"></div>
-                            <span>Awas (&ge; 10k): <b id="cnt-awas">6</b></span>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-dot" style="background: #df9b30;"></div>
-                            <span>Siaga (4k–10k): <b id="cnt-siaga">6</b></span>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
-                            <span>Waspada (1.5k–4k): <b id="cnt-waspada">11</b></span>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
-                            <span>Rendah (&lt; 1.5k): <b id="cnt-rendah">11</b></span>
+                        <div class="legend-horizontal-wrap">
+                            <span class="legend-title-inline">Beban Kasus:</span>
+                            <div class="legend-item"><div class="legend-swatch" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div><span>&lt; 1.5k (rendah) <b class="legend-count-tag" id="cnt-rendah">6</b></span></div>
+                            <div class="legend-item"><div class="legend-swatch" style="background: #f3daa2; border: 1px solid #d4c599;"></div><span>1.5k&ndash;4k <b class="legend-count-tag" id="cnt-waspada">11</b></span></div>
+                            <div class="legend-item"><div class="legend-swatch" style="background: #df9b30;"></div><span>4k&ndash;10k <b class="legend-count-tag" id="cnt-siaga">6</b></span></div>
+                            <div class="legend-item"><div class="legend-swatch" style="background: #a64920;"></div><span>&ge; 10k (awas) <b class="legend-count-tag" id="cnt-awas">6</b></span></div>
                         </div>
                     </div>
-                    <div style="margin-top: 6px; padding-top: 4px; border-top: 1px dashed #cbd5e1; display: flex; gap: 4px;" id="legend-metric-switch">
-                        <button id="btn-m-cases" class="basemap-btn active" style="font-size: 10px; padding: 2px 6px; color: #0284c7; background: #e0f2fe;" onclick="switchMetric('total_cases')">Kasus</button>
-                        <button id="btn-m-ir" class="basemap-btn" style="font-size: 10px; padding: 2px 6px; color: #64748b;" onclick="switchMetric('incidence_rate')">Insidens IR</button>
+                    <div class="legend-divider" id="legend-divider"></div>
+                    <div id="legend-metric-switch" style="display: flex; gap: 4px;">
+                        <button id="btn-m-cases" class="basemap-btn active" style="font-size: 10px; padding: 2px 7px; color: #0284c7; background: #e0f2fe;" onclick="switchMetric('total_cases')">Kasus</button>
+                        <button id="btn-m-ir" class="basemap-btn" style="font-size: 10px; padding: 2px 7px; color: #64748b;" onclick="switchMetric('incidence_rate')">Insidens IR</button>
                     </div>
                 </div>
 
@@ -2179,8 +2213,8 @@ def generate_interactive_html_map(
                 <div class="map-floating-modes">
                     <div id="idn-map-modes" style="display: flex; align-items: center; gap: 4px;">
                         <span class="mode-tag">MODE IKLIM (INDONESIA):</span>
-                        <button class="mode-btn active" id="btn-mode-temp" onclick="switchMapMode('temp')">🌡️ Suhu Udara</button>
-                        <button class="mode-btn" id="btn-mode-risk" onclick="switchMapMode('risk')">🔴 Kasus DBD</button>
+                        <button class="mode-btn active" id="btn-mode-risk" onclick="switchMapMode('risk')">🔴 Kasus DBD</button>
+                        <button class="mode-btn" id="btn-mode-temp" onclick="switchMapMode('temp')">🌡️ Suhu Udara</button>
                         <button class="mode-btn" id="btn-mode-rain" onclick="switchMapMode('rain')">🌧️ Curah Hujan</button>
                         <button class="mode-btn" id="btn-mode-wind" onclick="switchMapMode('wind')">💨 Angin BMKG</button>
                         <button class="mode-btn" id="btn-mode-driver" onclick="switchMapMode('driver')">🧭 Pendorong Iklim</button>
@@ -2518,7 +2552,7 @@ def generate_interactive_html_map(
     let showWorldHotspots = true;
     let currentYear = 2024;
     let currentMetric = 'total_cases';
-    let currentMapMode = 'temp';
+    let currentMapMode = 'risk';
     let showBadges = true;
     let currentOpacity = 0.70;
     let isPlaying = false;
@@ -3245,115 +3279,56 @@ def generate_interactive_html_map(
     function updateWorldLegend() {{
         const legBox = document.getElementById('legend-content');
         const metricSwitch = document.getElementById('legend-metric-switch');
+        const legDivider = document.getElementById('legend-divider');
         if (!legBox) return;
 
         if (metricSwitch) metricSwitch.style.display = 'none';
+        if (legDivider) legDivider.style.display = 'none';
 
         if (currentWorldMetric === 'cases') {{
             legBox.innerHTML = `
-                <b>Beban Kasus DBD Dunia (WHO 2024)</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #7f1d1d;"></div>
-                    <span>&ge; 1.000.000 (Brazil: 10.2M)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #dc2626;"></div>
-                    <span>250k &ndash; 1M (IDN, ARG, MEX, dll)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>50k &ndash; 250k (MYS, VNM, PHL, dll)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #f59e0b;"></div>
-                    <span>10k &ndash; 50k (Waspada Menengah)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #10b981;"></div>
-                    <span>1k &ndash; 10k (Terpantau)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #0284c7;"></div>
-                    <span>&lt; 1.000 Kasus</span>
-                </div>
-                <div style="margin-top:6px; padding-top:4px; border-top:1px dashed #cbd5e1; font-size:10px; color:#059669; font-weight:700;">
-                    🇮🇩 Garis Hijau: Indonesia (#7 Global)
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">Beban WHO:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0284c7;"></div><span>&lt; 1k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #10b981;"></div><span>1k&ndash;10k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #f59e0b;"></div><span>10k&ndash;50k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ea580c;"></div><span>50k&ndash;250k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #dc2626;"></div><span>250k&ndash;1M (IDN)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7f1d1d;"></div><span>&ge; 1M</span></div>
                 </div>
             `;
         }} else if (currentWorldMetric === 'ir') {{
             legBox.innerHTML = `
-                <b>Angka Insidens IR (per 100k Penduduk)</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #7f1d1d;"></div>
-                    <span>&ge; 1.000 / 100k (Hiperendemis)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #dc2626;"></div>
-                    <span>250 &ndash; 1.000 / 100k</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>100 &ndash; 250 / 100k</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #f59e0b;"></div>
-                    <span>49 &ndash; 100 / 100k (IDN: 92.1)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #10b981;"></div>
-                    <span>10 &ndash; 49 / 100k (Batas Aman)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #0284c7;"></div>
-                    <span>&lt; 10 / 100k</span>
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">Insidens IR (/100k):</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0284c7;"></div><span>&lt; 10</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #10b981;"></div><span>10&ndash;49</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #f59e0b;"></div><span>49&ndash;100 (IDN)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ea580c;"></div><span>100&ndash;250</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #dc2626;"></div><span>250&ndash;1k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7f1d1d;"></div><span>&ge; 1.000</span></div>
                 </div>
             `;
         }} else if (currentWorldMetric === 'deaths') {{
             legBox.innerHTML = `
-                <b>Total Kematian Dengue (WHO 2024)</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #7f1d1d;"></div>
-                    <span>&ge; 1.000 Wafat (BRA, IDN: 1.461)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #dc2626;"></div>
-                    <span>200 &ndash; 1.000 Wafat</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>50 &ndash; 200 Wafat</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #f59e0b;"></div>
-                    <span>10 &ndash; 50 Wafat</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #0284c7;"></div>
-                    <span>&lt; 10 Wafat</span>
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">Kematian:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0284c7;"></div><span>&lt; 10</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #f59e0b;"></div><span>10&ndash;50</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ea580c;"></div><span>50&ndash;200</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #dc2626;"></div><span>200&ndash;1k</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7f1d1d;"></div><span>&ge; 1.000 (IDN: 1.461)</span></div>
                 </div>
             `;
         }} else if (currentWorldMetric === 'cfr') {{
             legBox.innerHTML = `
-                <b>Tingkat Kematian Kasus (CFR %)</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #7f1d1d;"></div>
-                    <span>&ge; 1.00% (Kritis Tinggi)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #dc2626;"></div>
-                    <span>0.50% &ndash; 1.00% (IDN: 0.57%)</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>0.20% &ndash; 0.50%</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #f59e0b;"></div>
-                    <span>0.05% &ndash; 0.20%</span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #0284c7;"></div>
-                    <span>&lt; 0.05%</span>
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">CFR (%):</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0284c7;"></div><span>&lt; 0.05%</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #f59e0b;"></div><span>0.05&ndash;0.2%</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ea580c;"></div><span>0.2&ndash;0.5%</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #dc2626;"></div><span>0.5&ndash;1.0% (IDN: 0.57%)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7f1d1d;"></div><span>&ge; 1.0%</span></div>
                 </div>
             `;
         }}
@@ -3479,147 +3454,99 @@ def generate_interactive_html_map(
 
         if (currentMapMode === 'risk') {{
             metricSwitch.style.display = 'flex';
+            if (document.getElementById('legend-divider')) {{
+                document.getElementById('legend-divider').style.display = 'block';
+            }}
             const counts = (currentMetric === 'incidence_rate') ? nat.counts_ir : nat.counts_cases;
             if (currentMetric === 'incidence_rate') {{
                 legContent.innerHTML = `
-                    <b>Angka Insidens IR (per 100k) (${{currentYear}})</b>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #a64920;"></div>
-                        <span>&ge; 100: <b>${{counts.Awas}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #df9b30;"></div>
-                        <span>65 &ndash; 100: <b>${{counts.Siaga}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
-                        <span>40 &ndash; 65: <b>${{counts.Waspada}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
-                        <span>&lt; 40 (rendah): <b>${{counts.Rendah}}</b></span>
+                    <div class="legend-horizontal-wrap">
+                        <span class="legend-title-inline">Insidens IR:</span>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div><span>&lt;40 (rendah) <b class="legend-count-tag">${{counts.Rendah || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #f3daa2; border: 1px solid #d4c599;"></div><span>40&ndash;65 <b class="legend-count-tag">${{counts.Waspada || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #df9b30;"></div><span>65&ndash;100 <b class="legend-count-tag">${{counts.Siaga || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #a64920;"></div><span>&ge;100 <b class="legend-count-tag">${{counts.Awas || 0}}</b></span></div>
                     </div>
                 `;
             }} else {{
                 legContent.innerHTML = `
-                    <b>Tingkat Kasus DBD (${{currentYear}})</b>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #a64920;"></div>
-                        <span>Awas (&ge; 10k): <b>${{counts.Awas}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #df9b30;"></div>
-                        <span>Siaga (4k–10k): <b>${{counts.Siaga}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
-                        <span>Waspada (1.5k–4k): <b>${{counts.Waspada}}</b></span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
-                        <span>Rendah (&lt; 1.5k): <b>${{counts.Rendah}}</b></span>
+                    <div class="legend-horizontal-wrap">
+                        <span class="legend-title-inline">Beban Kasus:</span>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div><span>&lt; 1.5k (rendah) <b class="legend-count-tag">${{counts.Rendah || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #f3daa2; border: 1px solid #d4c599;"></div><span>1.5k&ndash;4k <b class="legend-count-tag">${{counts.Waspada || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #df9b30;"></div><span>4k&ndash;10k <b class="legend-count-tag">${{counts.Siaga || 0}}</b></span></div>
+                        <div class="legend-item"><div class="legend-swatch" style="background: #a64920;"></div><span>&ge; 10k (awas) <b class="legend-count-tag">${{counts.Awas || 0}}</b></span></div>
                     </div>
                 `;
             }}
         }} else if (currentMapMode === 'temp') {{
             metricSwitch.style.display = 'none';
+            if (document.getElementById('legend-divider')) {{
+                document.getElementById('legend-divider').style.display = 'none';
+            }}
             legContent.innerHTML = `
-                <div style="font-weight:800; font-size:12px; margin-bottom:5px; color:#0f172a;">🌡️ Tingkat Suhu Udara BMKG (°C)</div>
-                <div class="legend-gradient-bar" style="background: linear-gradient(to right, #fef08a, #fed7aa, #fdba74, #fb923c, #ef4444, #b91c1c);"></div>
-                <div class="legend-ticks">
-                    <span>< 25.5°</span>
-                    <span>26.8°</span>
-                    <span style="color:#fb923c; font-weight:700;">27.7° (Jawa)</span>
-                    <span style="color:#ef4444; font-weight:800;">28.4° (Kaltim)</span>
-                    <span style="color:#b91c1c; font-weight:800;">> 28.8°</span>
-                </div>
-                ${{showHotspots ? `
-                <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #cbd5e1;">
-                    <div class="legend-row">
-                        <div style="width:16px; height:0; border-top:3px dashed #dc2626; margin-right:6px;"></div>
-                        <span style="font-weight:700; color:#dc2626; font-size:11px;">Garis Merah & 🔥: Hotspot Kasus Awas</span>
-                    </div>
-                </div>
-                ` : ''}}
-                <div style="font-size:9.5px; color:#64748b; margin-top:5px; line-height:1.35;">
-                    *Suhu Kalimantan (28.4°C) lebih panas daripada Jawa Barat (27.7°C). Lonjakan kasus DBD di Jawa didorong oleh densitas penduduk perkotaan yang tinggi pada suhu optimum transmisi (26–28°C).
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">🌡️ Suhu BMKG:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #fef08a;"></div><span>&lt;25.5°</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #fdba74;"></div><span>25.5&ndash;27.5°</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #fb923c;"></div><span>27.7° (Jawa)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ef4444;"></div><span>28.4° (Kaltim)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #b91c1c;"></div><span>&gt;28.8°</span></div>
+                    ${{showHotspots ? `
+                    <div class="legend-item" style="margin-left:4px; padding-left:8px; border-left:1px solid #cbd5e1;">
+                        <span style="font-weight:700; color:#dc2626;">🔥 Hotspot Awas</span>
+                    </div>` : ''}}
                 </div>
             `;
         }} else if (currentMapMode === 'wind') {{
             metricSwitch.style.display = 'none';
+            if (document.getElementById('legend-divider')) {{
+                document.getElementById('legend-divider').style.display = 'none';
+            }}
             legContent.innerHTML = `
-                <div style="font-weight:800; font-size:12px; margin-bottom:5px; color:#0f172a;">💨 Angin Permukaan BMKG</div>
-                <div class="legend-section-title">SKALA KECEPATAN ANGIN:</div>
-                <div class="legend-gradient-bar" style="background: linear-gradient(to right, #e0f2fe, #bae6fd, #38bdf8, #0284c7, #1d4ed8, #172554);"></div>
-                <div class="legend-ticks">
-                    <span>< 4 m/s (Tenang)</span>
-                    <span>7 m/s (Sedang)</span>
-                    <span style="color:#172554; font-weight:800;">> 10.5 m/s (Kencang)</span>
-                </div>
-                ${{showHotspots ? `
-                <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #cbd5e1;">
-                    <div class="legend-row">
-                        <div style="width:16px; height:0; border-top:3px dashed #dc2626; margin-right:6px;"></div>
-                        <span style="font-weight:700; color:#dc2626; font-size:11px;">Garis Merah & 🔥: Hotspot Kasus Awas</span>
-                    </div>
-                </div>
-                ` : ''}}
-                <div style="font-size:9.5px; color:#0284c7; margin-top:5px; line-height:1.3;">
-                    *Angin tenang (&lt;5 m/s) sangat disukai nyamuk Aedes aegypti untuk mencari mangsa.
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">💨 Kecepatan Angin:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #bae6fd;"></div><span>&lt;4 m/s (Tenang)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0284c7;"></div><span>4&ndash;7 m/s (Sedang)</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #172554;"></div><span>&gt;10 m/s (Kencang)</span></div>
+                    ${{showHotspots ? `
+                    <div class="legend-item" style="margin-left:4px; padding-left:8px; border-left:1px solid #cbd5e1;">
+                        <span style="font-weight:700; color:#dc2626;">🔥 Hotspot Awas</span>
+                    </div>` : ''}}
                 </div>
             `;
         }} else if (currentMapMode === 'rain') {{
             metricSwitch.style.display = 'none';
+            if (document.getElementById('legend-divider')) {{
+                document.getElementById('legend-divider').style.display = 'none';
+            }}
             legContent.innerHTML = `
-                <div style="font-weight:800; font-size:12px; margin-bottom:5px; color:#0f172a;">🌧️ Curah Hujan Bulanan BMKG</div>
-                <div class="legend-section-title">SKALA CURAH HUJAN:</div>
-                <div class="legend-gradient-bar" style="background: linear-gradient(to right, #fef08a, #86efac, #22c55e, #0ea5e9, #2563eb, #7c3aed);"></div>
-                <div class="legend-ticks">
-                    <span>< 100mm</span>
-                    <span>200mm</span>
-                    <span>300mm</span>
-                    <span>> 400mm (Ungu)</span>
-                </div>
-                ${{showHotspots ? `
-                <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #cbd5e1;">
-                    <div class="legend-row">
-                        <div style="width:16px; height:0; border-top:3px dashed #dc2626; margin-right:6px;"></div>
-                        <span style="font-weight:700; color:#dc2626; font-size:11px;">Garis Merah & 🔥: Hotspot Kasus Awas</span>
-                    </div>
-                </div>
-                ` : ''}}
-                <div style="font-size:9.5px; color:#64748b; margin-top:5px; line-height:1.3;">
-                    *Curah hujan sedang-tinggi (150–300 mm) memperluas genangan air bersih tempat perindukan nyamuk.
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">🌧️ Curah Hujan:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #fef08a;"></div><span>&lt;100 mm</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #22c55e;"></div><span>100&ndash;250 mm</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #0ea5e9;"></div><span>250&ndash;350 mm</span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7c3aed;"></div><span>&gt;400 mm</span></div>
+                    ${{showHotspots ? `
+                    <div class="legend-item" style="margin-left:4px; padding-left:8px; border-left:1px solid #cbd5e1;">
+                        <span style="font-weight:700; color:#dc2626;">🔥 Hotspot Awas</span>
+                    </div>` : ''}}
                 </div>
             `;
         }} else if (currentMapMode === 'driver') {{
             metricSwitch.style.display = 'none';
+            if (document.getElementById('legend-divider')) {{
+                document.getElementById('legend-divider').style.display = 'none';
+            }}
             const dCounts = nat.counts_driver || {{}};
             legContent.innerHTML = `
-                <b>Asosiasi Iklim Dominan (${{currentYear}})</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>⚡ Panas & Hujan: <b>${{dCounts.compound || 0}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #f97316;"></div>
-                    <span>🔥 Suhu Panas: <b>${{dCounts.heat || 0}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #2563eb;"></div>
-                    <span>🌧️ Hujan Ekstrem: <b>${{dCounts.rain || 0}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #7c3aed;"></div>
-                    <span>🟣 Kemarau El Niño: <b>${{dCounts.elnino_dry || 0}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #059669;"></div>
-                    <span>🌿 Lembab Tropis: <b>${{dCounts.humid || 0}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #64748b;"></div>
-                    <span>⚪ Normal: <b>${{dCounts.normal || 0}}</b></span>
+                <div class="legend-horizontal-wrap">
+                    <span class="legend-title-inline">🧭 Driver:</span>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #ea580c;"></div><span>Panas &amp; Hujan <b class="legend-count-tag">${{dCounts.compound || 0}}</b></span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #f97316;"></div><span>Suhu Panas <b class="legend-count-tag">${{dCounts.heat || 0}}</b></span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #2563eb;"></div><span>Hujan Ekstrem <b class="legend-count-tag">${{dCounts.rain || 0}}</b></span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #7c3aed;"></div><span>El Niño <b class="legend-count-tag">${{dCounts.elnino_dry || 0}}</b></span></div>
+                    <div class="legend-item"><div class="legend-swatch" style="background: #059669;"></div><span>Lembab <b class="legend-count-tag">${{dCounts.humid || 0}}</b></span></div>
                 </div>
             `;
         }}
@@ -4137,6 +4064,7 @@ def generate_high_res_static_map(
     ax.legend(
         handles=legend_patches,
         loc="lower left",
+        ncol=4,
         title="Tingkat Risiko & Sebaran DBD (DengueCast Early Warning)",
         title_fontsize=10,
         fontsize=9,
