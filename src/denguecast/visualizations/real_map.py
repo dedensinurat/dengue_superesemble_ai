@@ -2200,8 +2200,8 @@ def generate_interactive_html_map(
                     <span class="card-stat-label">TOTAL KASUS GLOBAL</span>
                     <span>🚨</span>
                 </div>
-                <div class="card-stat-val" style="color: #dc2626;">12,860,000+ <span style="font-size: 12px; font-weight:600;">kasus</span></div>
-                <div class="card-stat-sub">Rekor Tertinggi Abad Ini</div>
+                <div class="card-stat-val" style="color: #dc2626;">14,506,000+ <span style="font-size: 12px; font-weight:600;">kasus</span></div>
+                <div class="card-stat-sub">Rekor Validasi Resmi WHO 2024</div>
             </div>
 
             <!-- Card 3: Insidens Tertinggi -->
@@ -2230,8 +2230,8 @@ def generate_interactive_html_map(
                     <span class="card-stat-label">TOTAL KEMATIAN</span>
                     <span>⚠️</span>
                 </div>
-                <div class="card-stat-val" style="color: #e11d48;">8,500+ Wafat</div>
-                <div class="card-stat-sub">Case Fatality Rate 0.07%</div>
+                <div class="card-stat-val" style="color: #e11d48;">11,347 Wafat</div>
+                <div class="card-stat-sub">Case Fatality Rate 0.08%</div>
             </div>
 
             <!-- Card 6: Serotipe Global -->
@@ -2398,7 +2398,7 @@ def generate_interactive_html_map(
                             </div>
                             <div class="side-card-title">Puncak Kasus DBD Tertinggi Abad Ini</div>
                             <div class="side-card-body">
-                                World Health Organization (WHO) memvalidasi lebih dari <b>12,8 juta kasus dengue</b> di seluruh dunia sepanjang 2024—rekor tertinggi dalam sejarah akibat anomali pemanasan global dan El Niño.
+                                World Health Organization (WHO) memvalidasi lebih dari <b>14,5 juta kasus dengue</b> (11.347 kematian) di seluruh dunia sepanjang 2024—rekor tertinggi dalam sejarah akibat anomali pemanasan global dan El Niño.
                             </div>
                             <div style="margin-top: 10px; padding: 8px 10px; background: #fef2f2; border-radius: 8px; border: 1px solid #fecaca; font-size: 11.5px;">
                                 <div style="font-weight: 800; color: #991b1b; margin-bottom: 2px;">
@@ -2967,19 +2967,21 @@ def generate_interactive_html_map(
         {{ iso: "BRA", name: "Brazil", cases: 10266017, rank: 1, lat: -14.2, lon: -51.9, tag: "10.2M (#1)" }},
         {{ iso: "ARG", name: "Argentina", cases: 581559, rank: 2, lat: -38.4, lon: -63.6, tag: "581k (#2)" }},
         {{ iso: "MEX", name: "Mexico", cases: 558846, rank: 3, lat: 23.6, lon: -102.5, tag: "558k (#3)" }},
-        {{ iso: "COL", name: "Colombia", cases: 326982, rank: 4, lat: 4.5, lon: -73.2, tag: "326k (#4)" }},
-        {{ iso: "PRY", name: "Paraguay", cases: 310886, rank: 5, lat: -23.4, lon: -58.4, tag: "310k (#5)" }},
-        {{ iso: "PER", name: "Peru", cases: 275031, rank: 6, lat: -9.1, lon: -75.0, tag: "275k (#6)" }},
+        {{ iso: "COL", name: "Colombia", cases: 320982, rank: 4, lat: 4.5, lon: -73.2, tag: "321k (#4)" }},
+        {{ iso: "PRY", name: "Paraguay", cases: 295785, rank: 5, lat: -23.4, lon: -58.4, tag: "295k (#5)" }},
+        {{ iso: "PER", name: "Peru", cases: 271531, rank: 6, lat: -9.1, lon: -75.0, tag: "271k (#6)" }},
         {{ iso: "IDN", name: "Indonesia", cases: 257271, rank: 7, lat: -0.7, lon: 113.9, tag: "257k (#7)", special: true }},
-        {{ iso: "MYS", name: "Malaysia", cases: 124317, rank: 8, lat: 4.2, lon: 101.9, tag: "124k (#8)" }},
-        {{ iso: "VNM", name: "Vietnam", cases: 118400, rank: 9, lat: 14.0, lon: 108.2, tag: "118k (#9)" }},
-        {{ iso: "PHL", name: "Philippines", cases: 98000, rank: 10, lat: 12.8, lon: 121.7, tag: "98k (#10)" }},
-        {{ iso: "SGP", name: "Singapura", cases: 13500, rank: 25, lat: 1.35, lon: 103.8, tag: "13.5k (#25)" }},
-        {{ iso: "IND", name: "India", cases: 94000, rank: 11, lat: 20.5, lon: 78.9, tag: "94k (#11)" }},
-        {{ iso: "BGD", name: "Bangladesh", cases: 88000, rank: 12, lat: 23.6, lon: 90.3, tag: "88k (#12)" }},
-        {{ iso: "THA", name: "Thailand", cases: 78000, rank: 13, lat: 15.8, lon: 100.9, tag: "78k (#13)" }},
-        {{ iso: "BFA", name: "Burkina Faso", cases: 68000, rank: 14, lat: 12.2, lon: -1.5, tag: "68k (#14)" }},
-        {{ iso: "SDN", name: "Sudan", cases: 18500, rank: 22, lat: 12.8, lon: 30.2, tag: "18.5k (#22)" }}
+        {{ iso: "IND", name: "India", cases: 232425, rank: 8, lat: 20.5, lon: 78.9, tag: "232k (#8)" }},
+        {{ iso: "GTM", name: "Guatemala", cases: 188585, rank: 9, lat: 15.8, lon: -90.2, tag: "188k (#9)" }},
+        {{ iso: "HND", name: "Honduras", cases: 177209, rank: 10, lat: 15.2, lon: -86.2, tag: "177k (#10)" }},
+        {{ iso: "MYS", name: "Malaysia", cases: 122423, rank: 11, lat: 4.2, lon: 101.9, tag: "122k (#11)" }},
+        {{ iso: "VNM", name: "Vietnam", cases: 108433, rank: 12, lat: 14.0, lon: 108.2, tag: "108k (#12)" }},
+        {{ iso: "THA", name: "Thailand", cases: 104681, rank: 13, lat: 15.8, lon: 100.9, tag: "104k (#13)" }},
+        {{ iso: "BGD", name: "Bangladesh", cases: 101214, rank: 14, lat: 23.6, lon: 90.3, tag: "101k (#14)" }},
+        {{ iso: "NIC", name: "Nicaragua", cases: 92022, rank: 15, lat: 12.8, lon: -85.2, tag: "92k (#15)" }},
+        {{ iso: "BFA", name: "Burkina Faso", cases: 73808, rank: 16, lat: 12.2, lon: -1.5, tag: "73k (#16)" }},
+        {{ iso: "SGP", name: "Singapura", cases: 13655, rank: 32, lat: 1.35, lon: 103.8, tag: "13.6k (#32)" }},
+        {{ iso: "SDN", name: "Sudan", cases: 10985, rank: 34, lat: 12.8, lon: 30.2, tag: "10.9k (#34)" }}
     ];
 
     function renderWorldHotspotPins() {{
