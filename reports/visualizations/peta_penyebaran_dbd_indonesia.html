@@ -518,7 +518,7 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            height: 480px;
+            height: 540px;
         }
         #leaflet-map {
             width: 100%;
@@ -823,19 +823,20 @@
             backdrop-filter: blur(8px);
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            padding: 5px 10px;
-            font-size: 11.5px;
+            padding: 5px 8px;
+            font-size: 11px;
             font-family: inherit;
             cursor: pointer;
             outline: none;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            max-width: 175px;
         }
         .btn-reset-view {
             background: rgba(255,255,255,0.95);
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            padding: 5px 10px;
-            font-size: 11.5px;
+            padding: 5px 8px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -850,25 +851,40 @@
 
         /* RIGHT PANEL COLUMN (Historical Event & Sparkline) */
         .right-col {
+            height: 540px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+        }
+        #right-col-idn {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .side-card {
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: 14px;
-            padding: 16px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+        .side-card-top {
+            flex: 1;
+            min-height: 0;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .side-card-top {
-            flex: 1;
-        }
         .side-card-bottom {
-            height: 195px;
+            height: 185px;
+            flex-shrink: 0;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .badge-event {
             background: #f1f5f9;
@@ -882,16 +898,20 @@
             letter-spacing: 0.05em;
         }
         .side-card-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 800;
             color: var(--text-main);
-            margin: 8px 0 6px 0;
+            margin: 6px 0 4px 0;
             line-height: 1.3;
         }
         .side-card-body {
-            font-size: 12.5px;
+            font-size: 11.5px;
             color: var(--text-sub);
-            line-height: 1.5;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* SPARKLINE CHART CONTAINER */
@@ -1054,6 +1074,46 @@
             border-radius: 10px !important;
             box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
             border: 1px solid #e2e8f0 !important;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .right-col {
+                height: auto;
+            }
+            #right-col-idn, #right-col-world {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .side-card-top, .side-card-bottom {
+                height: auto;
+                min-height: 220px;
+            }
+            .map-card {
+                height: 480px;
+            }
+        }
+        @media (max-width: 768px) {
+            #right-col-idn, #right-col-world {
+                grid-template-columns: 1fr;
+            }
+            .map-card {
+                height: 420px;
+            }
+            .map-floating-modes {
+                position: static;
+                margin: 6px;
+                flex-wrap: wrap;
+                border-radius: 8px;
+            }
+            .map-floating-search {
+                position: static;
+                margin: 6px;
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -1467,19 +1527,19 @@
                 <!-- Floating Mode Selector Pill (Center Top) -->
                 <div class="map-floating-modes">
                     <div id="idn-map-modes" style="display: flex; align-items: center; gap: 4px;">
-                        <span class="mode-tag">MODE IKLIM (INDONESIA):</span>
-                        <button class="mode-btn active" id="btn-mode-risk" onclick="switchMapMode('risk')">🔴 Kasus DBD</button>
-                        <button class="mode-btn" id="btn-mode-temp" onclick="switchMapMode('temp')">🌡️ Suhu Udara</button>
-                        <button class="mode-btn" id="btn-mode-rain" onclick="switchMapMode('rain')">🌧️ Curah Hujan</button>
-                        <button class="mode-btn" id="btn-mode-wind" onclick="switchMapMode('wind')">💨 Angin BMKG</button>
-                        <button class="mode-btn" id="btn-mode-driver" onclick="switchMapMode('driver')">🧭 Pendorong Iklim</button>
+                        <span class="mode-tag">LAYER:</span>
+                        <button class="mode-btn active" id="btn-mode-risk" onclick="switchMapMode('risk')">🔴 Kasus</button>
+                        <button class="mode-btn" id="btn-mode-temp" onclick="switchMapMode('temp')">🌡️ Suhu</button>
+                        <button class="mode-btn" id="btn-mode-rain" onclick="switchMapMode('rain')">🌧️ Hujan</button>
+                        <button class="mode-btn" id="btn-mode-wind" onclick="switchMapMode('wind')">💨 Angin</button>
+                        <button class="mode-btn" id="btn-mode-driver" onclick="switchMapMode('driver')">🧭 Driver</button>
                     </div>
                     <div id="world-map-modes" style="display: none; align-items: center; gap: 4px;">
-                        <span class="mode-tag" style="color: #fca5a5;">METRIK GLOBAL (WHO):</span>
-                        <button class="mode-btn active" id="btn-wmode-cases" onclick="switchWorldMetric('cases')">🔴 Kasus 2024</button>
-                        <button class="mode-btn" id="btn-wmode-ir" onclick="switchWorldMetric('ir')">📈 Insidens IR /100k</button>
-                        <button class="mode-btn" id="btn-wmode-deaths" onclick="switchWorldMetric('deaths')">⚠️ Kematian (Deaths)</button>
-                        <button class="mode-btn" id="btn-wmode-cfr" onclick="switchWorldMetric('cfr')">🩺 Fatality Rate (CFR %)</button>
+                        <span class="mode-tag" style="color: #fca5a5;">GLOBAL:</span>
+                        <button class="mode-btn active" id="btn-wmode-cases" onclick="switchWorldMetric('cases')">🔴 Kasus</button>
+                        <button class="mode-btn" id="btn-wmode-ir" onclick="switchWorldMetric('ir')">📈 IR /100k</button>
+                        <button class="mode-btn" id="btn-wmode-deaths" onclick="switchWorldMetric('deaths')">⚠️ Kematian</button>
+                        <button class="mode-btn" id="btn-wmode-cfr" onclick="switchWorldMetric('cfr')">🩺 CFR (%)</button>
                     </div>
                 </div>
 
@@ -1769,11 +1829,14 @@
                             <div class="side-card-body" id="side-narrative">Puncak rekor kasus DBD tertinggi sepanjang sejarah Indonesia terverifikasi resmi oleh World Health Organization (WHO Global Surveillance)! Kasus nasional menembus 257.271 kasus (1.461 kematian) dengan angka kesakitan (IR) 92.1 per 100k penduduk, melampaui rekor El Niño 2016 (204k) dan hampir 2 kali lipat batas aman Renstra Kemenkes (<49/100k) akibat eskalasi suhu ekstrem pasca-El Niño 2023/2024.</div>
 
                             <!-- National Driver Breakdown Box -->
-                            <div style="margin-top: 10px; padding: 8px 10px; background: #fff7ed; border-radius: 8px; border: 1px solid #fed7aa; font-size: 11.5px;">
-                                <div style="font-weight: 800; color: #c2410c; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">
-                                    <span id="side-driver-icon">🔥</span> Pendorong Nasional: <span id="side-driver-label">Anomali Suhu Panas</span>
+                            <div style="margin-top: 8px; padding: 7px 10px; background: #fff7ed; border-radius: 8px; border: 1px solid #fed7aa; font-size: 11.5px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <span style="font-weight: 800; color: #c2410c; font-size: 11px; display: flex; align-items: center; gap: 4px;">
+                                        <span id="side-driver-icon">🔥</span> Pendorong Utama:
+                                    </span>
+                                    <span id="side-driver-label" style="background: #ea580c; color: #ffffff; font-size: 9.5px; font-weight: 800; padding: 1px 7px; border-radius: 9999px;">Anomali Suhu Panas</span>
                                 </div>
-                                <div id="side-driver-mechanism" style="color: #7c2d12; line-height: 1.4; font-size: 11px;">
+                                <div id="side-driver-mechanism" style="color: #7c2d12; line-height: 1.35; font-size: 11px;">
                                     Anomali suhu panas memperpendek masa inkubasi ekstrinsik (EIP) virus di nyamuk betina dan meningkatkan frekuensi gigitan.
                                 </div>
                             </div>
@@ -1809,7 +1872,7 @@
                 </div>
 
                 <!-- World Right Column -->
-                <div id="right-col-world" style="display: none; flex-direction: column; gap: 12px; height: 100%;">
+                <div id="right-col-world" style="display: none; flex-direction: column; gap: 10px; height: 100%;">
                     <!-- Top Card: WHO Global Alert -->
                     <div class="side-card side-card-top" style="border-left: 4px solid #dc2626;">
                         <div>
@@ -3829,7 +3892,7 @@
 
         const spikesBox = document.getElementById('side-top-spikes');
         if (spikesBox && nat.top_spikes) {
-            spikesBox.innerHTML = nat.top_spikes.map(s => `
+            spikesBox.innerHTML = nat.top_spikes.slice(0, 3).map(s => `
                 <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:3px 6px; border-radius:4px; font-size:11px; border:1px solid #f1f5f9;">
                     <span><b>${s.name}</b>: <span style="color:#dc2626; font-weight:700;">+${s.diff_yoy.toLocaleString()}</span> (${s.pct_yoy}%)</span>
                     <span style="background:${s.driver_color}; color:#ffffff; font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:9999px;">${s.driver_icon} ${s.driver_tag}</span>
@@ -3887,6 +3950,7 @@
             renderWindVectors();
             renderHotspotPins();
         }
+        drawSparkline();
     }
 
     // GLOBAL COUNTRY SELECTION & SURVEILLANCE LOGIC
@@ -4219,6 +4283,7 @@
 
     // Init
     updateUI();
+    drawSparkline();
     renderGlobalLeaderboard();
     </script>
 </body>
