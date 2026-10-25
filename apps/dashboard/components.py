@@ -12,12 +12,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-# Color-blind safe palette
+# Sequential epidemiological palette matching Kemenkes & D-MOSS guidelines
 COLOR_MAP = {
-    "Rendah": "#2b83ba",    # Blue
-    "Waspada": "#abdda4",   # Soft Green-Teal
-    "Siaga": "#fdae61",     # Warm Amber-Orange
-    "Awas": "#d7191c",      # Vivid Red
+    "Rendah": "#bfdbdc",    # Soft Mint / Pale Sage (<40)
+    "Waspada": "#f3daa2",   # Pale Sand / Warm Cream (40-65)
+    "Siaga": "#df9b30",     # Golden Ochre / Warm Amber (65-100)
+    "Awas": "#a64920",      # Rust Terracotta / Burnt Sienna (>=100)
 }
 
 RISK_ORDER = ["Rendah", "Waspada", "Siaga", "Awas"]
@@ -148,10 +148,10 @@ def create_risk_map(
 
 
 REAL_COLOR_MAP = {
-    "Awas": "#d7191c",      # Vivid Red
-    "Siaga": "#fdae61",     # Warm Amber-Orange
-    "Waspada": "#abdda4",   # Soft Green-Teal
-    "Rendah": "#2b83ba",    # Slate Blue
+    "Awas": "#a64920",      # Rust Terracotta / Burnt Sienna (>=100)
+    "Siaga": "#df9b30",     # Golden Ochre / Warm Amber (65-100)
+    "Waspada": "#f3daa2",   # Pale Sand / Warm Cream (40-65)
+    "Rendah": "#bfdbdc",    # Soft Mint / Pale Sage (<40)
 }
 
 REAL_CATEGORY_ORDER = [

@@ -27,10 +27,10 @@ logger = logging.getLogger(__name__)
 
 # Epidemiological Risk Category Colors (Aligned with DengueCast 4 Early Warning Levels)
 COLOR_MAP = {
-    "Awas": "#dc2626",      # Red (Beban Tertinggi / Hotspot Utama)
-    "Siaga": "#ea580c",     # Orange (Beban Tinggi)
-    "Waspada": "#16a34a",   # Green (Beban Sedang)
-    "Rendah": "#0284c7",    # Sky Blue (Beban Rendah / Terkendali)
+    "Awas": "#a64920",      # Rust Terracotta / Burnt Sienna (>= 100 / Hotspot Utama)
+    "Siaga": "#df9b30",     # Golden Ochre / Warm Amber (65-100 / Beban Tinggi)
+    "Waspada": "#f3daa2",   # Pale Sand / Warm Cream (40-65 / Beban Sedang)
+    "Rendah": "#bfdbdc",    # Soft Mint / Pale Sage (< 40 / Beban Rendah)
 }
 
 CATEGORY_ORDER = [
@@ -334,7 +334,7 @@ class DengueMapConfig:
 
     total_case_cutoffs: list[int] = field(default_factory=lambda: [150000, 70000, 25000])
     year_cutoffs: list[int] = field(default_factory=lambda: [10000, 4000, 1500])
-    ir_cutoffs: list[float] = field(default_factory=lambda: [75.0, 50.0, 25.0])
+    ir_cutoffs: list[float] = field(default_factory=lambda: [100.0, 65.0, 40.0])
 
 
 
@@ -422,7 +422,7 @@ def build_yearly_dataset(
     }
 
     cutoffs_cases = [10000, 4000, 1500]
-    cutoffs_ir = [75.0, 50.0, 25.0]
+    cutoffs_ir = [100.0, 65.0, 40.0]
 
     # Precompute yearly province cases, scaling canonical years to official national benchmarks
     yearly_cases_by_region: dict[int, pd.Series] = {}
@@ -906,6 +906,8 @@ def generate_interactive_html_map(
         pr = p.get("precip", 214)
         hm = p.get("humidity", 78)
         bg = COLOR_MAP.get(cat, "#333")
+        badge_text_col = "#0f172a" if cat in ("Rendah", "Waspada") else "#ffffff"
+        badge_border = "border: 1px solid rgba(0,0,0,0.15);" if cat in ("Rendah", "Waspada") else ""
 
         d_code = p.get("driver_code", "normal")
         d_info = DRIVER_META.get(d_code, DRIVER_META["normal"])
@@ -927,7 +929,7 @@ def generate_interactive_html_map(
             <td style="text-align: right; font-size: 11px; font-weight: 700; color: {yoy_col};" id="tbl-yoy-{rid}">{yoy_str}</td>
             <td style="text-align: right; font-weight: 600; color: #0284c7;" id="tbl-ir-{rid}">{ir_val:.1f}</td>
             <td style="text-align: center;">
-                <span class="badge" id="tbl-badge-{rid}" style="background-color: {bg}; color: white; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">
+                <span class="badge" id="tbl-badge-{rid}" style="background-color: {bg}; color: {badge_text_col}; {badge_border} padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">
                     {cat}
                 </span>
             </td>
@@ -2151,19 +2153,19 @@ def generate_interactive_html_map(
                     <div id="legend-content">
                         <b>Tingkat Risiko DBD (<span id="leg-year-label">2024</span>)</b>
                         <div class="legend-row">
-                            <div class="legend-dot" style="background: #dc2626;"></div>
+                            <div class="legend-dot" style="background: #a64920;"></div>
                             <span>Awas (&ge; 10k): <b id="cnt-awas">6</b></span>
                         </div>
                         <div class="legend-row">
-                            <div class="legend-dot" style="background: #ea580c;"></div>
+                            <div class="legend-dot" style="background: #df9b30;"></div>
                             <span>Siaga (4k–10k): <b id="cnt-siaga">6</b></span>
                         </div>
                         <div class="legend-row">
-                            <div class="legend-dot" style="background: #16a34a;"></div>
+                            <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
                             <span>Waspada (1.5k–4k): <b id="cnt-waspada">11</b></span>
                         </div>
                         <div class="legend-row">
-                            <div class="legend-dot" style="background: #0284c7;"></div>
+                            <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
                             <span>Rendah (&lt; 1.5k): <b id="cnt-rendah">11</b></span>
                         </div>
                     </div>
@@ -2666,7 +2668,7 @@ def generate_interactive_html_map(
             fillColor: getColor(rid),
             weight: isHotspot ? 3.5 : (isSiaga ? 2.0 : 1.1),
             opacity: 1,
-            color: isHotspot ? '#dc2626' : (isSiaga ? '#ea580c' : '#334155'),
+            color: isHotspot ? '#a64920' : (isSiaga ? '#df9b30' : '#334155'),
             dashArray: isHotspot ? '4, 3' : null,
             fillOpacity: isHotspot ? 0.88 : currentOpacity
         }};
@@ -2687,11 +2689,14 @@ def generate_interactive_html_map(
                 const p = (yData && yData.provinces && yData.provinces[rid]) ? yData.provinces[rid] : provinceStats[rid];
                 if (p) {{
                     const cat = (currentMetric === 'incidence_rate') ? p.category_ir : p.category_cases;
+                    const catBg = (cat === 'Awas' ? '#a64920' : colorMap[cat]);
+                    const catTextCol = (cat === 'Rendah' || cat === 'Waspada') ? '#0f172a' : '#ffffff';
+                    const catBorder = (cat === 'Rendah' || cat === 'Waspada') ? 'border:1px solid rgba(0,0,0,0.18);' : '';
                     layer.bindPopup(`
                         <div style="font-family:'Plus Jakarta Sans',sans-serif; min-width:260px; max-width:320px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                                 <h4 style="margin:0; font-size:15px; color:#0f172a;">${{p.name}} (${{rid}})</h4>
-                                <span style="background:${{cat === 'Awas' ? '#991b1b' : colorMap[cat]}}; color:#ffffff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:9999px;">
+                                <span style="background:${{catBg}}; color:${{catTextCol}}; ${{catBorder}} font-size:10px; font-weight:800; padding:2px 8px; border-radius:9999px;">
                                     ${{cat === 'Awas' ? '🔴 AWAS (HOTSPOT)' : cat}}
                                 </span>
                             </div>
@@ -2700,7 +2705,7 @@ def generate_interactive_html_map(
                             <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; font-size:12px; margin-bottom:8px;">
                                 <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
                                     <span><b>📅 Kasus DBD ${{currentYear}}:</b></span>
-                                    <b style="color:${{cat === 'Awas' ? '#991b1b' : '#0f172a'}}; font-size:13px;">${{p.cases.toLocaleString()}} kasus</b>
+                                    <b style="color:${{cat === 'Awas' ? '#a64920' : '#0f172a'}}; font-size:13px;">${{p.cases.toLocaleString()}} kasus</b>
                                 </div>
                                 <div style="display:flex; justify-content:space-between; color:${{p.diff_yoy >= 0 ? '#dc2626' : '#059669'}}; font-weight:700; margin-bottom:2px;">
                                     <span>Tren vs Thn Lalu:</span>
@@ -3475,25 +3480,47 @@ def generate_interactive_html_map(
         if (currentMapMode === 'risk') {{
             metricSwitch.style.display = 'flex';
             const counts = (currentMetric === 'incidence_rate') ? nat.counts_ir : nat.counts_cases;
-            legContent.innerHTML = `
-                <b>Tingkat Risiko DBD (${{currentYear}})</b>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #dc2626;"></div>
-                    <span>Awas (&ge; 10k): <b>${{counts.Awas}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #ea580c;"></div>
-                    <span>Siaga (4k–10k): <b>${{counts.Siaga}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #16a34a;"></div>
-                    <span>Waspada (1.5k–4k): <b>${{counts.Waspada}}</b></span>
-                </div>
-                <div class="legend-row">
-                    <div class="legend-dot" style="background: #0284c7;"></div>
-                    <span>Rendah (&lt; 1.5k): <b>${{counts.Rendah}}</b></span>
-                </div>
-            `;
+            if (currentMetric === 'incidence_rate') {{
+                legContent.innerHTML = `
+                    <b>Angka Insidens IR (per 100k) (${{currentYear}})</b>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #a64920;"></div>
+                        <span>&ge; 100: <b>${{counts.Awas}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #df9b30;"></div>
+                        <span>65 &ndash; 100: <b>${{counts.Siaga}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
+                        <span>40 &ndash; 65: <b>${{counts.Waspada}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
+                        <span>&lt; 40 (rendah): <b>${{counts.Rendah}}</b></span>
+                    </div>
+                `;
+            }} else {{
+                legContent.innerHTML = `
+                    <b>Tingkat Kasus DBD (${{currentYear}})</b>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #a64920;"></div>
+                        <span>Awas (&ge; 10k): <b>${{counts.Awas}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #df9b30;"></div>
+                        <span>Siaga (4k–10k): <b>${{counts.Siaga}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #f3daa2; border: 1px solid #d4c599;"></div>
+                        <span>Waspada (1.5k–4k): <b>${{counts.Waspada}}</b></span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background: #bfdbdc; border: 1px solid #9dc3c5;"></div>
+                        <span>Rendah (&lt; 1.5k): <b>${{counts.Rendah}}</b></span>
+                    </div>
+                `;
+            }}
         }} else if (currentMapMode === 'temp') {{
             metricSwitch.style.display = 'none';
             legContent.innerHTML = `
@@ -3692,6 +3719,8 @@ def generate_interactive_html_map(
             if (tBg) {{
                 tBg.innerText = cat;
                 tBg.style.backgroundColor = colorMap[cat] || '#333';
+                tBg.style.color = (cat === 'Rendah' || cat === 'Waspada') ? '#0f172a' : '#ffffff';
+                tBg.style.border = (cat === 'Rendah' || cat === 'Waspada') ? '1px solid rgba(0,0,0,0.15)' : 'none';
             }}
 
             const tDr = document.getElementById(`tbl-driver-${{rid}}`);
