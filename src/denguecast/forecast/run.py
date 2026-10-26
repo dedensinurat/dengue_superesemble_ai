@@ -41,6 +41,8 @@ def run_forecast(
     dry_run: bool = False,
     n_samples: int = 1000,
     seed: int = 42,
+    splitter: Any = None,
+    candidates_to_eval: list[ModelSpec] | None = None,
 ) -> dict[str, Any]:
     """Execute complete forecast pipeline for given origin month.
 
@@ -113,9 +115,12 @@ def run_forecast(
 
     b1_spec = ModelSpec(model_id="B1_seasonal_mean", features=[], description="B1 Seasonal Mean")
     b2_spec = ModelSpec(model_id="B2_seasonal_nb", features=[], description="B2 Seasonal NB")
-    eval_specs = [b1_spec, b2_spec] + all_candidates[: min(12, len(all_candidates))]
+    if candidates_to_eval is not None:
+        eval_specs = candidates_to_eval
+    else:
+        eval_specs = [b1_spec, b2_spec] + all_candidates[: min(12, len(all_candidates))]
 
-    scores_df = score_candidates(eval_specs, train_df, config=config, n_jobs=4)
+    scores_df = score_candidates(eval_specs, train_df, splitter=splitter, config=config, n_jobs=4)
     top_k = getattr(config.models, "top_k", 4) if config and hasattr(config, "models") else 4
     selected_specs = select_top_k(scores_df, k=top_k, available_specs=eval_specs)
 

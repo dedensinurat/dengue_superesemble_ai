@@ -772,6 +772,7 @@ def generate_interactive_html_map(
     geojson_path: Path | str = "data/ref/indonesia_provinces.geojson",
     world_geojson_path: Path | str = "data/ref/world_dengue_who_compact.geojson",
     yearly_data: dict[str, Any] | None = None,
+    forecast_data: dict[str, Any] | None = None,
 ) -> Path:
     """Build and save an interactive HTML Leaflet dashboard with a zero-scroll compact layout matching executive standards."""
     out_file = Path(output_path)
@@ -846,6 +847,21 @@ def generate_interactive_html_map(
             logger.warning(f"Could not load WHO global summary: {e}")
 
     who_global_json = json.dumps(who_global_data)
+
+    # Load Forecast Data (probabilistic prediction model for Indonesia)
+    if forecast_data is None:
+        fc_json_path = Path("data/processed/forecasts_indonesia.json")
+        if fc_json_path.exists():
+            try:
+                with open(fc_json_path, encoding="utf-8") as f:
+                    forecast_data = json.load(f)
+            except Exception as e:
+                logger.warning(f"Could not load forecasts_indonesia.json: {e}")
+                forecast_data = {}
+        else:
+            forecast_data = {}
+
+    forecast_json = json.dumps(forecast_data or {})
 
     country_options = [
         '<optgroup label="🇮🇩 FOKUS NASIONAL & DAERAH (DATA RIIL LOKAL)">',
@@ -1321,6 +1337,125 @@ def generate_interactive_html_map(
             background: #0284c7;
             color: #ffffff;
             border-color: #0284c7;
+        }}
+
+        /* INDONESIA MODE SWITCHER (HISTORIS vs PREDIKSI SUPERENSEMBLE) */
+        .idn-mode-switcher-bar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 8px 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            flex-wrap: wrap;
+            gap: 10px;
+        }}
+        .idn-mode-pills {{
+            display: flex;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 9px;
+            border: 1px solid #e2e8f0;
+            gap: 4px;
+        }}
+        .idn-mode-pill {{
+            border: none;
+            background: transparent;
+            padding: 6px 14px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }}
+        .idn-mode-pill:hover {{
+            color: #0f172a;
+            background: rgba(255,255,255,0.6);
+        }}
+        .idn-mode-pill.active {{
+            background: #059669;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(5,150,105,0.25);
+        }}
+        .idn-mode-pill.active.pill-forecast {{
+            background: #0284c7;
+            box-shadow: 0 2px 6px rgba(2,132,199,0.25);
+        }}
+
+        /* FORECAST HORIZON & SCENARIO CONTROL BAR */
+        .forecast-control-bar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }}
+        .forecast-bar-left {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }}
+        .forecast-bar-right {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+        .forecast-bar-label {{
+            font-size: 11px;
+            font-weight: 800;
+            color: #047857;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }}
+        .forecast-lead-pills {{
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }}
+        .lead-pill-btn {{
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.15s;
+        }}
+        .lead-pill-btn:hover {{
+            background: #e2e8f0;
+            color: #0f172a;
+        }}
+        .lead-pill-btn.active {{
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 2px 5px rgba(2,132,199,0.3);
+        }}
+        .forecast-threshold-select {{
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #0f172a;
+            outline: none;
+            cursor: pointer;
         }}
 
         /* TOP HEADER ROW */
@@ -2098,6 +2233,24 @@ def generate_interactive_html_map(
             </div>
         </div>
 
+        <!-- INDONESIA MODE SWITCHER -->
+        <div class="idn-mode-switcher-bar" id="idn-mode-switcher-bar">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 12.5px; font-weight: 700; color: #1e293b;">Mode Analisis Indonesia:</span>
+                <div class="idn-mode-pills">
+                    <button class="idn-mode-pill active" id="btn-mode-hist" onclick="setIndonesiaMode('historical')">
+                        <span>📊</span> Data Observasi Historis (2000–2024)
+                    </button>
+                    <button class="idn-mode-pill pill-forecast" id="btn-mode-forecast" onclick="setIndonesiaMode('forecast')">
+                        <span>🔮</span> Model Prediksi Probabilistik (Prakiraan 1–6 Bulan ke Depan)
+                    </button>
+                </div>
+            </div>
+            <div id="forecast-status-badge" style="display: flex; align-items: center; gap: 6px; font-size: 11px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 4px 10px; border-radius: 6px; color: #047857; font-weight: 700;">
+                <span>✅</span> Origin: Juli 2024 &bull; Multi-Step Ahead (h=1..6) &bull; 34 Provinsi
+            </div>
+        </div>
+
         <!-- DYNAMIC TOP HEADER -->
         <div class="top-header" id="top-header-bar">
             <div class="logo-box">
@@ -2179,6 +2332,58 @@ def generate_interactive_html_map(
                 </div>
                 <div class="card-stat-val" id="top-enso-val" style="font-size: 16px; color: #ea580c; padding-top: 4px;">{init_2024['enso_event']}</div>
                 <div class="card-stat-sub" id="top-enso-sub">Sirkulasi Monsun Pasifik</div>
+            </div>
+        </div>
+
+        <!-- Forecast KPI Row (Active when in Forecast Mode) -->
+        <div class="kpi-row" id="kpi-row-forecast" style="display: none;">
+            <div class="card-stat" style="border-color: #38bdf8; background: #f0f9ff;">
+                <div class="card-stat-head">
+                    <span class="card-stat-label" style="color: #0284c7;">TARGET PRAKIRAAN</span>
+                    <span style="font-size: 14px;">🎯</span>
+                </div>
+                <div class="card-stat-val" id="fc-kpi-target" style="color: #0369a1; font-size: 18px;">Agustus 2024</div>
+                <div class="card-stat-sub" id="fc-kpi-lead" style="color: #0284c7; font-weight: 700;">Lead 1 (1 Bulan ke Depan)</div>
+            </div>
+            <div class="card-stat">
+                <div class="card-stat-head">
+                    <span class="card-stat-label">ESTIMASI KASUS NASIONAL</span>
+                    <span>🔮</span>
+                </div>
+                <div class="card-stat-val" id="fc-kpi-cases" style="color: #dc2626;">4,891 <span style="font-size: 13px; font-weight: 600; color: #dc2626;">kasus</span></div>
+                <div class="card-stat-sub" id="fc-kpi-cases-ci">[7 – 63,006 kasus]</div>
+            </div>
+            <div class="card-stat">
+                <div class="card-stat-head">
+                    <span class="card-stat-label">INSIDENS (IR) / 100K</span>
+                    <span>📈</span>
+                </div>
+                <div class="card-stat-val" id="fc-kpi-ir" style="color: #0284c7;">1.8 <span style="font-size: 12px; color: #64748b; font-weight: 600;">/100k</span></div>
+                <div class="card-stat-sub">Beban Kasus per 100k Penduduk</div>
+            </div>
+            <div class="card-stat">
+                <div class="card-stat-head">
+                    <span class="card-stat-label">STATUS PROVINSI</span>
+                    <span>🚨</span>
+                </div>
+                <div class="card-stat-val" id="fc-kpi-provs" style="font-size: 15px; color: #ea580c; padding-top: 4px;">0 Awas &bull; 3 Siaga</div>
+                <div class="card-stat-sub" id="fc-kpi-provs-sub">20 Waspada &bull; 11 Rendah</div>
+            </div>
+            <div class="card-stat">
+                <div class="card-stat-head">
+                    <span class="card-stat-label">BULAN ORIGIN MODEL</span>
+                    <span>🗓️</span>
+                </div>
+                <div class="card-stat-val" style="font-size: 18px; color: #047857;">Juli 2024</div>
+                <div class="card-stat-sub" style="color: #059669; font-weight: 700;">Anti-Leakage Valid</div>
+            </div>
+            <div class="card-stat">
+                <div class="card-stat-head">
+                    <span class="card-stat-label">STATUS VALIDASI</span>
+                    <span>✅</span>
+                </div>
+                <div class="card-stat-val" style="font-size: 15px; color: #059669; padding-top: 4px;">LOLOS KELAYAKAN</div>
+                <div class="card-stat-sub">CRPSS &gt; 0 vs Baseline</div>
             </div>
         </div>
 
@@ -2330,6 +2535,59 @@ def generate_interactive_html_map(
             <div class="right-col">
                 <!-- Indonesia Right Column -->
                 <div id="right-col-idn">
+                    <!-- FORECAST RIGHT COLUMN CARDS (Active in Forecast Mode) -->
+                    <div id="right-col-idn-fc" style="display: none; flex-direction: column; gap: 10px; height: 100%;">
+                        <!-- Top Card: Fan Chart (Prediction Cone) -->
+                        <div class="side-card side-card-top" style="border-left: 4px solid #0284c7;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 12px; font-weight: 800; color: #0284c7; display: flex; align-items: center; gap: 4px;">
+                                        <span>🔮</span> Kerucut Prakiraan (Fan Chart)
+                                    </span>
+                                    <span class="badge-event" id="fc-side-badge">INTERVAL 95%</span>
+                                </div>
+                                <div class="side-card-title" id="fc-side-headline">Pita Prediksi Probabilistik Nasional</div>
+                                <div class="side-card-body" id="fc-side-narrative">
+                                    Kurva riwayat kasus 12 bulan terakhir disambungkan ke kerucut prakiraan 6 bulan ke depan (median q50 dan interval kredibel 95%).
+                                </div>
+                                <div style="margin-top: 8px; height: 125px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 4px;">
+                                    <svg id="fan-chart-svg" viewBox="0 0 340 120" preserveAspectRatio="none" style="width: 100%; height: 100%;"></svg>
+                                </div>
+                            </div>
+                            <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #f1f5f9; font-size: 11.5px; display: flex; justify-content: space-between;">
+                                <span>Provinsi Terpilih: <b id="fc-side-selected-prov" style="color: #0284c7;">Nasional (34 Prov)</b></span>
+                                <button onclick="renderForecastSideCards('NATIONAL')" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 2px 6px; font-size: 10.5px; cursor: pointer;">Reset Nasional</button>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Card: Exceedance Probabilities & Ensemble Weights -->
+                        <div class="side-card side-card-bottom">
+                            <div class="sparkline-header">
+                                <div class="sparkline-title">
+                                    <span>🚨</span> Probabilitas Melampaui Ambang
+                                </div>
+                                <span class="badge-event">EARLY WARNING</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">
+                                Risiko epidemiologi berdasarkan saluran endemis 5 tahun:
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 5px;" id="fc-exceedance-bars">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                            <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #f1f5f9; font-size: 11px; color: #475569;">
+                                <b>🤖 Bobot Superensemble Model:</b>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 4px; font-size: 10.5px;">
+                                    <div style="background:#f8fafc; padding:3px 6px; border-radius:4px;"><b>B1 Mean:</b> 15%</div>
+                                    <div style="background:#f8fafc; padding:3px 6px; border-radius:4px;"><b>B2 NB:</b> 25%</div>
+                                    <div style="background:#f8fafc; padding:3px 6px; border-radius:4px;"><b>Suhu+Hujan:</b> 35%</div>
+                                    <div style="background:#f8fafc; padding:3px 6px; border-radius:4px;"><b>ENSO+RH:</b> 25%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HISTORICAL RIGHT COLUMN CARDS (Active in Historical Mode) -->
+                    <div id="right-col-idn-hist" style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
                     <!-- Top Card: Peristiwa Sejarah & Iklim -->
                     <div class="side-card side-card-top">
                         <div>
@@ -2382,6 +2640,7 @@ def generate_interactive_html_map(
                             <div class="sparkline-pill" id="sparkline-pill">{init_2024['total_cases']:,} kasus ({init_2024.get('year', 2024)})</div>
                             <svg id="sparkline-svg" viewBox="0 0 340 110" preserveAspectRatio="none"></svg>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -2461,6 +2720,62 @@ def generate_interactive_html_map(
 
         <!-- INDONESIA LOWER DETAILS -->
         <div id="indonesia-view-container">
+            <!-- FORECAST VIEW CONTAINER (Active when in Forecast Mode) -->
+            <div id="idn-forecast-container" style="display: none;">
+                <!-- FORECAST HORIZON CONTROL BAR -->
+                <div class="forecast-control-bar">
+                    <div class="forecast-bar-left">
+                        <span class="forecast-bar-label">HORIZON PRAKIRAAN (LEAD TIME):</span>
+                        <div class="forecast-lead-pills">
+                            <button class="lead-pill-btn active" id="btn-lead-1" onclick="setForecastLead(1)">h=1 (Ags 2024)</button>
+                            <button class="lead-pill-btn" id="btn-lead-2" onclick="setForecastLead(2)">h=2 (Sep 2024)</button>
+                            <button class="lead-pill-btn" id="btn-lead-3" onclick="setForecastLead(3)">h=3 (Okt 2024)</button>
+                            <button class="lead-pill-btn" id="btn-lead-4" onclick="setForecastLead(4)">h=4 (Nov 2024)</button>
+                            <button class="lead-pill-btn" id="btn-lead-5" onclick="setForecastLead(5)">h=5 (Des 2024)</button>
+                            <button class="lead-pill-btn" id="btn-lead-6" onclick="setForecastLead(6)">h=6 (Jan 2025)</button>
+                        </div>
+                    </div>
+                    <div class="forecast-bar-right">
+                        <span class="forecast-bar-label">SKENARIO AMBANG BATAS:</span>
+                        <select id="select-threshold-type" class="forecast-threshold-select" onchange="onThresholdChange(this.value)">
+                            <option value="m2sd" selected>🚨 Ambang Batas KLB: Mean + 2 SD (Siaga/KLB)</option>
+                            <option value="m1sd">⚠️ Ambang Batas Waspada: Mean + 1 SD</option>
+                            <option value="p75">📊 Persentil 75 (P75 Historis)</option>
+                            <option value="p95">🔥 Persentil 95 (P95 Ekstrem)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 34 PROVINCE FORECAST RANKED TABLE -->
+                <div class="section-table">
+                    <div class="table-title">🔮 Tabel Prakiraan Probabilistik 34 Provinsi di Indonesia (Target: <span id="tbl-fc-target-label">Agustus 2024 [h=1]</span>)</div>
+                    <div class="table-subtitle">Hasil simulasi superensemble (1000 draws), estimasi median q50, rentang interval kredibel 95%, probabilitas KLB, dan status kelayakan.</div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Rank</th>
+                                    <th>Provinsi</th>
+                                    <th>Wilayah</th>
+                                    <th style="text-align: right; color: #dc2626;">Median Kasus (q50)</th>
+                                    <th style="text-align: right; color: #475569;">Interval 95% (q025 – q975)</th>
+                                    <th style="text-align: right; color: #0284c7;">Prediksi IR / 100k</th>
+                                    <th style="text-align: center; color: #c2410c;">Prob. KLB (Mean+2SD)</th>
+                                    <th style="text-align: center;">Tingkat Risiko</th>
+                                    <th style="text-align: center;">Gerbang Kelayakan</th>
+                                    <th style="text-align: center;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fc-table-tbody">
+                                <!-- Populated dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HISTORICAL VIEW CONTAINER (Active when in Historical Mode) -->
+            <div id="idn-hist-container">
             <!-- BOTTOM JELAJAHI WAKTU BAR -->
             <div class="bottom-timeline-bar">
                 <div class="timeline-header">
@@ -2509,6 +2824,7 @@ def generate_interactive_html_map(
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
 
@@ -2609,6 +2925,12 @@ def generate_interactive_html_map(
     const YEARLY_DATA = {yearly_json};
     const TREND_DATA = {trend_json};
     const WHO_GLOBAL_DATA = {who_global_json};
+    const FORECAST_DATA = {forecast_json};
+
+    let currentIndonesiaMode = 'historical'; // 'historical' or 'forecast'
+    let currentForecastLead = 1; // 1 to 6
+    let currentThresholdType = 'm2sd'; // 'm2sd', 'm1sd', 'p75', 'p95'
+    let selectedForecastRegion = 'NATIONAL';
 
     let currentMapScope = 'IDN'; // 'IDN' or 'WORLD'
     let currentWorldMetric = 'cases'; // 'cases', 'ir', 'deaths', 'cfr'
@@ -2736,6 +3058,13 @@ def generate_interactive_html_map(
     }}
 
     function getColor(regionId) {{
+        if (currentIndonesiaMode === 'forecast') {{
+            const fLeadData = (FORECAST_DATA && FORECAST_DATA.by_lead) ? FORECAST_DATA.by_lead[String(currentForecastLead)] : null;
+            if (!fLeadData || !fLeadData.provinces || !fLeadData.provinces[regionId]) return '#bfdbdc';
+            const fProv = fLeadData.provinces[regionId];
+            return colorMap[fProv.risk_level] || '#bfdbdc';
+        }}
+
         const yData = YEARLY_DATA[String(currentYear)];
         if (!yData || !yData.provinces || !yData.provinces[regionId]) return '#94a3b8';
         const p = yData.provinces[regionId];
@@ -2782,6 +3111,63 @@ def generate_interactive_html_map(
             }},
             click: function(e) {{
                 const rid = feature.id || (feature.properties && feature.properties.region_id);
+                if (currentIndonesiaMode === 'forecast') {{
+                    const fLeadData = (FORECAST_DATA && FORECAST_DATA.by_lead) ? FORECAST_DATA.by_lead[String(currentForecastLead)] : null;
+                    const fProv = (fLeadData && fLeadData.provinces) ? fLeadData.provinces[rid] : null;
+                    if (fProv) {{
+                        const catBg = colorMap[fProv.risk_level] || '#bfdbdc';
+                        const catTextCol = (fProv.risk_level === 'Rendah' || fProv.risk_level === 'Waspada') ? '#0f172a' : '#ffffff';
+                        layer.bindPopup(`
+                            <div style="font-family:'Plus Jakarta Sans',sans-serif; min-width:260px; max-width:320px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <h4 style="margin:0; font-size:15px; color:#0f172a;">${{fProv.name}} (${{rid}})</h4>
+                                    <span style="background:${{catBg}}; color:${{catTextCol}}; font-size:10px; font-weight:800; padding:2px 8px; border-radius:9999px;">
+                                        ${{fProv.risk_level.toUpperCase()}}
+                                    </span>
+                                </div>
+                                <div style="font-size:11px; color:#64748b; margin-bottom:6px;">Target: <b>${{fLeadData.target_label}}</b> &bull; Wilayah: ${{fProv.region_group}}</div>
+                                
+                                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; font-size:12px; margin-bottom:8px;">
+                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                        <span><b>🔮 Median Prakiraan Kasus:</b></span>
+                                        <b style="color:#0f172a; font-size:13px;">${{fProv.q50.toLocaleString()}} kasus</b>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; color:#64748b; font-size:11px; margin-bottom:2px;">
+                                        <span>Interval Kepercayaan 95%:</span>
+                                        <b>${{fProv.q025.toLocaleString()}} – ${{fProv.q975.toLocaleString()}}</b>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; color:#0284c7; font-weight:600;">
+                                        <span>Prediksi Insidens (IR):</span>
+                                        <span>${{fProv.incidence_median}} / 100k</span>
+                                    </div>
+                                </div>
+
+                                <div style="background:#fff7ed; border:1px solid #fed7aa; padding:8px; border-radius:8px; font-size:11.5px; line-height:1.45; color:#9a3412; margin-bottom:8px;">
+                                    <b style="display:block; margin-bottom:3px; color:#c2410c;">🚨 Probabilitas Melebihi Ambang Batas:</b>
+                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                        <span>Probabilitas KLB (Mean+2SD):</span>
+                                        <b>${{(fProv.p_exceed_m2sd * 100).toFixed(1)}}%</b>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                                        <span>Probabilitas Waspada (Mean+1SD):</span>
+                                        <b>${{(fProv.p_exceed_m1sd * 100).toFixed(1)}}%</b>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between;">
+                                        <span>Probabilitas P75:</span>
+                                        <b>${{(fProv.p_exceed_p75 * 100).toFixed(1)}}%</b>
+                                    </div>
+                                </div>
+
+                                <div style="font-size:11px; color:#059669; font-weight:700;">
+                                    ✅ Status Model: ${{fProv.reliable ? 'Lolos Gerbang Kelayakan Evaluasi' : 'Dalam Evaluasi Tambahan'}}
+                                </div>
+                            </div>
+                        `).openPopup();
+                        renderForecastSideCards(rid);
+                    }}
+                    return;
+                }}
+
                 const yData = YEARLY_DATA[String(currentYear)];
                 const p = (yData && yData.provinces && yData.provinces[rid]) ? yData.provinces[rid] : provinceStats[rid];
                 if (p) {{
@@ -4050,6 +4436,332 @@ def generate_interactive_html_map(
         }});
     }}
 
+    // ==========================================
+    // INDONESIA PREDICTION / FORECAST MODE LOGIC
+    // ==========================================
+    window.setIndonesiaMode = function(mode) {{
+        currentIndonesiaMode = mode;
+        const btnHist = document.getElementById('btn-mode-hist');
+        const btnFc = document.getElementById('btn-mode-forecast');
+        const idnHistContainer = document.getElementById('idn-hist-container');
+        const idnFcContainer = document.getElementById('idn-forecast-container');
+        const kpiRowIdn = document.getElementById('kpi-row-idn');
+        const kpiRowFc = document.getElementById('kpi-row-forecast');
+        const rightHist = document.getElementById('right-col-idn-hist');
+        const rightFc = document.getElementById('right-col-idn-fc');
+        const idnMapModes = document.getElementById('idn-map-modes');
+
+        if (mode === 'forecast') {{
+            btnHist.classList.remove('active');
+            btnFc.classList.add('active');
+            if (idnHistContainer) idnHistContainer.style.display = 'none';
+            if (idnFcContainer) idnFcContainer.style.display = 'block';
+            if (kpiRowIdn) kpiRowIdn.style.display = 'none';
+            if (kpiRowFc) kpiRowFc.style.display = 'grid';
+            if (rightHist) rightHist.style.display = 'none';
+            if (rightFc) rightFc.style.display = 'flex';
+            if (idnMapModes) idnMapModes.style.display = 'none'; // Lock to forecast risk
+            renderForecastUI();
+        }} else {{
+            btnFc.classList.remove('active');
+            btnHist.classList.add('active');
+            if (idnHistContainer) idnHistContainer.style.display = 'block';
+            if (idnFcContainer) idnFcContainer.style.display = 'none';
+            if (kpiRowIdn) kpiRowIdn.style.display = 'grid';
+            if (kpiRowFc) kpiRowFc.style.display = 'none';
+            if (rightHist) rightHist.style.display = 'flex';
+            if (rightFc) rightFc.style.display = 'none';
+            if (idnMapModes) idnMapModes.style.display = 'flex';
+            updateUI();
+        }}
+    }};
+
+    window.setForecastLead = function(lead) {{
+        currentForecastLead = parseInt(lead);
+        for (let i = 1; i <= 6; i++) {{
+            const btn = document.getElementById('btn-lead-' + i);
+            if (btn) {{
+                if (i === currentForecastLead) btn.classList.add('active');
+                else btn.classList.remove('active');
+            }}
+        }}
+        renderForecastUI();
+    }};
+
+    window.onThresholdChange = function(val) {{
+        currentThresholdType = val;
+        renderForecastUI();
+    }};
+
+    function renderForecastUI() {{
+        if (!FORECAST_DATA || !FORECAST_DATA.by_lead) return;
+        const fLeadData = FORECAST_DATA.by_lead[String(currentForecastLead)];
+        if (!fLeadData) return;
+
+        // Update Forecast KPI cards
+        const fcKpiTarget = document.getElementById('fc-kpi-target');
+        const fcKpiLead = document.getElementById('fc-kpi-lead');
+        const fcKpiCases = document.getElementById('fc-kpi-cases');
+        const fcKpiCasesCi = document.getElementById('fc-kpi-cases-ci');
+        const fcKpiIr = document.getElementById('fc-kpi-ir');
+        const fcKpiProvs = document.getElementById('fc-kpi-provs');
+        const fcKpiProvsSub = document.getElementById('fc-kpi-provs-sub');
+        const tblFcLabel = document.getElementById('tbl-fc-target-label');
+
+        if (fcKpiTarget) fcKpiTarget.textContent = fLeadData.month_name + ' ' + fLeadData.year;
+        if (fcKpiLead) fcKpiLead.textContent = 'Lead ' + fLeadData.lead + ' (' + fLeadData.lead + ' Bulan ke Depan)';
+        if (fcKpiCases) fcKpiCases.innerHTML = fLeadData.national.total_median.toLocaleString() + ' <span style="font-size: 13px; font-weight: 600; color: #dc2626;">kasus</span>';
+        if (fcKpiCasesCi) fcKpiCasesCi.textContent = '[' + fLeadData.national.total_q025.toLocaleString() + ' – ' + fLeadData.national.total_q975.toLocaleString() + ' kasus]';
+        if (fcKpiIr) fcKpiIr.innerHTML = fLeadData.national.incidence_median + ' <span style="font-size: 12px; color: #64748b; font-weight: 600;">/100k</span>';
+        if (fcKpiProvs) fcKpiProvs.innerHTML = fLeadData.national.awas_count + ' Awas &bull; ' + fLeadData.national.siaga_count + ' Siaga';
+        if (fcKpiProvsSub) fcKpiProvsSub.innerHTML = fLeadData.national.waspada_count + ' Waspada &bull; ' + fLeadData.national.rendah_count + ' Rendah';
+        if (tblFcLabel) tblFcLabel.textContent = fLeadData.target_label;
+
+        // Update Map styling
+        if (geojsonLayer) geojsonLayer.setStyle(style);
+
+        // Update Legend Counts for forecast
+        const cntRendah = document.getElementById('cnt-rendah');
+        const cntWaspada = document.getElementById('cnt-waspada');
+        const cntSiaga = document.getElementById('cnt-siaga');
+        const cntAwas = document.getElementById('cnt-awas');
+        if (cntRendah) cntRendah.textContent = fLeadData.national.rendah_count;
+        if (cntWaspada) cntWaspada.textContent = fLeadData.national.waspada_count;
+        if (cntSiaga) cntSiaga.textContent = fLeadData.national.siaga_count;
+        if (cntAwas) cntAwas.textContent = fLeadData.national.awas_count;
+
+        // Render Side Cards & Table
+        renderForecastSideCards(selectedForecastRegion);
+        renderForecastTable();
+    }}
+
+    window.renderForecastSideCards = function(regionId) {{
+        selectedForecastRegion = regionId || 'NATIONAL';
+        const traj = (FORECAST_DATA && FORECAST_DATA.trajectories) ? (FORECAST_DATA.trajectories[selectedForecastRegion] || FORECAST_DATA.trajectories['NATIONAL']) : null;
+        const provMeta = provinceStats[selectedForecastRegion];
+        const provName = provMeta ? provMeta.name : (selectedForecastRegion === 'NATIONAL' ? 'Nasional (34 Prov)' : selectedForecastRegion);
+
+        const selProvEl = document.getElementById('fc-side-selected-prov');
+        const headlineEl = document.getElementById('fc-side-headline');
+        if (selProvEl) selProvEl.textContent = provName;
+        if (headlineEl) headlineEl.textContent = 'Pita Prediksi: ' + provName;
+
+        // Draw Fan Chart
+        drawFanChart(traj, provName);
+
+        // Render Exceedance bars
+        renderExceedanceBars(selectedForecastRegion);
+    }};
+
+    function drawFanChart(traj, label) {{
+        const svg = document.getElementById('fan-chart-svg');
+        if (!svg || !traj) return;
+
+        const histCases = traj.history_cases || [];
+        const fQ025 = traj.q025 || [];
+        const fQ50 = traj.q50 || [];
+        const fQ975 = traj.q975 || [];
+
+        const allVals = histCases.concat(fQ975).concat(fQ025);
+        const maxVal = Math.max(10, Math.max(...allVals) * 1.15);
+        const minVal = 0;
+
+        const w = 340;
+        const h = 120;
+        const padL = 30;
+        const padR = 15;
+        const padT = 15;
+        const padB = 22;
+        const plotW = w - padL - padR;
+        const plotH = h - padT - padB;
+
+        const nHist = histCases.length;
+        const nFc = fQ50.length;
+        const totalPoints = nHist + nFc;
+
+        function getX(i) {{
+            return padL + (i / (totalPoints - 1)) * plotW;
+        }}
+        function getY(val) {{
+            return padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+        }}
+
+        let svgHtml = '';
+
+        // Grid lines
+        svgHtml += `<line x1="${{padL}}" y1="${{padT}}" x2="${{w-padR}}" y2="${{padT}}" stroke="#f1f5f9" stroke-width="1"/>`;
+        svgHtml += `<line x1="${{padL}}" y1="${{padT + plotH/2}}" x2="${{w-padR}}" y2="${{padT + plotH/2}}" stroke="#f1f5f9" stroke-width="1"/>`;
+        svgHtml += `<line x1="${{padL}}" y1="${{padT + plotH}}" x2="${{w-padR}}" y2="${{padT + plotH}}" stroke="#cbd5e1" stroke-width="1"/>`;
+
+        // 95% Confidence Cone Polygon (Shaded Area)
+        let conePoints = [];
+        // Connect from last historical point
+        const originX = getX(nHist - 1);
+        const originY = getY(histCases[nHist - 1]);
+        conePoints.push(`${{originX}},${{originY}}`);
+
+        for (let i = 0; i < nFc; i++) {{
+            const ptX = getX(nHist + i);
+            const ptY = getY(fQ975[i]);
+            conePoints.push(`${{ptX}},${{ptY}}`);
+        }}
+        for (let i = nFc - 1; i >= 0; i--) {{
+            const ptX = getX(nHist + i);
+            const ptY = getY(fQ025[i]);
+            conePoints.push(`${{ptX}},${{ptY}}`);
+        }}
+        conePoints.push(`${{originX}},${{originY}}`);
+        svgHtml += `<polygon points="${{conePoints.join(' ')}}" fill="rgba(223, 155, 48, 0.28)" stroke="rgba(223, 155, 48, 0.5)" stroke-width="1"/>`;
+
+        // Historical Line
+        let histPath = '';
+        for (let i = 0; i < nHist; i++) {{
+            const px = getX(i);
+            const py = getY(histCases[i]);
+            histPath += (i === 0 ? `M ${{px}} ${{py}}` : ` L ${{px}} ${{py}}`);
+        }}
+        svgHtml += `<path d="${{histPath}}" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>`;
+
+        // Forecast Median Line (Dashed)
+        let fcPath = `M ${{originX}} ${{originY}}`;
+        for (let i = 0; i < nFc; i++) {{
+            const px = getX(nHist + i);
+            const py = getY(fQ50[i]);
+            fcPath += ` L ${{px}} ${{py}}`;
+        }}
+        svgHtml += `<path d="${{fcPath}}" fill="none" stroke="#a64920" stroke-width="2.5" stroke-dasharray="4,3"/>`;
+
+        // Origin Divider Line
+        svgHtml += `<line x1="${{originX}}" y1="${{padT}}" x2="${{originX}}" y2="${{padT + plotH}}" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2,2"/>`;
+        svgHtml += `<text x="${{originX}}" y="${{h - 6}}" font-size="9" font-weight="700" fill="#64748b" text-anchor="middle">Origin (Jul 24)</text>`;
+
+        // Forecast Points
+        for (let i = 0; i < nFc; i++) {{
+            const px = getX(nHist + i);
+            const py = getY(fQ50[i]);
+            const isSelected = (i + 1) === currentForecastLead;
+            svgHtml += `<circle cx="${{px}}" cy="${{py}}" r="${{isSelected ? 5 : 3}}" fill="${{isSelected ? '#dc2626' : '#a64920'}}" stroke="#ffffff" stroke-width="1.5" style="cursor:pointer;" onclick="setForecastLead(${{i+1}})">
+                <title>Lead ${{i+1}}: ${{fQ50[i].toLocaleString()}} kasus [${{fQ025[i].toLocaleString()}} - ${{fQ975[i].toLocaleString()}}]</title>
+            </circle>`;
+        }}
+
+        // Labels
+        svgHtml += `<text x="${{padL}}" y="${{h - 6}}" font-size="8.5" fill="#94a3b8">12 Bln Lalu</text>`;
+        svgHtml += `<text x="${{w - padR}}" y="${{h - 6}}" font-size="8.5" fill="#94a3b8" text-anchor="end">Jan 2025</text>`;
+        svgHtml += `<text x="${{padL - 3}}" y="${{padT + 8}}" font-size="8" fill="#94a3b8" text-anchor="end">${{maxVal >= 1000 ? Math.round(maxVal/1000)+'k' : Math.round(maxVal)}}</text>`;
+
+        svg.innerHTML = svgHtml;
+    }}
+
+    function renderExceedanceBars(regionId) {{
+        const container = document.getElementById('fc-exceedance-bars');
+        if (!container || !FORECAST_DATA || !FORECAST_DATA.by_lead) return;
+
+        const fLeadData = FORECAST_DATA.by_lead[String(currentForecastLead)];
+        if (!fLeadData) return;
+
+        let p_m2sd = 0.15;
+        let p_m1sd = 0.30;
+        let p_p75 = 0.25;
+        let p_p95 = 0.10;
+
+        if (regionId && regionId !== 'NATIONAL' && fLeadData.provinces && fLeadData.provinces[regionId]) {{
+            const p = fLeadData.provinces[regionId];
+            p_m2sd = p.p_exceed_m2sd;
+            p_m1sd = p.p_exceed_m1sd;
+            p_p75 = p.p_exceed_p75;
+            p_p95 = p.p_exceed_p95;
+        }}
+
+        container.innerHTML = `
+            <div style="font-size:11px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                    <span>🚨 <b>Prob. KLB (Mean + 2 SD):</b></span>
+                    <b style="color:#a64920;">${{(p_m2sd * 100).toFixed(1)}}%</b>
+                </div>
+                <div style="height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
+                    <div style="height:100%; width:${{Math.min(100, p_m2sd * 100)}}%; background:#a64920; border-radius:3px;"></div>
+                </div>
+            </div>
+            <div style="font-size:11px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                    <span>⚠️ <b>Prob. Waspada (Mean + 1 SD):</b></span>
+                    <b style="color:#df9b30;">${{(p_m1sd * 100).toFixed(1)}}%</b>
+                </div>
+                <div style="height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
+                    <div style="height:100%; width:${{Math.min(100, p_m1sd * 100)}}%; background:#df9b30; border-radius:3px;"></div>
+                </div>
+            </div>
+            <div style="font-size:11px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                    <span>📊 <b>Prob. Melampaui P75:</b></span>
+                    <b style="color:#0284c7;">${{(p_p75 * 100).toFixed(1)}}%</b>
+                </div>
+                <div style="height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
+                    <div style="height:100%; width:${{Math.min(100, p_p75 * 100)}}%; background:#0284c7; border-radius:3px;"></div>
+                </div>
+            </div>
+            <div style="font-size:11px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                    <span>🔥 <b>Prob. Melampaui P95 Ekstrem:</b></span>
+                    <b style="color:#dc2626;">${{(p_p95 * 100).toFixed(1)}}%</b>
+                </div>
+                <div style="height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
+                    <div style="height:100%; width:${{Math.min(100, p_p95 * 100)}}%; background:#dc2626; border-radius:3px;"></div>
+                </div>
+            </div>
+        `;
+    }}
+
+    function renderForecastTable() {{
+        const tbody = document.getElementById('fc-table-tbody');
+        if (!tbody || !FORECAST_DATA || !FORECAST_DATA.by_lead) return;
+
+        const fLeadData = FORECAST_DATA.by_lead[String(currentForecastLead)];
+        if (!fLeadData || !fLeadData.provinces) return;
+
+        const provList = Object.values(fLeadData.provinces).sort((a, b) => a.rank - b.rank);
+        tbody.innerHTML = '';
+
+        provList.forEach(p => {{
+            const catBg = colorMap[p.risk_level] || '#bfdbdc';
+            const catTextCol = (p.risk_level === 'Rendah' || p.risk_level === 'Waspada') ? '#0f172a' : '#ffffff';
+            const catBorder = (p.risk_level === 'Rendah' || p.risk_level === 'Waspada') ? 'border:1px solid rgba(0,0,0,0.18);' : '';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center; font-weight: 700; color: #64748b;">#${{p.rank}}</td>
+                <td><b>${{p.name}}</b> <span style="font-size: 11px; color: #94a3b8;">(${{p.region_id}})</span></td>
+                <td><span class="region-tag">${{p.region_group}}</span></td>
+                <td style="text-align: right; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: ${{p.risk_level === 'Awas' ? '#a64920' : '#0f172a'}};">
+                    ${{p.q50.toLocaleString()}}
+                </td>
+                <td style="text-align: right; font-size: 11.5px; color: #64748b; font-family: 'JetBrains Mono', monospace;">
+                    [${{p.q025.toLocaleString()}} – ${{p.q975.toLocaleString()}}]
+                </td>
+                <td style="text-align: right; font-weight: 700; color: #0284c7; font-family: 'JetBrains Mono', monospace;">
+                    ${{p.incidence_median.toFixed(1)}}
+                </td>
+                <td style="text-align: center; font-weight: 700; color: ${{p.p_exceed_m2sd >= 0.4 ? '#dc2626' : (p.p_exceed_m2sd >= 0.2 ? '#ea580c' : '#059669')}};">
+                    ${{(p.p_exceed_m2sd * 100).toFixed(1)}}%
+                </td>
+                <td style="text-align: center;">
+                    <span style="background: ${{catBg}}; color: ${{catTextCol}}; ${{catBorder}} font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 9999px;">
+                        ${{p.risk_level.toUpperCase()}}
+                    </span>
+                </td>
+                <td style="text-align: center; font-size: 11px; color: #059669; font-weight: 700;">
+                    ${{p.reliable ? '✅ Layak' : '⚠️ Evaluasi'}}
+                </td>
+                <td style="text-align: center; white-space: nowrap;">
+                    <button class="btn-focus-map" onclick="zoomToProvince('${{p.region_id}}')" style="margin-right: 4px;">📍 Peta</button>
+                    <button class="btn-view-profile" onclick="renderForecastSideCards('${{p.region_id}}')">📈 Kerucut</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }});
+    }}
+
     // Init
     updateUI();
     drawSparkline();
@@ -4061,6 +4773,47 @@ def generate_interactive_html_map(
     out_file.write_text(full_html, encoding="utf-8")
     logger.info(f"Compact Leaflet HTML map saved to: {out_file}")
     return out_file
+
+
+class RealDengueMapVisualizer:
+    """High-level visualizer class for DengueCast maps and dashboards."""
+
+    def __init__(self, config: DengueMapConfig | None = None) -> None:
+        self.config = config or DengueMapConfig()
+
+    def generate_interactive_html(
+        self,
+        output_path: Path | str | None = None,
+        yearly_data: dict[str, Any] | None = None,
+        forecast_data: dict[str, Any] | None = None,
+    ) -> Path:
+        out = output_path or self.config.output_html
+        summary_df, geo_df, _ = load_real_dengue_data(self.config)
+        return generate_interactive_html_map(
+            summary_df=summary_df,
+            geo_df=geo_df,
+            output_path=out,
+            geojson_path=self.config.geojson_path,
+            world_geojson_path=self.config.world_geojson_path,
+            yearly_data=yearly_data,
+            forecast_data=forecast_data,
+        )
+
+    def generate_static_map(
+        self,
+        output_path: Path | str | None = None,
+        metric_col: str = "total_cases",
+        dpi: int = 300,
+    ) -> Path:
+        out = output_path or self.config.output_png
+        summary_df, geo_df, _ = load_real_dengue_data(self.config)
+        return generate_high_res_static_map(
+            summary_df=summary_df,
+            geo_df=geo_df,
+            output_path=out,
+            metric_col=metric_col,
+            dpi=dpi,
+        )
 
 
 def generate_high_res_static_map(

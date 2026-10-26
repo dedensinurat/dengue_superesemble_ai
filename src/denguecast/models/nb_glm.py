@@ -258,10 +258,20 @@ class NBGLM(ForecastModel):
                 x_df["region_group"].astype(str).map(self._clim_group_map).fillna("Small_Groups")
             )
 
+        # Fill NaNs in predictor features
+        for f in self._features:
+            if f in x_df.columns:
+                x_df[f] = x_df[f].fillna(0.0)
+            else:
+                x_df[f] = 0.0
+
         # 2. Build test design matrix
         try:
             design_matrices = patsy.build_design_matrices([self._design_info], x_df)
             X_mat = np.asarray(design_matrices[0])
+            if X_mat.shape[0] != n_rows:
+                logger.warning(f"Design matrix rows ({X_mat.shape[0]}) mismatch n_rows ({n_rows}). Using fallback.")
+                return np.zeros((n_rows, n_samples), dtype=int)
         except Exception as e:
             logger.warning(f"Error building design matrix for prediction: {e}. Using fallback.")
             return np.zeros((n_rows, n_samples), dtype=int)

@@ -177,3 +177,72 @@ def test_who_global_summary_and_selector() -> None:
     assert "Viet Nam" in c_names
     assert "Thailand" in c_names
 
+
+def test_forecast_mode_integration(tmp_path: Path) -> None:
+    """Test generating map with probabilistic superensemble forecast data embedded."""
+    from denguecast.visualizations.real_map import RealDengueMapVisualizer
+
+    cfg = DengueMapConfig()
+    summary_df, geo_df, meta = load_real_dengue_data(cfg)
+
+    mock_forecast_data = {
+        "metadata": {
+            "origin": "2024-07",
+            "model_version": "v1.0.0",
+            "synthetic": False,
+        },
+        "by_lead": {
+            "1": {
+                "lead": 1,
+                "target": "2024-08",
+                "target_label": "Agustus 2024 (h=1)",
+                "month_name": "Agustus 2024",
+                "national": {
+                    "total_median": 4891,
+                    "total_q025": 7,
+                    "total_q975": 63006,
+                    "incidence_median": 1.8,
+                    "awas_count": 0,
+                    "siaga_count": 3,
+                    "waspada_count": 20,
+                    "rendah_count": 11,
+                },
+                "provinces": {
+                    "32": {
+                        "name": "Jawa Barat",
+                        "region_group": "Java-Bali",
+                        "q50": 1200,
+                        "q025": 150,
+                        "q975": 4500,
+                        "incidence_median": 2.4,
+                        "risk_level": "Siaga",
+                        "p_exceed_m2sd": 0.35,
+                        "p_exceed_m1sd": 0.65,
+                        "p_exceed_p75": 0.70,
+                        "p_exceed_p95": 0.20,
+                        "threshold_m2sd": 1500,
+                        "reliable": True,
+                    }
+                },
+            }
+        },
+    }
+
+    out_file = tmp_path / "test_forecast_map.html"
+    vis = RealDengueMapVisualizer(cfg)
+    result = vis.generate_interactive_html(
+        output_path=out_file,
+        yearly_data=meta.get("yearly_data"),
+        forecast_data=mock_forecast_data,
+    )
+
+    assert result.exists()
+    content = result.read_text(encoding="utf-8")
+    assert "btn-mode-forecast" in content
+    assert "kpi-row-forecast" in content
+    assert "fan-chart-svg" in content
+    assert "fc-table-tbody" in content
+    assert "setForecastLead" in content
+    assert "renderForecastSideCards" in content
+
+
